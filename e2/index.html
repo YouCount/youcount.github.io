@@ -23,11 +23,11 @@ function getText(url, callback) {
 function queryName(){
 	getText("https://www.googleapis.com/youtube/v3/search?part=snippet&q="+encodeURIComponent(rawInput)+"&type=channel&maxResults=1&key=" + getKey(), function(e){
 		if(e.pageInfo.totalResults < 1) {
-			document.querySelector("#username").textContent = "Not Found!";
+			document.querySelector("#username").value = "Not Found!";
 			return;
 		}
 		document.getElementById("dp").src=e.items[0].snippet.thumbnails.default.url;
-		document.querySelector("#username").textContent = e.items[0].snippet.title;
+		document.querySelector("#username").value = e.items[0].snippet.title;
 		username = e.items[0].snippet.channelId.trim();
 	})
 }
@@ -75,6 +75,9 @@ window.addEventListener("resize", remsize, false);
 
 </script>
 <style>
+body {
+	overflow:hidden;
+}
 #dp {
 	position:absolute;
 	top:2.5vh;
@@ -82,23 +85,36 @@ window.addEventListener("resize", remsize, false);
 	border-radius:23vh;
 }
 #username {
-	position:absolute;
-	color:#e52d27;
+	position:fixed;
 	font-family:Lato;
-	top:2.5vh;
+	top:18vh;
+	right: 35vh;
+	border: 2px solid black;
+	height:15vh;
 	text-align:right;
-	left:50vh;
-	font-size:20vh;
+	font-size:10vh;
 	overflow:hidden;
-	right:5vw;
 }
 #topnum {
-	position:absolute;
+	position:fixed;
 	font-family:Lato;
 	bottom:2.5vh;
+	left:0;
 	text-align:center;
 	width:100vw;
 	font-size:30vh;
+}
+#search {
+	position:absolute;
+	right:2.5vh;
+	top:18vh;
+	height:15vh;
+	width:30vh;
+	background-color:#e52d27;
+	border:0;
+}
+#search img {
+	width:12vh;
 }
 /* Odometer */
 .odometer.odometer-auto-theme,.odometer.odometer-auto-theme .odometer-digit,.odometer.odometer-theme-minimal,.odometer.odometer-theme-minimal .odometer-digit{display:inline-block;position:relative}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;-webkit-backface-visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0);transform:translateZ(0)}.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s}.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s;-webkit-transform:translateY(0);transform:translateY(0)}
@@ -109,7 +125,8 @@ window.addEventListener("resize", remsize, false);
 <body>
 <div id="prime" class="card">
 <img id="dp" src="">
-<div id="username"></div>
+<input type="text" id="username" value="">
+<button id="search" onclick="function(){rawInput = document.getElementById('username').value;queryName();}"><img src="/images/search.png"</button>
 <div id="topnum">
 <br>
 <span class="count_live"></span>
