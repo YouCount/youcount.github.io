@@ -1,0 +1,98 @@
+<!doctype html>
+<html amp lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta name="theme-color" content="#e52d27" />
+	<meta name="fragment" content="!">
+	<link rel="canonical" href="https://youcount.github.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="description" content="YouCount allows you to see the YouTube subscriber count of any YouTube Channel in realtime, along with the increasing/decreasing trend of subscribers and additional information about the YouTube Channel."/>
+	<script async src="https://cdn.ampproject.org/v0.js"></script>
+	<script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+	<script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
+    <title>YouCount: Youtube Live Subscriber Count</title>
+    <link rel="canonical" href="http://example.ampproject.org/article-metadata.html" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "NewsArticle",
+        "headline": "Open-source framework for publishing content",
+        "datePublished": "2015-10-07T12:02:41Z",
+        "image": [
+          "logo.jpg"
+        ]
+      }
+    </script>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <style amp-custom>
+  body {
+    background-color: white;
+  }
+  #heading {
+	background-color:#e52d27;
+	position:absolute;
+	top:0;
+	height:100px;
+	width:100%;
+  }
+  h1 {
+	text-align:center;
+	font-family:Arial;
+	color:white;
+  }
+  amp-iframe {
+	top:100px;
+	position:absolute;
+  }
+  amp-img {
+    background-color: gray;
+    border: 1px solid black;
+  }
+  amp-fit-text {
+	position:absolute;
+	top:75px;
+	font-family:Arial;
+	text-align:center;
+  }
+  #more {
+	border:0;
+	background-color:#e52d27;
+	color:white;
+	border-radius:3px;
+	position:relative;
+	left:50%;
+	top:75px;
+	transform:translate(-50%,0);
+	text-align:center;
+	width:100px;
+	height:25px;
+	font-family:Arial;
+	font-size:15px;
+  }
+	</style>
+  </head>
+  <body>
+    <div id="heading"><h1>YouCount</h1></div>
+	<amp-iframe width="500"
+      height="250"
+      layout="responsive"
+      sandbox="allow-scripts allow-same-origin allow-popups"
+      allowfullscreen
+      frameborder="0"
+      src="https://youcount.github.io/e2/#!/pewdiepie">
+	  <amp-img layout="fill"
+        src="https://youcount.github.io/e2/y.jpg"
+        placeholder>
+	  </amp-img>
+  </amp-iframe>
+  <br><br>
+  <amp-fit-text width="300" height="300" layout="responsive" max-font-size="52">
+  The YouTube subscriber count is updated every second!<br><br>
+  Click on the search box on top and write the Username / ID / YouTube Channel Name /Youtube URL (all of them work!) of any YouTube channel and press the search button.<br><br>
+  In a way, this is a search engine for YouTube Channels which shows you the YouTube subscriber count of the most relevant match of your query, so any keywords related to the YouTube channel can be entered in the search query.
+  </amp-fit-text>
+  <a href="https://youcount.github.io/#!/Pewdiepie"><button id="more">View More</button></a>
+  <br><br>
+  </body>
+</html>
