@@ -49,7 +49,7 @@
 	height:100px;
 	width:100%;
   }
-  h1 {
+  #heading amp-fit-text {
 	text-align:center;
 	font-family:Arial;
 	color:white;
@@ -62,8 +62,7 @@
     background-color: gray;
     border: 1px solid black;
   }
-  amp-fit-text {
-	position:absolute;
+  .descrip {
 	top:75px;
 	font-family:Arial;
 	text-align:center;
@@ -86,21 +85,21 @@
 	</style>
   </head>
   <body>
-    <div id="heading"><h1>YouCount</h1></div>
+    <div id="heading"><amp-fit-text width="9" height="2" layout="responsive" max-font-size="200">YouCount</amp-fit-text></div>
 	<amp-iframe width="500"
       height="250"
       layout="responsive"
       sandbox="allow-same-origin allow-scripts allow-popups"
       allowfullscreen
       frameborder="0"
-      src="https://youcount.github.io/e2/#!/pewdiepie">
+      src="https://20manas.github.io/youcount-amp/#!/pewdiepie">
 	  <amp-img layout="fill"
         src="https://youcount.github.io/e2/y.jpg"
         placeholder>
 	  </amp-img>
   </amp-iframe>
   <br><br>
-  <amp-fit-text width="300" height="300" layout="responsive" max-font-size="52">
+  <amp-fit-text class="descrip" width="300" height="200" layout="responsive" max-font-size="52">
   The YouTube subscriber count is updated every second!<br><br>
   Click on the search box on top and write the Username / ID / YouTube Channel Name /Youtube URL (all of them work!) of any YouTube channel and press the search button.<br><br>
   In a way, this is a search engine for YouTube Channels which shows you the YouTube subscriber count of the most relevant match of your query, so any keywords related to the YouTube channel can be entered in the search query.
