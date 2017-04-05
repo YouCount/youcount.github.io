@@ -86,7 +86,7 @@ function getKey() {
 }
 window.onload = function() {
 	queryName();
-	var inter = setInterval(live, level);
+	var inter = setInterval(live, intervals[level]);
 };
 function remsize() {
 	var root = document.querySelector(":root");
