@@ -20,7 +20,7 @@ function getText(url, callback) {
 	request.send();
 }
 function queryName(){
-	getText("https://www.googleapis.com/youtube/v3/search?part=snippet&q="+encodeURIComponent(rawInput)+"&type=channel&fields="+encodeURIComponent("items/snippet/title,channelId,thumbnails/default/url")+"&maxResults=1&key=" + getKey(), function(e){
+	getText("https://www.googleapis.com/youtube/v3/search?part=snippet&q="+encodeURIComponent(rawInput)+"&type=channel&fields="+encodeURIComponent("items(snippet(title,channelId,thumbnails(default(url))))")+"&maxResults=1&key=" + getKey(), function(e){
 		if(e.pageInfo.totalResults < 1) {
 			document.querySelector("#username").textContent = "Not Found!";
 			return;
