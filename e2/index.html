@@ -6,7 +6,7 @@
 var APIkeys = ["AIzaSyBPsCt-UTntWemt0P3590TAZ883eh0Q3r0"];
 var te = location.hash.split("#!/")[1];
 var rawInput = te.trim();
-document.body.addEventListener("click",function(){window.open("https://youcount.github.io/#!/"+encodeURIComponent(rawInput), '_blank')});
+window.addEventListener("click",function(){window.open("https://youcount.github.io/#!/"+encodeURIComponent(rawInput), '_blank')});
 var keyIndex = 0,username;
 function getText(url, callback) {
 	var request = new XMLHttpRequest();
