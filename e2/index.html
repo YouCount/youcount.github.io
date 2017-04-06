@@ -6,7 +6,7 @@
 var APIkeys = ["AIzaSyBPsCt-UTntWemt0P3590TAZ883eh0Q3r0"];
 var te = location.hash.split("#!/")[1];
 var rawInput = te.trim();
-window.addEventListener("click",function(){window.open("https://youcount.github.io/#!/"+encodeURIComponent(rawInput), '_blank')});
+document.body.addEventListener("click",function(){window.open("https://youcount.github.io/#!/"+encodeURIComponent(rawInput), '_blank'});
 var keyIndex = 0,username;
 function getText(url, callback) {
 	var request = new XMLHttpRequest();
@@ -48,7 +48,7 @@ function checkInt(count) {
 			if(counts[0]!=count){time=1000;0}
 		}
 	}*/
-	if(level==6){clearInterval(inter);document.querySelector(".count_live").textContent = "Paused";return;}
+	if(level==6){clearInterval(inter);delete odo;isLive=0;document.querySelector(".count_live").textContent = "Paused";return;}
 	if(counts[recursions[level]-2]!=0&&counts[0]==count)++level;
 	else if(counts[0]!=count&&counts[0]!=0&&level!=0)--level;
 	else {counts[r] = count; r++; return;}
@@ -57,6 +57,7 @@ function checkInt(count) {
 	for(var q=0;q<15;q++)counts[q]=0;
 	r=0;
 }
+var odo;
 function live() {
 	var reqType = (username.length>=24 && username.substr(0, 2).toUpperCase() == "UC")?"id":"forUsername";
 	var url = "https://www.googleapis.com/youtube/v3/channels?part=statistics&"+reqType+"="+username+"&fields=items/statistics/subscriberCount&key=" + getKey();
@@ -66,7 +67,7 @@ function live() {
 		}
 		var sub_count = e.items[0].statistics.subscriberCount;
 		if(!isLive) {
-			new Odometer({
+			odo = new Odometer({
 				el: document.querySelector(".count_live"),
 				value: sub_count,
 				format: '(,ddd)',
