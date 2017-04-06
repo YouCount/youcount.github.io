@@ -48,16 +48,21 @@ function checkInt(count) {
 			if(counts[0]!=count){time=1000;0}
 		}
 	}*/
-	if(level==6){clearInterval(inter);delete odo;isLive=0;document.querySelector(".count_live").textContent = "Paused";return;}
 	if(counts[recursions[level]-2]!=0&&counts[0]==count)++level;
 	else if(counts[0]!=count&&counts[0]!=0&&level!=0)--level;
 	else {counts[r] = count; r++; return;}
+	
+	if(level==6){
+		clearInterval(inter);
+		document.getElementById("count_live").style.display="none";
+		document.getElementById("paused").style.display="block";
+		return;
+	}
 	clearInterval(inter);
 	inter = setInterval(live, intervals[level]);
 	for(var q=0;q<15;q++)counts[q]=0;
 	r=0;
 }
-var odo;
 function live() {
 	var reqType = (username.length>=24 && username.substr(0, 2).toUpperCase() == "UC")?"id":"forUsername";
 	var url = "https://www.googleapis.com/youtube/v3/channels?part=statistics&"+reqType+"="+username+"&fields=items/statistics/subscriberCount&key=" + getKey();
@@ -67,15 +72,15 @@ function live() {
 		}
 		var sub_count = e.items[0].statistics.subscriberCount;
 		if(!isLive) {
-			odo = new Odometer({
-				el: document.querySelector(".count_live"),
+			new Odometer({
+				el: document.getElementById("count_live"),
 				value: sub_count,
 				format: '(,ddd)',
 				theme: 'minimal'
 			});
 			isLive = 1;
 		} else {
-			document.querySelector(".count_live").textContent = sub_count;
+			document.getElementById("count_live").textContent = sub_count;
 		}
 		checkInt(sub_count);
 	});
@@ -102,7 +107,7 @@ window.addEventListener("resize", remsize, false);
 //Odometer End
 </script>
 <style>
-#username,.count_live,body{cursor:pointer;font-family:Lato,sans-serif}#dp,#topnum,#username{position:absolute}body{outline:0;margin:0;overflow:hidden!important;-webkit-tap-highlight-color:transparent}.card{padding-top:2rem;text-align:center}.count_live{padding-top:10rem;font-size:15rem!important}#dp{height:17rem;left:5%;border-radius:40rem}#username{color:#e52d27;background-color:#fff;font-size:10rem;left:30%;text-align:left;border-radius:.5rem;box-shadow:0 0 20px -4px #000;padding:2rem 5rem}#topnum{width:100%;bottom:0}
+#paused{display:none}#username,.count_live,body{cursor:pointer;font-family:Lato,sans-serif}#dp,#topnum,#username{position:absolute}body{outline:0;margin:0;overflow:hidden!important;-webkit-tap-highlight-color:transparent}.card{padding-top:2rem;text-align:center}.count_live{padding-top:10rem;font-size:15rem!important}#dp{height:17rem;left:5%;border-radius:40rem}#username{color:#e52d27;background-color:#fff;font-size:10rem;left:30%;text-align:left;border-radius:.5rem;box-shadow:0 0 20px -4px #000;padding:2rem 5rem}#topnum{width:100%;bottom:0}
 /* Odometer */
 .odometer.odometer-auto-theme,.odometer.odometer-auto-theme .odometer-digit,.odometer.odometer-theme-minimal,.odometer.odometer-theme-minimal .odometer-digit{display:inline-block;position:relative}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;-webkit-backface-visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0);transform:translateZ(0)}.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s}.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s;-webkit-transform:translateY(0);transform:translateY(0)}
 /*Font*/
@@ -115,7 +120,8 @@ window.addEventListener("resize", remsize, false);
 <div id="username"></div>
 <div id="topnum">
 <br>
-<span class="count_live"></span>
+<span id="count_live" class="count_live"></span>
+<span id="paused" class="count_live">Paused</span>
 </div>
 </div>
 </body>
