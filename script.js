@@ -415,6 +415,7 @@ function linkshare() {
 var views = [[]];
 function pushViews(url,i) {
 	getText(url, function(e) {
+		console.log("part3 done");
 		views[i] = e.items[0].statistics.viewCount;
 	});
 }
@@ -425,17 +426,19 @@ var extraswitch = 0,
 	myLineChart2Data,
 	vids=5;
 function extrabutton() {
-	$("#extra").css({
+	/*$("#extra").css({
 		'-webkit-transition':'all 0.5s',
 		'transition':'all 0.5s'
-	});
+	});*/
 	if(firstload === 0) {
 		$("#showextra").html("LOADING...");
 		var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() == "UC") ? "id" : "forUsername";
 		var url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&" + reqType + "=" + username + "&fields=items/contentDetails/relatedPlaylists/uploads&key=" + getKey();
 		getText(url, function(e) {
+			console.log("part1 done");
 			var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + e.items[0].contentDetails.relatedPlaylists.uploads + "&maxResults=10&fields=items/snippet/resourceId/videoId&key=" + getKey();
 			getText(url, function(e) {
+				console.log("part2 done");
 				for(var i=0; e.items[i]; i++){
 					var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
 					pushViews(url,i);
@@ -477,39 +480,39 @@ function extrabutton() {
 				}
 			});
 		});
-		$("#extraContent").css({
-			"opacity": "1"
-		});
+		$("#extraContent").fadeIn();
 		$("html, body").animate({
 			scrollTop: $("#extra").offset().top
 		}, 500);
 		$("#charts").fadeIn(500);
-		setTimeout(function(){
+		/*setTimeout(function(){
 			$("#charts").css({
 				'-webkit-transition':'all 0s',
 				'transition':'all 0s'
 			});
-		},500);
+		},500);*/
 		firstload = 1;
 	} else {
-		setTimeout(function(){
+		/*setTimeout(function(){
 			$("#extra").css({
 				'-webkit-transition':'all 0s',
 				'transition':'all 0s'
 			});
-		},500);
+		},500);*/
 		$("#showextra").html("SHOW TREND");
 		if(extraswitch === 0) {
 			isChart = 1;
-			document.getElementById("extra").style.height = "60vh";
+			document.getElementById("extra").style.height = "120vh";
 			$("#showextra").fadeOut();
 			$("#hideextra").fadeIn();
+			$("#extraContent").fadeIn();
 			extraswitch = 1;
 		} else {
-			myLineChart.destroy();
+			myLineChart1.destroy();
 			document.getElementById("extra").style.height = "15vh";
 			$("#showextra").fadeIn();
 			$("#hideextra").fadeOut(100);
+			$("#extraContent").fadeOut();
 			extraswitch = 0;
 			isChart = 0;
 		}
