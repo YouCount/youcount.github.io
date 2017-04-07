@@ -179,6 +179,7 @@ function(){
 	});
 });
 //this function upon clicking the red button, shows extra info and chart/chart button.
+/*
 var arrowvar = 0;
 function arrowfunc() {
 	$("#extra").css({
@@ -219,6 +220,7 @@ function arrowfunc() {
 		});
 	}, 1000);
 }
+*/
 //these 3 functions below store the y-axis location of the page (where it has been scrolled) then slide down the menu, set overflowing content in the main thing to hidden (so this menu thing can work properly) and do the vice versa as well
 var menuswitch1 = 0, menuswitch2 = 0;
 var loc;
@@ -274,7 +276,7 @@ function hidemenu() {
 	menushrink();
 }
 //menushrink does 2 things. it fixes the red bar after user has scrolled to a location. It is called and it fixes the red bar when menu is loaded. It is responsible for changing the 2 logos.
-window.onscroll = function(){ menushrink();};
+setInterval(function(){window.onscroll = function(){ menushrink();}},200);
 function menushrink(motion) {
 	if(menuswitch2===0) {
 		var menulength = (window.innerHeight) / 5;
