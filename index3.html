@@ -878,8 +878,7 @@ function queryName() {
 	});
 	loadfunc();
 }
-var isLive = 0;
-var myLineChart1Data;
+var isLive = 0, myLineChart1Data, prevCounts = [[0],[0],[0],[0],[0]]
 function live() {
 	var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() == "UC") ? "id" : "forUsername";
 	var url = "https://www.googleapis.com/youtube/v3/channels?part=statistics&" + reqType + "=" + username + "&fields=items/statistics/subscriberCount&key=" + getKey();
@@ -928,6 +927,8 @@ function live() {
 			seconds=0;
 		}
 		
+		prevCounts[seconds%5]=actualCount;
+		
 		//send updated values of actualCount and milestones
 		if(!isLive) {
 			new Odometer({
@@ -951,12 +952,14 @@ function live() {
 				document.getElementById("milestoneBox").innerHTML = "Congratulations!";
 			}
 			//if chart is already loaded, the value of chart is updated here.
-			if(isChart===2) {
-				myLineChart1.data.labels.push('');
-				myLineChart1.data.datasets[0].data.push(actualCount);
+			if(isChart===2&&seconds%5==0) {
+				for(var i=0;i<5;i++)myLineChart1.data.labels.push('');
+				for(i=0;i<5;i++)myLineChart1.data.datasets[0].data.push(prevCounts[i]);
 				if(seconds > 30) {//the max values of x axis is 30 seconds and after that limit is reached, starting values start getting destroyed.
-					myLineChart1.data.labels.shift();
-					myLineChart1.data.datasets[0].data.shift();
+					for(i=0;i<5;i++){
+						myLineChart1.data.labels.shift();
+						myLineChart1.data.datasets[0].data.shift();
+					}
 				}
 				myLineChart1.update();
 			}
