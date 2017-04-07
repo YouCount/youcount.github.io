@@ -271,10 +271,9 @@ function linkshare() {
 	});
 }
 var views = [];
+for(var l=0;l<50;l++)views[l]=50-l;
 function pushViews(url,i) {
 	getText(url, function(e) {
-		console.log("part 3 done!");
-		console.log(url);
 		views[i] = e.items[0].statistics.viewCount;
 	});
 }
@@ -290,49 +289,46 @@ function extrabutton() {
 		var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() == "UC") ? "id" : "forUsername";
 		var url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&" + reqType + "=" + username + "&fields=items/contentDetails/relatedPlaylists/uploads&key=" + getKey();
 		getText(url, function(e) {
-			console.log("part1 done");
 			var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + e.items[0].contentDetails.relatedPlaylists.uploads + "&maxResults=50&fields=items/snippet/resourceId/videoId&key=" + getKey();
 			getText(url, function(e) {
-				console.log("part2 done");
 				for(var i=0; e.items[i]; i++){
 					var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
 					pushViews(url,i);
-					
-					$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
-						isChart = 1;
-						document.getElementById("extra").style.height = "120vh";
-						$("#showextra").fadeOut();
-						$("#hideextra").fadeIn();
-						extraswitch = 1;
-						
-						var data=[],labels=[];
-						for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}	
-						myLineChart2Data = {
-							labels: labels,
-							datasets: [{
-								label: "Views of last " + vids + " videos",
-								fill:false,
-								borderColor: "rgba(255,50,50,0.5)",
-								pointBorderColor: "rgba(255,50,50,0.5)",
-								pointBackgroundColor:"rgba(255,50,50,1)",
-								data: data
-							}]
-						};
-						myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
-							type:"line",
-							data: myLineChart2Data, 
-							gridLines:{display: false},
-							responsive: true,
-							maintainAspectRatio: false
-						});
-						changeText(document.getElementById('pubDate'), channeldate);
-						var url2 = "https://www.googleapis.com/youtube/v3/channels?part=statistics&" + reqType + "=" + username + "&fields=items/statistics(videoCount,viewCount)&key=" + getKey();
-						getText(url2, function(e) {
-							changeText(document.getElementById("totalVideos"), e.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-							changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-						});
-					});
 				}
+				$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
+					isChart = 1;
+					document.getElementById("extra").style.height = "120vh";
+					$("#showextra").fadeOut();
+					$("#hideextra").fadeIn();
+					extraswitch = 1;
+					
+					var data=[],labels=[];
+					for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}	
+					myLineChart2Data = {
+						labels: labels,
+						datasets: [{
+							label: "Views of last " + vids + " videos",
+							fill:false,
+							borderColor: "rgba(255,50,50,0.5)",
+							pointBorderColor: "rgba(255,50,50,0.5)",
+							pointBackgroundColor:"rgba(255,50,50,1)",
+							data: data
+						}]
+					};
+					myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
+						type:"line",
+						data: myLineChart2Data, 
+						gridLines:{display: false},
+						responsive: true,
+						maintainAspectRatio: false
+					});
+					changeText(document.getElementById('pubDate'), channeldate);
+					var url2 = "https://www.googleapis.com/youtube/v3/channels?part=statistics&" + reqType + "=" + username + "&fields=items/statistics(videoCount,viewCount)&key=" + getKey();
+					getText(url2, function(e) {
+						changeText(document.getElementById("totalVideos"), e.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+						changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					});
+				});
 			});
 		});
 		$("#extraContent").fadeTo("fast",1);
@@ -361,7 +357,7 @@ function extrabutton() {
 		}
 	}
 }
-window.onload = function() {
+
 //images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
 var images = document.getElementsByTagName("img");
 for(var pl=0;pl<images.length;pl++){
@@ -370,4 +366,3 @@ for(var pl=0;pl<images.length;pl++){
 	}
 }
 document.getElementById("instruct").src="/images/instruct.png";
-}
