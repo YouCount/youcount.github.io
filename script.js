@@ -445,9 +445,9 @@ function extrabutton() {
 					
 					$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 						isChart = 1;
-						document.getElementById("extra").style.height = "60vh";
-						$("#showchart").fadeOut();
-						$("#hidechart").fadeIn();
+						document.getElementById("extra").style.height = "120vh";
+						$("#showextra").fadeOut();
+						$("#hideextra").fadeIn();
 						extraswitch = 1;
 						
 						var data=[[]],labels=[[]];
@@ -477,13 +477,19 @@ function extrabutton() {
 							changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 						});
 							
-							
 						
 						setTimeout(function(){
 							$("#charts").css({
 								'-webkit-transition':'all 0s',
 								'transition':'all 0s'
 							});
+							$("#extraContent").css({
+								"opacity": "1"
+							});
+							$("html, body").animate({
+								scrollTop: $("#extra").offset().top
+							}, 500);
+							$("#charts").fadeIn(500);
 						},500);
 					});
 					

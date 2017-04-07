@@ -464,7 +464,7 @@ position:absolute;
 	font-size:3vw;
 	font-weight:100;
 }
-#myChart-wrapper {
+.myChart-wrapper {
 	width:80%;
 	height:30vh;
 }
@@ -491,7 +491,7 @@ position:absolute;
 	overflow:hidden;
 	z-index:2;
 }
-#hideextra, #myChart-wrapper {
+#hideextra, .myChart-wrapper {
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -555,7 +555,7 @@ a {text-decoration:none;}
 	height:8vh;
 	width:35vw;
 	}
-	#myChart-wrapper {
+	.myChart-wrapper {
 	width:95%;
 	}
 	#charts {
@@ -703,6 +703,9 @@ Select and copy the URL of this page below and use it to share this page anywher
 	<section id="extra" class="card">
 		<button class="extrabutton" id="showextra">SHOW TREND</button>
 		<div id="extraContent">
+			<div class="myChart-wrapper">
+				<canvas width="400" height="200" id="myChart1"></canvas>
+			</div>
 			<span class="milestones" id="milestoneBox">
 				<span id="milestoneLeft">Loading...</span> left from <span id="milestoneTarget">Loading...</span>!
 			</span>
@@ -721,8 +724,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 					<td><span id="pubDate">Loading...</span></td>
 				</tr>
 			</table>
-			<div id="myChart-wrapper">
-				<canvas width="400" height="200" id="myChart1"></canvas>
+			<div class="myChart-wrapper">
 				<canvas width="400" height="200" id="myChart2"></canvas>
 			</div>
 		</div>
