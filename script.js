@@ -109,15 +109,11 @@ $('#showextra,#hideextra').on("click", function() {
 var shareswitch = 0;
 $("#share").on("click", function() {
 	if(shareswitch === 0) {
-		$("#sharebox").height("52.5%");
-		$("#share").height("14.2%");
 		$("#fb,#tw,#lnkdIn,#tb,#rdit,#link").fadeIn(200);
 		shareswitch = 3;
 	} else {
 		$("#fb,#tw,#lnkdIn,#tb,#rdit,#link").fadeOut(200);
 		setTimeout(function() {
-			$("#sharebox").height("7.5%");
-			$("#share").height("100%");
 			shareswitch = 0;
 		}, 200);
 	}
@@ -128,8 +124,6 @@ $("body").on("click", function() {
 		if(shareswitch == 1) {
 			$("#fb,#tw,#lnkdIn,#tb,#rdit,#link").fadeOut(200);
 			setTimeout(function() {
-				$("#sharebox").height("7.5%");
-				$("#share").height("100%");
 				shareswitch = 0;
 			}, 200);
 		}
