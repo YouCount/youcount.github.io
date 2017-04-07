@@ -449,11 +449,12 @@ function extrabutton() {
 						$("#hideextra").fadeIn();
 						extraswitch = 1;
 						
-						var data=[[]],labels=[[]];
+						var data=[],labels=[];
 						for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}	
 						myLineChart2Data = {
 							labels: labels,
 							datasets: [{
+								label: "Views of last" + vids + "videos",
 								fill:false,
 								borderColor: "rgba(255,50,50,0.5)",
 								pointBorderColor: "rgba(255,50,50,0.5)",
@@ -464,8 +465,7 @@ function extrabutton() {
 						myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
 							type:"line",
 							data: myLineChart2Data, 
-							scaleShowGridLines: false,
-							pointDot: false,
+							gridLines: {display:false},
 							responsive: true,
 							maintainAspectRatio: false
 						});
@@ -479,7 +479,7 @@ function extrabutton() {
 				}
 			});
 		});
-		$("#extraContent").fadeIn();
+		$("#extraContent").fadeTo("fast",1);
 		$("html, body").animate({
 			scrollTop: $("#extra").offset().top
 		}, 500);
@@ -511,7 +511,7 @@ function extrabutton() {
 			document.getElementById("extra").style.height = "15vh";
 			$("#showextra").fadeIn();
 			$("#hideextra").fadeOut(100);
-			$("#extraContent").fadeTo("fast",0);
+			$("#extraContent").fadeTo(0,0);
 			extraswitch = 0;
 			isChart = 0;
 		}

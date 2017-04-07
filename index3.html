@@ -908,18 +908,17 @@ function live() {
 			myLineChart1Data = {
 				labels: [''],
 				datasets: [{
+					label: "Realtime Trend (30s)",
 					fill:false,
 					borderColor: "rgba(255,50,50,0.5)",
-					pointBorderColor: "rgba(255,50,50,0.5)",
-					pointBackgroundColor:"rgba(255,50,50,1)",
+					pointRadius:0,
 					data: [actualCount]
 				}]
 			};
 			myLineChart1 = new Chart(document.getElementById("myChart1").getContext("2d"), {
 				type:"line",
 				data: myLineChart1Data, 
-				scaleShowGridLines: false,
-				pointDot: false,
+				gridLines: {display:false},
 				responsive: true,
 				maintainAspectRatio: false
 			});
