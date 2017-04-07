@@ -99,7 +99,7 @@ $('.suggest').on("click", function() {
 		});
 	});
 });
-$('#logo,#logo2').on("click", function() {
+$('#logo').on("click", function() {
 	location.href = '/';
 });
 $('#showextra,#hideextra').on("click", function() {
@@ -245,7 +245,6 @@ function showmenu() {
 		menuswitch1 = 1;
 	}, 500);
 	menuswitch2 = 1;
-	menushrink("smooth");
 	$("#buttonBig").addClass("cross");
 	$("#contents").css({
 		"position": "fixed"
@@ -273,48 +272,7 @@ function hidemenu() {
 		"overflow": "visible"
 	});
 	window.scrollTo(0, loc);
-	menushrink();
 }
-//menushrink does 2 things. it fixes the red bar after user has scrolled to a location. It is called and it fixes the red bar when menu is loaded. It is responsible for changing the 2 logos.
-setInterval(function(){window.onscroll = function(){ menushrink();}},200);
-function menushrink(motion) {
-	if(menuswitch2===0) {
-		var menulength = (window.innerHeight) / 5;
-		if(window.pageYOffset > menulength) {
-			$("#menu").css({
-				"position": "fixed",
-				"height": "10%"
-			});
-			
-		} else {
-			$("#menu").css({
-				"position": "absolute",
-				"height": "30%"
-			});
-		}
-		var logopos = (menulength) / 2;
-		document.getElementById("logo2").style.position = "fixed";
-		if(window.pageYOffset > logopos) {
-			document.getElementById("logo").style.display = "none";
-			document.getElementById("logo2").style.display = "initial";
-		} else {
-			document.getElementById("logo2").style.display = "none";
-			document.getElementById("logo").style.display = "inherit";
-		}
-	} else {
-		$("#menu").css({
-			"position": "fixed",
-			"height": "10%"
-		});
-		document.getElementById("logo2").style.display = "inherit";
-		document.getElementById("logo").style.display = "none";		
-	}
-	if(motion == "smooth"){
-		$("#menu").css({"transition": "height 0.5s linear"});
-		setTimeout(function(){$("#menu").css({"transition": "all 0s"});});
-	}
-}
-menushrink();
 
 //nav shows and hides the pages in the menu. the last 'else' hides every page and is called when menu is closed
 var help = 0,
