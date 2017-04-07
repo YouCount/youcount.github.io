@@ -950,11 +950,11 @@ function live() {
 			}
 			//if chart is already loaded, the value of chart is updated here.
 			if(isChart===2) {
-				myLineChart1Data.data.labels.push('');
-				myLineChart1Data.data.datasets[0].data.push(actualCount);
+				myLineChart1.data.labels.push('');
+				myLineChart1.data.datasets[0].data.push(actualCount);
 				if(seconds > 30) {//the max values of x axis is 30 seconds and after that limit is reached, starting values start getting destroyed.
-					myLineChart1Data.data.labels.shift();
-					myLineChart1Data.data.datasets[0].data.shift();
+					myLineChart1.data.labels.shift();
+					myLineChart1.data.datasets[0].data.shift();
 				}
 				myLineChart1.update();
 			}
