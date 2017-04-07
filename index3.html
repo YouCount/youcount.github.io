@@ -117,27 +117,27 @@ transition: all 0.5s;
 transform:translate(0,-50%);
 }
 #logo {
-display:none;
 position:fixed;
 height:8%;
 min-height:40px;
-width:auto;
 top:1%;
-bottom:auto;
 left:50%;
-cursor:pointer;
 -webkit-transform:translate(-50%,0);
 transform:translate(-50%,0);
+cursor:pointer;
 }
 #sharebox {
 position:fixed;
 right:15px;
+margin:0;
+padding:0;
+list-style-type:none;
 }
 .share {
+height:10vh;
 margin-bottom:20%;
 border-radius:50%;
 cursor:pointer;
-float:right;
 display:none;
 }
 #share {
@@ -570,7 +570,7 @@ a {text-decoration:none;}
 
 	<img id="logo" alt="YouCount Icon/Logo">
 
-	<div id="sharebox">
+	<ul id="sharebox">
 		<li id="shareLi"><img id="share" class="share" alt="Share Icon"></li><br>
 		<li><img id="fb" class="share" alt="Facebook Icon"></li><br>
 		<li><img id="tw" class="share" alt="Twitter Icon"></li><br>
@@ -578,7 +578,7 @@ a {text-decoration:none;}
 		<li><img id="tb" class="share" alt="Tumblr Icon"></li><br>
 		<li><img id="rdit" class="share" alt="Reddit Icon"></li><br>
 		<li><img id="link" class="share" alt="Link Icon"></li>
-	</div>
+	</ul>
 </section>
 
 <span id="pageUrl">
