@@ -99,9 +99,6 @@ $('.suggest').on("click", function() {
 		});
 	});
 });
-$('#arrowCircle').on("click", function() {
-	arrowfunc();
-});
 $('#logo,#logo2').on("click", function() {
 	location.href = '/';
 });
@@ -476,28 +473,23 @@ function extrabutton() {
 							changeText(document.getElementById("totalVideos"), e.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 							changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 						});
-							
-						
-						setTimeout(function(){
-							$("#charts").css({
-								'-webkit-transition':'all 0s',
-								'transition':'all 0s'
-							});
-							$("#extraContent").css({
-								"opacity": "1"
-							});
-							$("html, body").animate({
-								scrollTop: $("#extra").offset().top
-							}, 500);
-							$("#charts").fadeIn(500);
-						},500);
 					});
-					
-					
-					
 				}
 			});
 		});
+		$("#extraContent").css({
+			"opacity": "1"
+		});
+		$("html, body").animate({
+			scrollTop: $("#extra").offset().top
+		}, 500);
+		$("#charts").fadeIn(500);
+		setTimeout(function(){
+			$("#charts").css({
+				'-webkit-transition':'all 0s',
+				'transition':'all 0s'
+			});
+		},500);
 		firstload = 1;
 	} else {
 		setTimeout(function(){
