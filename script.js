@@ -442,54 +442,55 @@ function extrabutton() {
 				for(var i=0; e.items[i]; i++){
 					var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
 					pushViews(url,i);
+					
+					$.getScript("/js/chart.js", function() {
+						isChart = 1;
+						document.getElementById("extra").style.height = "60vh";
+						$("#showchart").fadeOut();
+						$("#hidechart").fadeIn();
+						extraswitch = 1;
+						
+						var data=[[]],labels=[[]];
+						for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}	
+						myLineChart2Data = {
+							labels: labels,
+							datasets: [{
+								fill:false,
+								borderColor: "rgba(255,50,50,0.5)",
+								pointBorderColor: "rgba(255,50,50,0.5)",
+								pointBackgroundColor:"rgba(255,50,50,1)",
+								data: data
+							}]
+						};
+						myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
+							type:"line",
+							data: data, 
+							scaleShowGridLines: false,
+							pointDot: false,
+							responsive: true,
+							maintainAspectRatio: false
+						});
+						changeText(document.getElementById('pubDate'), channeldate);
+						var url2 = "https://www.googleapis.com/youtube/v3/channels?part=statistics&" + reqType + "=" + username + "&fields=items/statistics(videoCount,viewCount)&key=" + getKey();
+						getText(url2, function(e) {
+							changeText(document.getElementById("totalVideos"), e.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+							changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+						});
+							
+							
+						
+						setTimeout(function(){
+							$("#charts").css({
+								'-webkit-transition':'all 0s',
+								'transition':'all 0s'
+							});
+						},500);
+					});
+					
+					
+					
 				}
 			});
-		});
-		
-		var data=[[]],labels=[[]];
-		for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}
-		function start(){	
-			myLineChart2Data = {
-				labels: labels,
-				datasets: [{
-					fill:false,
-					borderColor: "rgba(255,50,50,0.5)",
-					pointBorderColor: "rgba(255,50,50,0.5)",
-					pointBackgroundColor:"rgba(255,50,50,1)",
-					data: data
-				}]
-			};
-			myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
-				type:"line",
-				data: data, 
-				scaleShowGridLines: false,
-				pointDot: false,
-				responsive: true,
-				maintainAspectRatio: false
-			});
-		}
-		
-		
-		
-		
-		changeText(document.getElementById('pubDate'), channeldate);
-		var url2 = "https://www.googleapis.com/youtube/v3/channels?part=statistics&" + reqType + "=" + username + "&fields=items/statistics/videoCount,viewCount&key=" + getKey();
-		getText(url2, function(e) {
-			changeText(document.getElementById("totalVideos"), e.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-			changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-		});
-		$.getScript("/js/chart.js", function() {
-			isChart = 1;
-			document.getElementById("extra").style.height = "60vh";
-			$("#showchart").fadeOut();
-			$("#hidechart").fadeIn();
-			extraswitch = 1;
-			setTimeout(function(){
-				$("#charts").css({
-					'-webkit-transition':'all 0s',
-					'transition':'all 0s'
-				});
-			},500);
 		});
 		firstload = 1;
 	} else {

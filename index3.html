@@ -965,7 +965,7 @@ function live() {
 //this code below, which is not inside any function, starts in the very beginning.
 
 //1. Check if iframe or http
-/*if (window.top !== window.self || window.top.location != window.self.location || window.location.hostname !='youcount.github.io' || window.top.location.hostname != 'youcount.github.io')
+if (window.top !== window.self || window.top.location != window.self.location || window.location.hostname !='youcount.github.io' || window.top.location.hostname != 'youcount.github.io')
 	window.top.location = window.self.location;
 else if(window.location.protocol != "https:")
 	try {
@@ -980,12 +980,12 @@ else {
 
 	if(location.hash.split("#!/")[1]) {//if something is there after #!/, make that the search query else if subdirectory is available, make that the query. else do nothing.
 		rawInput = location.hash.split("#!/")[1].trim();
-	} else if(window.location.pathname != '/') {
+	}/* else if(window.location.pathname != '/') {
 		rawInput = window.location.pathname;
 	}*/
 	queryName();//after getting the value for search query, queryName is called for the first time.
 	var intervalId = setInterval(live, 1000);//this sets live to be automatically called after every 1 second.
-//}
+}
 
 
 window.onpopstate = function() {
