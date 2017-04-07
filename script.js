@@ -1,11 +1,3 @@
-//images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
-var images = document.getElementsByTagName("img");
-for(var pl=0;pl<images.length;pl++){
-	if(!images[pl].src && images[pl].id && images[pl].id!="instruct"){
-		images[pl].src = '/images/' + images[pl].id + '.png';
-	}
-}
-document.getElementById("instruct").src="/images/instruct.png";
 //just to ensure that the correct page is loaded iframe and http is checked again
 if (window.top !== window.self || window.top.location != window.self.location || window.location.hostname !='youcount.github.io' || window.top.location.hostname != 'youcount.github.io')
 window.top.location = window.self.location;
@@ -172,49 +164,7 @@ function(){
 		}
 	});
 });
-//this function upon clicking the red button, shows extra info and chart/chart button.
-/*
-var arrowvar = 0;
-function arrowfunc() {
-	$("#extra").css({
-		"-webkit-transition":"width 0.5s, height 0.5s, border-radius 0.5s, transform 0.5s",
-		"transition":"width 0.5s, height 0.5s, border-radius 0.5s, transform 0.5s",
-	});
-	if(arrowvar === 0) {
-		$("#extra").addClass("card");
-		$("#extra").removeClass("extra");
-		$("#arrowCircle").css({
-			"transform": "rotate(180deg)"
-		});
-		setTimeout(function() {
-			$("#extraContent").css({
-				"opacity": "1"
-			});
-			$("html, body").animate({
-				scrollTop: $("#extra").offset().top
-			}, 500);
-			$("#charts").fadeIn(500);
-		}, 500);
-		arrowvar = 1;
-	} else {
-		$("html, body").animate({scrollTop: 0}, 500);
-		setTimeout(function(){
-			$("#extra").addClass("extra");
-			$("#extra").removeClass("card");
-			$("#charts").hide();
-			$("#arrowCircle").css({"transform": "rotate(0deg)"});
-			$("#extraContent").css({"opacity": "0"});
-		});
-		arrowvar = 0;
-	}
-	setTimeout(function() {
-		$("#extra").css({
-		"-webkit-transition":"all 0s ease 0s",
-		"transition":"all 0s ease 0s",
-		});
-	}, 1000);
-}
-*/
+
 //these 3 functions below store the y-axis location of the page (where it has been scrolled) then slide down the menu, set overflowing content in the main thing to hidden (so this menu thing can work properly) and do the vice versa as well
 var menuswitch1 = 0, menuswitch2 = 0;
 var loc;
@@ -269,72 +219,28 @@ function hidemenu() {
 }
 
 //nav shows and hides the pages in the menu. the last 'else' hides every page and is called when menu is closed
-var help = 0,
-	about = 0,
-	embed = 0;
+var articleStates = [0,0,0];
 
 function nav(func, page) {
 	if(func == "show") {
-		if(page == "help") {
-			if(help === 0) {
-				$("#help").slideDown(1000);
-				$("#menuHelp").css({
-					'color': 'black',
-					'background-color': 'rgba(0,0,0,0.1)',
-					'font-weight': '900'
-				});
-				help = 1;
-			} else {
-				$("#help").slideUp(1000);
-				$("#menuHelp").css({
-					'color': 'grey',
-					'background-color': 'white',
-					'font-weight': '100'
-				});
-				setTimeout(function() {
-					help = 0;
-				}, 1000);
-			}
-		} else if(page == "about") {
-			if(about === 0) {
-				$("#about").slideDown(1000);
-				$("#menuAbout").css({
-					'color': 'black',
-					'background-color': 'rgba(0,0,0,0.1)',
-					'font-weight': '900'
-				});
-				about = 1;
-			} else {
-				$("#about").slideUp(1000);
-				$("#menuAbout").css({
-					'color': 'grey',
-					'background-color': 'white',
-					'font-weight': '100'
-				});
-				setTimeout(function() {
-					about = 0;
-				}, 1000);
-			}
+		var articles = ["#help","#about","#embed"], lis = ["#menuHelp","#menuAbout","#menuEmbed"];
+		page = Number(page[1]);
+		if(articleStates[page]==0){
+			$(articles[page]).slideDown(1000);
+			$(lis[page]).css({
+				'color': 'black',
+				'background-color': 'rgba(0,0,0,0.1)',
+				'font-weight': '900'
+			});
+			articleStates[page]=1;
 		} else {
-			if(embed === 0) {
-				$("#embed").slideDown(1000);
-				$("#menuEmbed").css({
-					'color': 'black',
-					'background-color': 'rgba(0,0,0,0.1)',
-					'font-weight': '900'
-				});
-				embed = 1;
-			} else {
-				$("#embed").slideUp(1000);
-				$("#menuEmbed").css({
-					'color': 'grey',
-					'background-color': 'white',
-					'font-weight': '100'
-				});
-				setTimeout(function() {
-					embed = 0;
-				}, 1000);
-			}
+			$(articles[page]).slideUp(1000);
+			$(lis[page]).css({
+				'color': 'grey',
+				'background-color': 'white',
+				'font-weight': '100'
+			});
+			articleStates[page]=0;
 		}
 	} else {
 		$("#about,#help,#embed").hide();
@@ -343,9 +249,7 @@ function nav(func, page) {
 			'background-color': 'white',
 			'font-weight': '100'
 		});
-		help = 0;
-		about = 0;
-		embed = 0;
+		articleStates = [0,0,0];
 	}
 }
 
@@ -370,7 +274,7 @@ var views = [];
 function pushViews(url,i) {
 	getText(url, function(e) {
 		console.log("part 3 done!");
-		console.log(e);
+		console.log(url);
 		views[i] = e.items[0].statistics.viewCount;
 	});
 }
@@ -381,17 +285,13 @@ var extraswitch = 0,
 	myLineChart2Data,
 	vids=5;
 function extrabutton() {
-	/*$("#extra").css({
-		'-webkit-transition':'all 0.5s',
-		'transition':'all 0.5s'
-	});*/
 	if(firstload === 0) {
 		$("#showextra").html("LOADING...");
 		var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() == "UC") ? "id" : "forUsername";
 		var url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&" + reqType + "=" + username + "&fields=items/contentDetails/relatedPlaylists/uploads&key=" + getKey();
 		getText(url, function(e) {
 			console.log("part1 done");
-			var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + e.items[0].contentDetails.relatedPlaylists.uploads + "&maxResults=10&fields=items/snippet/resourceId/videoId&key=" + getKey();
+			var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + e.items[0].contentDetails.relatedPlaylists.uploads + "&maxResults=50&fields=items/snippet/resourceId/videoId&key=" + getKey();
 			getText(url, function(e) {
 				console.log("part2 done");
 				for(var i=0; e.items[i]; i++){
@@ -410,7 +310,7 @@ function extrabutton() {
 						myLineChart2Data = {
 							labels: labels,
 							datasets: [{
-								label: "Views of last" + vids + "videos",
+								label: "Views of last " + vids + " videos",
 								fill:false,
 								borderColor: "rgba(255,50,50,0.5)",
 								pointBorderColor: "rgba(255,50,50,0.5)",
@@ -421,7 +321,7 @@ function extrabutton() {
 						myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
 							type:"line",
 							data: myLineChart2Data, 
-							gridLines: {display:false},
+							gridLines.display: false,
 							responsive: true,
 							maintainAspectRatio: false
 						});
@@ -440,20 +340,8 @@ function extrabutton() {
 			scrollTop: $("#extra").offset().top
 		}, 500);
 		$("#charts").fadeIn(500);
-		/*setTimeout(function(){
-			$("#charts").css({
-				'-webkit-transition':'all 0s',
-				'transition':'all 0s'
-			});
-		},500);*/
 		firstload = 1;
 	} else {
-		/*setTimeout(function(){
-			$("#extra").css({
-				'-webkit-transition':'all 0s',
-				'transition':'all 0s'
-			});
-		},500);*/
 		$("#showextra").html("SHOW TREND");
 		if(extraswitch === 0) {
 			isChart = 1;
@@ -472,4 +360,14 @@ function extrabutton() {
 			isChart = 0;
 		}
 	}
+}
+window.onload = function() {
+//images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
+var images = document.getElementsByTagName("img");
+for(var pl=0;pl<images.length;pl++){
+	if(!images[pl].src && images[pl].id && images[pl].id!="instruct"){
+		images[pl].src = '/images/' + images[pl].id + '.png';
+	}
+}
+document.getElementById("instruct").src="/images/instruct.png";
 }

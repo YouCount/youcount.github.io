@@ -155,7 +155,7 @@ display:inherit;
 	z-index:1010;
 	background-color:white;
 	box-shadow: 0 0 20px -4px black;
-	padding-top:30px;
+	padding:30px;
 	font-size:25px;
 	display:none;
 }
@@ -215,7 +215,7 @@ text-decoration:none;color:rgb(229,45,39); padding:10px; font-weight:900;
 	display:none;
 	color:black;
 	left:10%;
-	text-align:left;
+	text-align:center;
 	background-color:white;
 	padding:10px;
 	border-left:0.5vw solid rgb(229,45,39);
@@ -226,7 +226,7 @@ text-decoration:none;color:rgb(229,45,39); padding:10px; font-weight:900;
 }
 #help p,#help li,#about p,#about li,#embed p,#embed li{
 	font-size:25px;
-	text-align:center;
+	text-align:left;
 }
 #instruct {
 	width:75%;
@@ -588,7 +588,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 
 <section id="contents">
 	<ul>
-		<li id="menuHelp" class="help">Help Me!</li><br>
+		<li id="menuHelp" class="m0">Help Me!</li><br>
 		<article id="help">
 			<span class="bar2"></span>
 			<h1>HOW TO USE!</h1>
@@ -614,7 +614,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 			clicking on the "Show Trend" button.</p>
 		</article>
 		<hr>
-		<li id="menuAbout" class="about">About YouCount</li><br>
+		<li id="menuAbout" class="m1">About YouCount</li><br>
 		<article id="about">
 			<span class="bar2"></span>
 			<h1>WHAT IS YOUCOUNT?</h1>
@@ -634,7 +634,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 			<p>Support the website by sharing it with your friends!</p>
 		</article>
 		<hr>
-		<li id="menuEmbed" class="embed">Embed this!</li><br>
+		<li id="menuEmbed" class="m2">Embed this!</li><br>
 		<article id="embed">
 			<span class="bar2"></span>
 			<h1>EMBED THIS!</h1>
@@ -705,6 +705,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 					<td><span id="pubDate">Loading...</span></td>
 				</tr>
 			</table>
+			<p>Last <input type="text" id="vids" placeholder="1-25" value="5"> videos</p>
 			<div class="myChart-wrapper">
 				<canvas width="400" height="200" id="myChart2"></canvas>
 			</div>
