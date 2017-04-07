@@ -443,7 +443,7 @@ function extrabutton() {
 					var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
 					pushViews(url,i);
 					
-					$.getScript("/js/chart.js", function() {
+					$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 						isChart = 1;
 						document.getElementById("extra").style.height = "60vh";
 						$("#showchart").fadeOut();
