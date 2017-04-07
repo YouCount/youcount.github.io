@@ -464,7 +464,7 @@ function extrabutton() {
 						};
 						myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
 							type:"line",
-							data: data, 
+							data: myLineChart2Data, 
 							scaleShowGridLines: false,
 							pointDot: false,
 							responsive: true,
