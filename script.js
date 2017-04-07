@@ -297,7 +297,7 @@ function extrabutton() {
 				}
 				$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 					isChart = 1;
-					document.getElementById("extra").style.height = "120vh";
+					document.getElementById("extra").style.height = "110vw";
 					$("#showextra").fadeOut();
 					$("#hideextra").fadeIn();
 					extraswitch = 1;
@@ -341,7 +341,7 @@ function extrabutton() {
 		$("#showextra").html("SHOW TREND");
 		if(extraswitch === 0) {
 			isChart = 1;
-			document.getElementById("extra").style.height = "120vh";
+			document.getElementById("extra").style.height = "110vh";
 			$("#showextra").fadeOut();
 			$("#hideextra").fadeIn();
 			$("#extraContent").fadeTo("fast",1);
@@ -364,6 +364,8 @@ function upCharts() {
 		myLineChart2.data.labels[i]='';
 		myLineChart2.data.datasets[0].data[i]=views[i];
 	}
+	myLineChart2.data.labels.splice(vids);
+	myLineChart2.data.datasets[0].data.splice(vids);
 	myLineChart2.update();
 }
 
