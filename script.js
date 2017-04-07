@@ -105,8 +105,8 @@ $('#arrowCircle').on("click", function() {
 $('#logo,#logo2').on("click", function() {
 	location.href = '/';
 });
-$('#showchart,#hidechart').on("click", function() {
-	chartbutton();
+$('#showextra,#hideextra').on("click", function() {
+	extrabutton();
 });
 //these 2 functions give the share button its clicking function. if the button is clicked, the sharing features are shown, next time, they are hidden. The function after that checks if sharing features are being shown. If they are, it hides them whenever the body is clicked.
 var shareswitch = 0;
@@ -415,21 +415,75 @@ function linkshare() {
 		$("bg2").off("click");
 	});
 }
+var views = [[]];
+function pushViews(url,i) {
+	getText(url, function(e) {
+		views[i] = e.items[0].statistics.viewCount;
+	});
+}
 //this is used to show/hide the chart. if the chart is loading for the first time (ie firstload=0) first the script of chart is downloaded and then it is loaded. 
-var chartswitch = 0,
-	firstload = 0;
-function chartbutton() {
-	$("#charts").css({
+var extraswitch = 0,
+	firstload = 0,
+	myLineChart2,
+	myLineChart2Data,
+	vids=5;
+function extrabutton() {
+	$("#extra").css({
 		'-webkit-transition':'all 0.5s',
 		'transition':'all 0.5s'
 	});
 	if(firstload === 0) {
+		$("#showextra").html("LOADING...");
+		var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() == "UC") ? "id" : "forUsername";
+		var url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&" + reqType + "=" + username + "&fields=items/contentDetails/relatedPlaylists/uploads&key=" + getKey();
+		getText(url, function(e) {
+			var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + e.items[0].contentDetails.relatedPlaylists.uploads + "&maxResults=10&fields=items/snippet/resourceId/videoId&key=" + getKey();
+			getText(url, function(e) {
+				for(var i=0; e.items[i]; i++){
+					var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
+					pushViews(url,i);
+				}
+			});
+		});
+		
+		var data=[[]],labels=[[]];
+		for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}
+		function start(){	
+			myLineChart2Data = {
+				labels: labels,
+				datasets: [{
+					fill:false,
+					borderColor: "rgba(255,50,50,0.5)",
+					pointBorderColor: "rgba(255,50,50,0.5)",
+					pointBackgroundColor:"rgba(255,50,50,1)",
+					data: data
+				}]
+			};
+			myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
+				type:"line",
+				data: data, 
+				scaleShowGridLines: false,
+				pointDot: false,
+				responsive: true,
+				maintainAspectRatio: false
+			});
+		}
+		
+		
+		
+		
+		changeText(document.getElementById('pubDate'), channeldate);
+		var url2 = "https://www.googleapis.com/youtube/v3/channels?part=statistics&" + reqType + "=" + username + "&fields=items/statistics/videoCount,viewCount&key=" + getKey();
+		getText(url2, function(e) {
+			changeText(document.getElementById("totalVideos"), e.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			changeText(document.getElementById("totalViews"), e.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		});
 		$.getScript("/js/chart.js", function() {
 			isChart = 1;
-			document.getElementById("charts").style.height = "40vh";
+			document.getElementById("extra").style.height = "60vh";
 			$("#showchart").fadeOut();
 			$("#hidechart").fadeIn();
-			chartswitch = 1;
+			extraswitch = 1;
 			setTimeout(function(){
 				$("#charts").css({
 					'-webkit-transition':'all 0s',
@@ -437,28 +491,27 @@ function chartbutton() {
 				});
 			},500);
 		});
-		$("#showchart").html("LOADING...");
 		firstload = 1;
 	} else {
 		setTimeout(function(){
-			$("#charts").css({
+			$("#extra").css({
 				'-webkit-transition':'all 0s',
 				'transition':'all 0s'
 			});
 		},500);
-		$("#showchart").html("SHOW TREND");
-		if(chartswitch === 0) {
+		$("#showextra").html("SHOW TREND");
+		if(extraswitch === 0) {
 			isChart = 1;
-			document.getElementById("charts").style.height = "40vh";
-			$("#showchart").fadeOut();
-			$("#hidechart").fadeIn();
-			chartswitch = 1;
+			document.getElementById("extra").style.height = "60vh";
+			$("#showextra").fadeOut();
+			$("#hideextra").fadeIn();
+			extraswitch = 1;
 		} else {
 			myLineChart.destroy();
-			document.getElementById("charts").style.height = "15vh";
-			$("#showchart").fadeIn();
-			$("#hidechart").fadeOut(100);
-			chartswitch = 0;
+			document.getElementById("extra").style.height = "15vh";
+			$("#showextra").fadeIn();
+			$("#hideextra").fadeOut(100);
+			extraswitch = 0;
 			isChart = 0;
 		}
 	}
