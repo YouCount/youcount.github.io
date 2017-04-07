@@ -415,8 +415,6 @@ function linkshare() {
 var views = [];
 function pushViews(url,i) {
 	getText(url, function(e) {
-		console.log("part3 done");
-		console.log(e);
 		views[i] = e.items[0].statistics.viewCount;
 	});
 }
@@ -506,14 +504,14 @@ function extrabutton() {
 			document.getElementById("extra").style.height = "120vh";
 			$("#showextra").fadeOut();
 			$("#hideextra").fadeIn();
-			$("#extraContent").fadeIn();
+			$("#extraContent").fadeTo("fast",1);
 			extraswitch = 1;
 		} else {
 			myLineChart1.destroy();
 			document.getElementById("extra").style.height = "15vh";
 			$("#showextra").fadeIn();
 			$("#hideextra").fadeOut(100);
-			$("#extraContent").fadeOut();
+			$("#extraContent").fadeTo("fast",0);
 			extraswitch = 0;
 			isChart = 0;
 		}
