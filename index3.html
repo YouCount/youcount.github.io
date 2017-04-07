@@ -902,7 +902,6 @@ function live() {
 		else document.body.style.backgroundColor = 'rgb(255,240,240)';
 		
 		//load chart if not already loaded and update it.
-		++seconds;
 		if(isChart === 1) {
 
 			myLineChart1Data = {
@@ -926,7 +925,7 @@ function live() {
 			isChart = 2;
 			seconds=0;
 		}
-		
+		++seconds;
 		prevCounts[seconds%5]=actualCount;
 		
 		//send updated values of actualCount and milestones
