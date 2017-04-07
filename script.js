@@ -359,7 +359,7 @@ function extrabutton() {
 }
 
 function upCharts() {
-	vids = $("#vids").value;
+	vids = Number($("#vids").val());
 	for(var i=0;i<vids;i++){
 		myLineChart2.data.labels[i]='';
 		myLineChart2.data.datasets[0].data[i]=views[i];
