@@ -412,10 +412,11 @@ function linkshare() {
 		$("bg2").off("click");
 	});
 }
-var views = [[]];
+var views = [];
 function pushViews(url,i) {
 	getText(url, function(e) {
 		console.log("part3 done");
+		console.log(e);
 		views[i] = e.items[0].statistics.viewCount;
 	});
 }
