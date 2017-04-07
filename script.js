@@ -321,7 +321,7 @@ function extrabutton() {
 						myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
 							type:"line",
 							data: myLineChart2Data, 
-							gridLines.display: false,
+							gridLines:{display: false},
 							responsive: true,
 							maintainAspectRatio: false
 						});
