@@ -358,6 +358,14 @@ function extrabutton() {
 	}
 }
 
+function upCharts() {
+	vids = $("#vids").value;
+	for(var i=0;i<vids;i++){
+		myLineChart2.data.labels[i]='';
+		myLineChart2.data.datasets[0].data[i]=views[i];
+	}
+}
+
 //images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
 var images = document.getElementsByTagName("img");
 for(var pl=0;pl<images.length;pl++){

@@ -476,6 +476,9 @@ position:absolute;
 	margin-left:auto;
 	margin-right:auto;
 }
+#vids {
+	text-align:center;
+}
 a {text-decoration:none;}
 @media only screen and (max-width: 800px), screen and (orientation: portrait){
 	#instruct {
@@ -705,7 +708,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 					<td><span id="pubDate">Loading...</span></td>
 				</tr>
 			</table>
-			<p>Last <input type="text" id="vids" placeholder="1-25" value="5"> videos</p>
+			<p>Last <input type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
 			<div class="myChart-wrapper">
 				<canvas width="400" height="200" id="myChart2"></canvas>
 			</div>
