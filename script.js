@@ -364,6 +364,7 @@ function upCharts() {
 		myLineChart2.data.labels[i]='';
 		myLineChart2.data.datasets[0].data[i]=views[i];
 	}
+	myLineChart2.update();
 }
 
 //images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
