@@ -369,6 +369,8 @@ function linkshare() {
 var views = [];
 function pushViews(url,i) {
 	getText(url, function(e) {
+		console.log("part 3 done!");
+		console.log(e);
 		views[i] = e.items[0].statistics.viewCount;
 	});
 }
