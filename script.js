@@ -279,7 +279,6 @@ function pushViews(url,i) {
 }
 //this is used to show/hide the chart. if the chart is loading for the first time (ie firstload=0) first the script of chart is downloaded and then it is loaded. 
 var extraswitch = 0,
-	firstload = 0,
 	myLineChart2,
 	myLineChart3,
 	vids=5;

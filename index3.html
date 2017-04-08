@@ -784,7 +784,8 @@ function to:-
 	2. get channel name, picture, total videos, total views, date of starting youtube, and changing url
 */
 var isChart = 0,
-	notFound = 0;
+	notFound = 0,
+	firstload=0;
 function queryName() {
 	getText("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + encodeURIComponent(rawInput) + "&type=channel&maxResults=1&key=" + getKey(), function(e) {
 		if(e.pageInfo.totalResults < 1) {//if no result found, show not found and hide stuff
