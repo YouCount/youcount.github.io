@@ -396,14 +396,24 @@ function extrabutton() {
 }
 
 function upCharts() {
+	if(Number($("#vids").val())>25)return;
 	vids = Number($("#vids").val());
+	var sum1=0,sum2=0;
 	for(var i=0;i<vids;i++){
 		myLineChart2.data.labels[i]='';
 		myLineChart2.data.datasets[0].data[i]=views[i];
+		sum1+=views[i];
 	}
+	for(i=vids;i<(vids*2);i++)sum2+=views[i];
 	myLineChart2.data.labels.splice(vids);
 	myLineChart2.data.datasets[0].data.splice(vids);
+	myLineChart3.data.datasets[0].data[0] = sum1/vids;
+	myLineChart3.data.datasets[0].data[1] = sum2/vids;
+	myLineChart4.data.datasets[0].data[0] = sum1;
+	myLineChart4.data.datasets[0].data[1] = sum2;
 	myLineChart2.update();
+	myLineChart3.update();
+	myLineChart4.update();
 }
 
 //images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).

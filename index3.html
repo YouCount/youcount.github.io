@@ -855,6 +855,21 @@ function queryName() {
 			});
 		} else popstatevar = 1;//resetting of popstatevar
 		
+		if(firstload){
+			var url = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&" + reqType + "=" + username + "&fields=items/contentDetails/relatedPlaylists/uploads&key=" + getKey();
+			getText(url, function(e) {
+				var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + e.items[0].contentDetails.relatedPlaylists.uploads + "&maxResults=50&fields=items/snippet/resourceId/videoId&key=" + getKey();
+				getText(url, function(e) {
+					for(var i=0; e.items[i]; i++){
+						var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
+						pushViews(url,i);
+					}
+				});
+			});
+		upCharts();
+		}
+		
+		
 		//set profile picture of channel
 		document.getElementById("dp").src = e.items[0].snippet.thumbnails.default.url;
 		/*
