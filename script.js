@@ -302,7 +302,7 @@ function extrabutton() {
 					extraswitch = 1;
 					
 					var data1=[],labels1=[];
-					for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}	
+					for(var i=0;i<vids;i++){data1[i]=views[i];labels[1i]='';}	
 					var myLineChart2Data = {
 						labels: labels1,
 						datasets: [{
@@ -374,7 +374,7 @@ function extrabutton() {
 		$("#charts").fadeIn(500);
 		firstload = 1;
 	} else {
-		$("#showextra").html("SHOW TREND");
+		$("#showextra").html("SHOW STATS");
 		if(extraswitch === 0) {
 			isChart = 1;
 			document.getElementById("extra").style.height = "110vh";
