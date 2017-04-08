@@ -281,7 +281,7 @@ function pushViews(url,i) {
 var extraswitch = 0,
 	firstload = 0,
 	myLineChart2,
-	myLineChart2Data,
+	myLineChart3,
 	vids=5;
 function extrabutton() {
 	if(firstload === 0) {
@@ -302,22 +302,59 @@ function extrabutton() {
 					$("#hideextra").fadeIn();
 					extraswitch = 1;
 					
-					var data=[],labels=[];
+					var data1=[],labels1=[];
 					for(var i=0;i<vids;i++){data[i]=views[i];labels[i]='';}	
-					myLineChart2Data = {
-						labels: labels,
+					var myLineChart2Data = {
+						labels: labels1,
 						datasets: [{
 							label: "Views of last " + vids + " videos",
 							fill:false,
 							borderColor: "rgba(255,50,50,0.5)",
 							pointBorderColor: "rgba(255,50,50,0.5)",
 							pointBackgroundColor:"rgba(255,50,50,1)",
-							data: data
+							data: data1
 						}]
 					};
 					myLineChart2 = new Chart(document.getElementById("myChart2").getContext("2d"), {
 						type:"line",
 						data: myLineChart2Data, 
+						gridLines:{display: false},
+						responsive: true,
+						maintainAspectRatio: false
+					});
+					var totviews = [function(){var tot=0;for(var i=0;i<vids;i++)tot+=views[i];return tot;},function(){var tot=0;for(var i=vids;i<(vids*2);i++)tot+=views[i];return tot;}],
+					data2 = [totviews[0]/vids,totviews[1]/vids],
+					labels2 = ["Last "+vids+" videos (Avg Views)","Last to last "+vids+" videos (Avg Views)"],
+					myLineChart3Data = {
+						labels: labels2,
+						datasets: [{
+							label: "Last " + vids + " videos vs Last to last "+vids+" videos",
+							borderColor: ["rgba(255,50,50,0.5)","rgba(50,255,50,0.5)"],
+							backgroundColor:["rgba(255,50,50,1)","rgba(50,255,50,1)"],
+							data: data2
+						}]
+					};
+					myLineChart3 = new Chart(document.getElementById("myChart3").getContext("2d"), {
+						type:"bar",
+						data: myLineChart3Data, 
+						gridLines:{display: false},
+						responsive: true,
+						maintainAspectRatio: false
+					});
+					var data3 = [totviews[0],totviews[1]],
+					labels3 = ["Last "+vids+" videos (Total Views)","Last to last "+vids+" videos (Total Views)"],
+					myLineChart4Data = {
+						labels: labels3,
+						datasets: [{
+							label: "Last " + vids + " videos vs Last to last "+vids+" videos",
+							backgroundColor:"rgba(255,50,50,1)",
+							hoverBackgroundColor:"rgba(255,20,20,1)",
+							data: data3
+						}]
+					};
+					myLineChart4 = new Chart(document.getElementById("myChart4").getContext("2d"), {
+						type:"doughnut",
+						data: myLineChart4Data, 
 						gridLines:{display: false},
 						responsive: true,
 						maintainAspectRatio: false
