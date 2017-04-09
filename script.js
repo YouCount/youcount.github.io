@@ -321,7 +321,7 @@ function extrabutton() {
 						responsive: true,
 						maintainAspectRatio: false
 					});
-					var totviews = [function(){var tot=0;for(var i=0;i<vids;i++)tot+=Number(views[i]);return tot;},function(){var tot=0;for(var i=vids;i<(vids*2);i++)tot+=Number(views[i]);return tot;}],
+					var totviews = [(function(){var tot=0;for(var i=0;i<vids;i++)tot+=Number(views[i]);return tot;})(),(function(){var tot=0;for(var i=vids;i<(vids*2);i++)tot+=Number(views[i]);return tot;})()],
 					data2 = [totviews[0]/vids,totviews[1]/vids],
 					labels2 = ["last "+vids+" videos","last to last "+vids+" videos"],
 					myLineChart3Data = {
@@ -406,13 +406,18 @@ function upCharts() {
 	for(i=vids;i<(vids*2);i++)sum2+=Number(views[i]);
 	myLineChart2.data.labels.splice(vids);
 	myLineChart2.data.datasets[0].data.splice(vids);
+	myLineChart2.data.datasets[0].label = "Views of last " + vids + "videos";
+	
 	var labels = ["last "+vids+" videos","last to last "+vids+" videos"];
+	
 	myLineChart3.data.labels= labels;
-	myLineChart3.data.datasets[0].data[0] = sum1/vids;
-	myLineChart3.data.datasets[0].data[1] = sum2/vids;
+	myLineChart3.data.datasets[0].data[0] = Math.floor(sum1/vids);
+	myLineChart3.data.datasets[0].data[1] = Math.floor(sum2/vids);
+	
 	myLineChart4.data.labels= labels;
 	myLineChart4.data.datasets[0].data[0] = sum1;
 	myLineChart4.data.datasets[0].data[1] = sum2;
+	
 	myLineChart2.update();
 	myLineChart3.update();
 	myLineChart4.update();
