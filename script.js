@@ -296,7 +296,7 @@ function extrabutton() {
 				}
 				$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 					isChart = 1;
-					document.getElementById("extra").style.height = "110vw";
+					document.getElementById("extra").style.height = "180vw";
 					$("#showextra").fadeOut();
 					$("#hideextra").fadeIn();
 					extraswitch = 1;
@@ -377,7 +377,7 @@ function extrabutton() {
 		$("#showextra").html("SHOW STATS");
 		if(extraswitch === 0) {
 			isChart = 1;
-			document.getElementById("extra").style.height = "110vh";
+			document.getElementById("extra").style.height = "180vw";
 			$("#showextra").fadeOut();
 			$("#hideextra").fadeIn();
 			$("#extraContent").fadeTo("fast",1);
