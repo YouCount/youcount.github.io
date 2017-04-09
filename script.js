@@ -302,7 +302,7 @@ function extrabutton() {
 					extraswitch = 1;
 					
 					var data1=[],labels1=[];
-					for(var i=0;i<vids;i++){data1[i]=views[i];labels[1i]='';}	
+					for(var i=0;i<vids;i++){data1[i]=views[i];labels1[i]='';}	
 					var myLineChart2Data = {
 						labels: labels1,
 						datasets: [{
