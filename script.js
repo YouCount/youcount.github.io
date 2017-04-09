@@ -321,13 +321,13 @@ function extrabutton() {
 						responsive: true,
 						maintainAspectRatio: false
 					});
-					var totviews = [function(){var tot=0;for(var i=0;i<vids;i++)tot+=views[i];return tot;},function(){var tot=0;for(var i=vids;i<(vids*2);i++)tot+=views[i];return tot;}],
+					var totviews = [function(){var tot=0;for(var i=0;i<vids;i++)tot+=Number(views[i]);return tot;},function(){var tot=0;for(var i=vids;i<(vids*2);i++)tot+=Number(views[i]);return tot;}],
 					data2 = [totviews[0]/vids,totviews[1]/vids],
-					labels2 = ["Last "+vids+" videos (Avg Views)","Last to last "+vids+" videos (Avg Views)"],
+					labels2 = ["last "+vids+" videos","last to last "+vids+" videos"],
 					myLineChart3Data = {
 						labels: labels2,
 						datasets: [{
-							label: "Last " + vids + " videos vs Last to last "+vids+" videos",
+							label: "Average Views",
 							borderColor: ["rgba(255,50,50,0.5)","rgba(50,255,50,0.5)"],
 							backgroundColor:["rgba(255,50,50,1)","rgba(50,255,50,1)"],
 							data: data2
@@ -341,11 +341,11 @@ function extrabutton() {
 						maintainAspectRatio: false
 					});
 					var data3 = [totviews[0],totviews[1]],
-					labels3 = ["Last "+vids+" videos (Total Views)","Last to last "+vids+" videos (Total Views)"],
+					labels3 = ["last "+vids+" videos","last to last "+vids+" videos"],
 					myLineChart4Data = {
 						labels: labels3,
 						datasets: [{
-							label: "Last " + vids + " videos vs Last to last "+vids+" videos",
+							label: "Total Views",
 							backgroundColor:"rgba(255,50,50,1)",
 							hoverBackgroundColor:"rgba(255,20,20,1)",
 							data: data3
@@ -401,13 +401,16 @@ function upCharts() {
 	for(var i=0;i<vids;i++){
 		myLineChart2.data.labels[i]='';
 		myLineChart2.data.datasets[0].data[i]=views[i];
-		sum1+=views[i];
+		sum1+=Number(views[i]);
 	}
 	for(i=vids;i<(vids*2);i++)sum2+=views[i];
 	myLineChart2.data.labels.splice(vids);
 	myLineChart2.data.datasets[0].data.splice(vids);
+	var labels = ["last "+vids+" videos","last to last "+vids+" videos"];
+	myLineChart3.data.labels= labels;
 	myLineChart3.data.datasets[0].data[0] = sum1/vids;
 	myLineChart3.data.datasets[0].data[1] = sum2/vids;
+	myLineChart4.data.labels= labels;
 	myLineChart4.data.datasets[0].data[0] = sum1;
 	myLineChart4.data.datasets[0].data[1] = sum2;
 	myLineChart2.update();
