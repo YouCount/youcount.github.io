@@ -322,7 +322,7 @@ function extrabutton() {
 						maintainAspectRatio: false
 					});
 					var totviews = [(function(){var tot=0;for(var i=0;i<vids;i++)tot+=Number(views[i]);return tot;})(),(function(){var tot=0;for(var i=vids;i<(vids*2);i++)tot+=Number(views[i]);return tot;})()],
-					data2 = [totviews[0]/vids,totviews[1]/vids],
+					data2 = [Math.floor(totviews[0]/vids),Math.floor(totviews[1]/vids)],
 					labels2 = ["last "+vids+" videos","last to last "+vids+" videos"],
 					myLineChart3Data = {
 						labels: labels2,
