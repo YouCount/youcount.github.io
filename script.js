@@ -403,7 +403,7 @@ function upCharts() {
 		myLineChart2.data.datasets[0].data[i]=views[i];
 		sum1+=Number(views[i]);
 	}
-	for(i=vids;i<(vids*2);i++)sum2+=views[i];
+	for(i=vids;i<(vids*2);i++)sum2+=Number(views[i]);
 	myLineChart2.data.labels.splice(vids);
 	myLineChart2.data.datasets[0].data.splice(vids);
 	var labels = ["last "+vids+" videos","last to last "+vids+" videos"];
