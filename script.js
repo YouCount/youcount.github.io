@@ -342,7 +342,7 @@ function extrabutton() {
 						maintainAspectRatio: false
 					});
 					var data3 = [totviews[0],totviews[1]],
-					labels3 = ["last "+vids+" videos","last to last "+vids+" videos"],
+					labels3 = ["last "+vids+" videos (total views)","last to last "+vids+" videos (total views)"],
 					myLineChart4Data = {
 						labels: labels3,
 						datasets: [{
@@ -410,13 +410,11 @@ function upCharts() {
 	myLineChart2.data.datasets[0].data.splice(vids);
 	myLineChart2.data.datasets[0].label = "Views of last " + vids + " videos";
 	
-	var labels = ["last "+vids+" videos","last to last "+vids+" videos"];
-	
-	myLineChart3.data.labels= labels;
+	myLineChart3.data.labels= ["last "+vids+" videos","last to last "+vids+" videos"];
 	myLineChart3.data.datasets[0].data[0] = Math.floor(sum1/vids);
 	myLineChart3.data.datasets[0].data[1] = Math.floor(sum2/vids);
 	
-	myLineChart4.data.labels= labels;
+	myLineChart4.data.labels= ["last "+vids+" videos (total views)","last to last "+vids+" videos (total views)"];
 	myLineChart4.data.datasets[0].data[0] = sum1;
 	myLineChart4.data.datasets[0].data[1] = sum2;
 	
