@@ -411,6 +411,9 @@ position:absolute;
 	width:4vw;
 	height:15vh;
 }
+.extraExp {
+	height:180vw;
+}
 #arrowCircle {
 	background-color:rgb(229,45,39);
 	width:4vw;
@@ -498,6 +501,9 @@ a {text-decoration:none;}
 	}
 	#extra {
 	height:10vw;
+	}
+	.extraExp {
+	height:300vw;
 	}
 	#extra table {
 	font-size:5vw;
@@ -874,9 +880,9 @@ function queryName() {
 						var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
 						pushViews(url,i);
 					}
+					upCharts();
 				});
 			});
-		upCharts();
 		}
 		
 		

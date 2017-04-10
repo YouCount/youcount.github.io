@@ -296,6 +296,7 @@ function extrabutton() {
 				}
 				$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 					isChart = 1;
+					$("#extra").addClass("extraExp");
 					document.getElementById("extra").style.height = "180vw";
 					$("#showextra").fadeOut();
 					$("#hideextra").fadeIn();
@@ -370,22 +371,20 @@ function extrabutton() {
 			});
 		});
 		$("#extraContent").fadeTo("fast",1);
-		$("html, body").animate({
-			scrollTop: $("#extra").offset().top
-		}, 500);
 		$("#charts").fadeIn(500);
 		firstload = 1;
 	} else {
 		$("#showextra").html("SHOW STATS");
 		if(extraswitch === 0) {
 			isChart = 1;
-			document.getElementById("extra").style.height = "180vw";
+			$("#extra").addClass("extraExp");
 			$("#showextra").fadeOut();
 			$("#hideextra").fadeIn();
 			$("#extraContent").fadeTo("fast",1);
 			extraswitch = 1;
 		} else {
 			myLineChart1.destroy();
+			$("#extra").removeClass("extraExp");
 			document.getElementById("extra").style.height = "15vh";
 			$("#showextra").fadeIn();
 			$("#hideextra").fadeOut(100);
