@@ -480,6 +480,12 @@ position:absolute;
 }
 #vids {
 	text-align:center;
+	width:5vw;
+	margin:1vw;
+	font-size:3vw;
+	border:0;
+	border-bottom:0.5vw solid rgb(229,45,39);
+	background-color:rgba(200,200,200,0.3);
 }
 a {text-decoration:none;}
 @media only screen and (max-width: 800px), screen and (orientation: portrait){
@@ -710,7 +716,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 					<td><span id="pubDate">Loading...</span></td>
 				</tr>
 			</table>
-			<p>Last <input type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
+			<p style="font-size:3vw;">Last <input type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
 			<div class="myChart-wrapper">
 				<canvas width="400" height="200" id="myChart2"></canvas>
 				<canvas width="400" height="200" id="myChart3"></canvas>

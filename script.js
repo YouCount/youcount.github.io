@@ -328,8 +328,9 @@ function extrabutton() {
 						labels: labels2,
 						datasets: [{
 							label: "Average Views",
-							borderColor: ["rgba(255,50,50,0.5)","rgba(50,255,50,0.5)"],
-							backgroundColor:["rgba(255,50,50,1)","rgba(50,255,50,1)"],
+							borderColor: ["rgba(0,0,255,1)","rgba(0,255,0,1)"],
+							backgroundColor:["rgba(50,50,255,0.2)","rgba(50,255,50,0.2)"],
+							hoverBackgroundColor:["rgba(0,0,255,1)","rgba(0,255,0,1)"],
 							data: data2
 						}]
 					};
@@ -346,8 +347,9 @@ function extrabutton() {
 						labels: labels3,
 						datasets: [{
 							label: "Total Views",
-							backgroundColor:"rgba(255,50,50,1)",
-							hoverBackgroundColor:"rgba(255,20,20,1)",
+							borderColor: ["rgba(0,0,255,1)","rgba(0,255,0,1)"],
+							backgroundColor:["rgba(50,50,255,0.2)","rgba(50,255,50,0.2)"],
+							hoverBackgroundColor:["rgba(0,0,255,1)","rgba(0,255,0,1)"],
 							data: data3
 						}]
 					};
@@ -406,7 +408,7 @@ function upCharts() {
 	for(i=vids;i<(vids*2);i++)sum2+=Number(views[i]);
 	myLineChart2.data.labels.splice(vids);
 	myLineChart2.data.datasets[0].data.splice(vids);
-	myLineChart2.data.datasets[0].label = "Views of last " + vids + "videos";
+	myLineChart2.data.datasets[0].label = "Views of last " + vids + " videos";
 	
 	var labels = ["last "+vids+" videos","last to last "+vids+" videos"];
 	
