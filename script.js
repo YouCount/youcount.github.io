@@ -92,7 +92,8 @@ $('.suggest').on("click", function() {
 	});
 });
 $('#logo').on("click", function() {
-	location.href = '/';
+	rawInput = preSelect[Math.floor(Math.random() * preSelect.length)];
+	queryName();
 });
 $('#showextra,#hideextra').on("click", function() {
 	extrabutton();

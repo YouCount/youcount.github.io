@@ -881,6 +881,7 @@ function queryName() {
 					for(var i=0; e.items[i]; i++){
 						var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
 						pushViews(url,i);
+						upCharts();
 					}
 					upCharts();
 				});
