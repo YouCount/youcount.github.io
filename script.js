@@ -273,9 +273,10 @@ function linkshare() {
 }
 var views = [];
 for(var l=0;l<50;l++)views[l]=50-l;
-function pushViews(url,i) {
+function pushViews(url,i,auto) {
 	getText(url, function(e) {
 		views[i] = e.items[0].statistics.viewCount;
+		if(auto=="auto"&&i==((vids*2)-1))upCharts();
 	});
 }
 //this is used to show/hide the chart. if the chart is loading for the first time (ie firstload=0) first the script of chart is downloaded and then it is loaded. 
