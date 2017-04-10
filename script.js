@@ -297,7 +297,6 @@ function extrabutton() {
 				$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 					isChart = 1;
 					$("#extra").addClass("extraExp");
-					document.getElementById("extra").style.height = "180vw";
 					$("#showextra").fadeOut();
 					$("#hideextra").fadeIn();
 					extraswitch = 1;
@@ -385,7 +384,6 @@ function extrabutton() {
 		} else {
 			myLineChart1.destroy();
 			$("#extra").removeClass("extraExp");
-			document.getElementById("extra").style.height = "15vh";
 			$("#showextra").fadeIn();
 			$("#hideextra").fadeOut(100);
 			$("#extraContent").fadeTo(0,0);
