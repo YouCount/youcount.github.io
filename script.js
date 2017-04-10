@@ -296,6 +296,7 @@ function extrabutton() {
 				}
 				$.getScript("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js", function() {
 					isChart = 1;
+					$("#extra").removeClass("extraCol");
 					$("#extra").addClass("extraExp");
 					$("#showextra").fadeOut();
 					$("#hideextra").fadeIn();
@@ -376,6 +377,7 @@ function extrabutton() {
 		$("#showextra").html("SHOW STATS");
 		if(extraswitch === 0) {
 			isChart = 1;
+			$("#extra").removeClass("extraCol");
 			$("#extra").addClass("extraExp");
 			$("#showextra").fadeOut();
 			$("#hideextra").fadeIn();
@@ -384,6 +386,7 @@ function extrabutton() {
 		} else {
 			myLineChart1.destroy();
 			$("#extra").removeClass("extraExp");
+			$("#extra").addClass("extraCol");
 			$("#showextra").fadeIn();
 			$("#hideextra").fadeOut(100);
 			$("#extraContent").fadeTo(0,0);
