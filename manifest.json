@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "short_name": "YouCount",
-  "name": "YouCount: YouTube® LIVE Subscriber Count",
+  "name": "YouCount",
   "icons": [
     {
       "src": "/apple-touch-icon-precomposed.png",
@@ -11,6 +11,6 @@
     }
   ],
   "theme_color": "#e52d27",
-  "background_color": "#FAFAFA",
+  "background_color": "#fafafa",
   "display": "standalone"
 }
