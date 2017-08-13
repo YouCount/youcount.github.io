@@ -3,11 +3,12 @@
   "name": "YouCount: YouTube® LIVE Subscriber Count",
   "icons": [
     {
-      "src": "apple-touch-icon-precomposed.png",
+      "src": "/apple-touch-icon-precomposed.png",
       "type": "image/png",
       "sizes": "196x196"
     }
   ],
   "theme_color": "#e52d27",
+  "background_color": "#FAFAFA",
   "display": "standalone",
 }
