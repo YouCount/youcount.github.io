@@ -290,7 +290,8 @@ document.getElementById('username').addEventListener('keyup', function() {
     function(e) {
       try {
         if(!e.items) {
-          throw new Error( "undef e.items in username keyup (script.js)");
+          noInternet( "undef e.items in username keyup (script.js)");
+          return;
         }
         if (e.pageInfo.totalResults < 1) {
           // if no result found, return
@@ -362,12 +363,14 @@ function extrabutton() {
     try {
       AJX(url, function(e) {
         if (!e.items[0].contentDetails.relatedPlaylists.uploads) {
-          throw new Error( "1. undef e.items[0].contentDetails.relatedPlaylists.uploads in extrabutton(script.js)");
+          noInternet( "1. undef e.items[0].contentDetails.relatedPlaylists.uploads in extrabutton(script.js)");
+          return;
         }
         var url2 = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + e.items[0].contentDetails.relatedPlaylists.uploads + '&maxResults=50&fields=items/snippet/resourceId/videoId&key=' + getKey();
         AJX(url2, function(e) {
           if (!e.items) {
-            throw new Error( "2. undef e.items in extrabutton(script.js)");
+            noInternet( "2. undef e.items in extrabutton(script.js)");
+            return;
           }
           for (var i = 0; e.items[i]; i ++) {
             var url3 = 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id=' + e.items[i].snippet.resourceId.videoId + '&fields=items/statistics/viewCount&key=' + getKey();
@@ -464,7 +467,8 @@ function extrabutton() {
             var url4 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&' + reqType + '=' + username + '&fields=items/statistics(videoCount,viewCount)&key=' + getKey();
             AJX(url4, function(b) {
               if (!b.items[0].statistics.videoCount || !b.items[0].statistics.viewCount) {
-                throw new Error( "3. undef b.items[0].statistics.videoCount or b.items[0].statistics.viewCount in extrabutton(script.js)");
+                noInternet( "3. undef b.items[0].statistics.videoCount or b.items[0].statistics.viewCount in extrabutton(script.js)");
+                return;
               }
               changeText(document.getElementById('totalVideos'), b.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
               changeText(document.getElementById('totalViews'), b.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
