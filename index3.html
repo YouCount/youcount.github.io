@@ -666,7 +666,9 @@ Select and copy the URL of this page below and use it to share this page anywher
 var APIkeys = ["AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U"];
 var username = '';
 var rawInput = username;
-var channelname,channeldate="", popstatevar = 1;
+var channelname;
+var channeldate = '';
+var popstatevar = 1;
 var keyIndex = Math.round(Math.random()*(APIkeys.length-1)),
 	isLoaded = 0,
 	seconds = 0;
@@ -674,6 +676,7 @@ var actualCount;
 var targets = [10, 25, 50, 1E2, 5E2, 1E3, 2.5E3, 5E3, 1E4, 2.5E4, 5E4, 1E5, 2.5E5, 5E5, 1E6, 2E6, 3E6, 4E6, 5E6, 6E6,7E6, 10E6, 15E6, 20E6, 25E6, 30E6, 40E6, 50E6, 70E6, 1E8, 1.5E8, 2E8, 3E8];
 var myLineChart1;
 var internet = 1;//change this to 1 when uploaded.
+const developmentMode = 1;
 //-----select APIkey randomly----
 function getKey() {
 	++keyIndex;
@@ -744,7 +747,10 @@ function getValue(value) {
     intervalId = setInterval(live, 1000);
 	queryName();
 }
-function noInternet() {
+function noInternet(e) {
+  if (developmentMode) {
+    console.log('noInternet:' + e);
+  } else{
     internet = 0;
     document.getElementById('actualCount').innerHTML ="No Internet";
     var arr = ["totalViews","totalVideos","pubDate","username"];
@@ -754,6 +760,7 @@ function noInternet() {
     document.getElementById('username').value = 'Refresh the page';
     document.getElementById('dp').style.display = 'none';
     clearInterval(intervalId);
+  }
 }
 /*
 function to:-
@@ -767,8 +774,7 @@ function queryName() {
     try {
     	AJX("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + encodeURIComponent(rawInput) + "&type=channel&maxResults=1&key=" + getKey(), function(e) {
             if(!e.items){
-                noInternet();
-                return;
+                throw "undef e.items in queryName";
             }
             if(e.pageInfo.totalResults < 1) {//if no result found, show not found and hide stuff
     			document.getElementById('actualCount').style.display = "none";
@@ -857,8 +863,8 @@ function queryName() {
     		*/
     		//ga("send","pageview",location.pathname);
     	}, noInternet);
-    } catch(e){
-        noInternet();
+    } catch (e){
+        noInternet(e);
     }
 }
 var isLive = 0, myLineChart1Data, prevCounts = [[0],[0],[0],[0],[0]]
@@ -869,8 +875,7 @@ function live() {
         AJX(url,  function(e) {
     		var prevCount = actualCount;
             if(!e.items || e.items[0].statistics.subscriberCount){
-                noInternet();
-                return;
+                throw "undef e.items or e.items[0].statistics.subscriberCount in live";
             } else {
                 actualCount = e.items[0].statistics.subscriberCount;//set actualCount to realtime subscribers
 
@@ -953,7 +958,7 @@ function live() {
 
     	}, noInternet);
     } catch (e) {
-        noInternet();
+        noInternet(e);
     }
 }
 
