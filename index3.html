@@ -286,6 +286,7 @@ label[for="username"] {
 }
 #dp {
 	height:8vw;
+  margin-right: 1vw;
   border-radius:4vw;
 	cursor:pointer;
 }
@@ -299,10 +300,9 @@ label[for="username"] {
   position: relative;
 }
 #input {
-	position:static;
   display: inline-block;
 	height:8vw;
-  margin-left:10px;
+  margin-left:1vw;
 	width:75%;
   overflow: hidden;
 	background-color:rgb(200,200,200);
@@ -351,7 +351,9 @@ border-bottom: 5px solid rgb(229,45,39);
 	left:0;
 	top:8vw;
 	z-index:400;
-	width:100%;
+	width:70vw;
+  left:50%;
+  transform: translate(-50%, 0);
 	display:none;
 	box-shadow:0 4px 10px -4px black;
 	list-style-type:none;
@@ -396,24 +398,11 @@ position: relative;
 }
 #extra {
 	font-weight:400;
-  padding-top:50px;
-  padding-bottom:50px;
-}
-#arrowCircle {
-	background-color:rgb(229,45,39);
-	width:4vw;
-	height:4vw;
-	margin-left:auto;
-	margin-right:auto;
-	border-radius:5vw;
-	cursor:pointer;
-	-webkit-transition:transform 0.5s;
-	-webkit-transition:-webkit-transform 0.5s;
-	transition:transform 0.5s;
+  padding-top:15px;
+  padding-bottom:15px;
 }
 #extraContent {
 	display: none;
-	height:auto;
 }
 #extra table {
 	border-collapse: collapse;
@@ -435,7 +424,6 @@ position: relative;
 }
 .myChart-wrapper {
 	width:80%;
-	height:auto;
 }
 #hideextra {
 	display:none;
@@ -502,25 +490,15 @@ a {text-decoration:none;}
 	#username:focus {
 	width:84%;
 	}
-	#extra, #arrowCircle {
-	width:10vw;
-	}
-	#arrowCircle {
-	height:10vw;
-	}
-	#arrow {
-	box-shadow:0.75vw 0.75vw white;
-	height:2.625vw;
-	width:2.625vw;
-	}
 	#username {
 	font-size:6vw;
 	}
-	#input,#dp {
+	#input, #dp {
 	height:12vw;
 	}
 	#suggest {
 	top:12vw;
+  width:87.5vw;
 	}
 	#input button {
 	width:12vw;
@@ -615,7 +593,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 	<section id="prime" class="card">
     <div id="topPrime">
   		<label for="username">
-  			<img id="dp" src="/images/pointer.png" alt="Channel Image">
+  			<img id="dp" src="/images/token.png" alt="Channel Image">
   		</label>
   		<div id="input">
   			<input type="text" id="username" placeholder="Search for a YouTube channel"  value="Loading..." onkeypress="trigenter(event)"/>
