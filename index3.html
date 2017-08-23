@@ -550,9 +550,6 @@ a {text-decoration:none;}
 	.myChart-wrapper {
 	width:95%;
 	}
-	#charts {
-	display:none !important;
-	}
 }
 </style>
 </head>
@@ -884,7 +881,7 @@ function queryName() {
     				AJX(url,  function(e) {
     					for(var i=0; e.items[i]; i++){
     						var url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + e.items[i].snippet.resourceId.videoId + "&fields=items/statistics/viewCount&key=" + getKey();
-    						pushViews(url,i,"auto");
+    						pushViews(url,i);
     					}
     				});
     			});
