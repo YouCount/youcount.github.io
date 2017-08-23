@@ -285,9 +285,10 @@ label[for="username"] {
   display: inline-block;
 }
 #dp {
+  display: none;
 	height:8vw;
   margin-right: 1vw;
-  border-radius:4vw;
+  border-radius:6vw; /*for both 8vw and 12vw sizes */
 	cursor:pointer;
 }
 #username,#input button{
@@ -301,6 +302,7 @@ label[for="username"] {
 }
 #input {
   display: inline-block;
+  position: relative;
 	height:8vw;
   margin-left:1vw;
 	width:75%;
@@ -351,7 +353,7 @@ border-bottom: 5px solid rgb(229,45,39);
 	left:0;
 	top:8vw;
 	z-index:400;
-	width:70vw;
+	width:70vw; /* 8vw + 1vw (margin) + 1vw (margin) + 75% of 80% */
   left:50%;
   transform: translate(-50%, 0);
 	display:none;
@@ -498,7 +500,7 @@ a {text-decoration:none;}
 	}
 	#suggest {
 	top:12vw;
-  width:87.5vw;
+  width:87.5vw; /* 12vw + 1vw (margin) + 1vw (margin) + 75% of 98% */
 	}
 	#input button {
 	width:12vw;
@@ -593,7 +595,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 	<section id="prime" class="card">
     <div id="topPrime">
   		<label for="username">
-  			<img id="dp" src="/images/token.png" alt="Channel Image">
+  			<img id="dp" alt="Channel Image">
   		</label>
   		<div id="input">
   			<input type="text" id="username" placeholder="Search for a YouTube channel"  value="Loading..." onkeypress="trigenter(event)"/>
@@ -693,9 +695,9 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     request.onreadystatechange = function() {
   		if(request.readyState == 4) {
   			if(request.status == 200) {
-  				success(JSON.parse(request.responseText));
+  				if(success)success(JSON.parse(request.responseText));
   			} else {
-          failure(request.statusText);
+          if(failure)failure(request.statusText);
         }
   		}
   	};
@@ -726,7 +728,6 @@ function getValueFromURL() {
   }
 }
 function getValue(value) {
-  console.log('getValue ran');
     if (!value)
         value = document.getElementById('username').value;
     value = value.trim();
@@ -867,7 +868,7 @@ function live() {
     try{
         AJX(url,  function(e) {
     		var prevCount = actualCount;
-            if(!e.items){
+            if(!e.items || e.items[0].statistics.subscriberCount){
                 noInternet();
                 return;
             } else {
@@ -997,13 +998,13 @@ function getScript(source,callback,prop,val) {//used to load jQuery (basically a
             if(!isAbort) { if(callback) callback(); }
         }
     };
-    script.src = source;
     if (prop&&val) {
       for(var a=0;a<prop.length;a++){
           if(prop[a])
       	   script[prop[a]]= val[a];
       }
     }
+    script.src = source;
 }
 window.onload = function() {
   getScript("js/script.js");
