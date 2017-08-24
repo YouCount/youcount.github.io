@@ -463,7 +463,7 @@ position: relative;
 	text-align:center;
 	width:5vw;
 	margin:1vw;
-	font-size:3vw;
+	font-size:25px;
 	border:0;
 	border-bottom:0.5vw solid rgb(229,45,39);
 	background-color:rgba(200,200,200,0.3);
@@ -974,23 +974,26 @@ function live() {
 
 //this code below, which is not inside any function, starts in the very beginning.
 
-//1. Check if iframe or http
-/*if (window.top !== window.self || window.top.location != window.self.location || window.location.hostname !='youcount.github.io' || window.top.location.hostname != 'youcount.github.io')
-	window.top.location = window.self.location;
-else if(window.location.protocol != "https:")
-	try {
-		window.location.protocol = "https:";
-	}
-	catch(err) {
-		window.location.protocol = "https";
-	}*/
-if(false);
-else {
-
-//2. code below is responsible for starting the processes in the beginning.
-getValueFromURL();
+if(!developmentMode) {
+  // 1. Check if iframe or http
+  if (window.top !== window.self || window.top.location != window.self.location) {
+  	window.top.location = window.self.location;
+  } else if(window.location.hostname != 'youcount.github.io' || window.top.location.hostname != 'youcount.github.io') {
+    window.location.hostname = 'youcount.github.io';
+  } else if (window.location.protocol != "https:") {
+  	try {
+  		window.location.protocol = "https:";
+  	} catch (err) {
+  		window.location.protocol = "https";
+  	}
+  } else {
+    // 2. this starts the processes in the beginning.
+    getValueFromURL();
+  }
+} else {
+  // 2. this starts the processes in the beginning.
+  getValueFromURL();
 }
-
 
 window.onpopstate = function() {
 	popstatevar = 0;
