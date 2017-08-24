@@ -230,7 +230,7 @@ ol li {
   font-family:Impact, Arial, sans-serif;
 }
 #bg1 p, #bg1 ol {
-  font-size:25px;
+  font-size:20px;
 	text-align:left;
 	margin-left:20px;
 	margin-right:20px;
@@ -238,6 +238,9 @@ ol li {
 #bg1 a {
   color:rgb(229,45,39);
   font-weight: 600;
+}
+#bg1 .extrabutton {
+  display: block;
 }
 #bg2 {
   display: none;
@@ -306,7 +309,6 @@ label[for="username"] {
 	height:8vw;
   margin-left:1vw;
 	width:75%;
-  overflow: hidden;
 	background-color:rgb(200,200,200);
 	-webkit-transition:background-color 0.25s;
 	transition:background-color 0.25s;
@@ -410,6 +412,9 @@ position: relative;
 	border-collapse: collapse;
 	font-size:2vw;
 	font-weight:100;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 #extra th, #extra td {
 	text-align: left;
@@ -426,10 +431,11 @@ position: relative;
 }
 .myChart-wrapper {
 	width:80%;
+  margin-left:auto;
+  margin-right:auto;
 }
 #hideextra {
 	display:none;
-	position:relative;
 }
 .extrabutton {
 	border:none;
@@ -441,6 +447,8 @@ position: relative;
 	width:15vw;
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-left:auto;
+  margin-right:auto;
   font-size: 18px;
 	border-radius:4px;
 	font-weight:900;
@@ -448,9 +456,8 @@ position: relative;
 	overflow:hidden;
 	z-index:2;
 }
-#hideextra, .myChart-wrapper {
-	margin-left:auto;
-	margin-right:auto;
+#vidsText {
+  font-size:25px;
 }
 #vids {
 	text-align:center;
@@ -573,7 +580,7 @@ Select and copy the URL of this page below and use it to share this page anywher
     </ol>
 		</p>
 		<p>Support the website by sharing it with your friends!</p>
-
+    <input type="button" class="extrabutton" value="How to Use" onclick="tutorial(0)">
   </div>
   <div id="codeArt">
     <h2>Embed This!</h2>
@@ -630,7 +637,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 				<span id="milestoneLeft">Loading...</span> left from <span id="milestoneTarget">Loading...</span>!
 			</span>
 			<br><br><br>
-			<table style="margin-left: auto; margin-right: auto; text-align: center;">
+			<table>
 				<tr>
 					<td>Total Views:</td>
 					<td><span id="totalViews">Loading...</span></td>
@@ -644,7 +651,7 @@ Select and copy the URL of this page below and use it to share this page anywher
 					<td><span id="pubDate">Loading...</span></td>
 				</tr>
 			</table>
-			<p style="font-size:3vw;">Last <input aria-label="Input box: Enter number of videos (1-25)" type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
+			<p id="vidsText">Last <input aria-label="Input box: Enter number of videos (1-25)" type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
 			<div class="myChart-wrapper">
 				<canvas width="400" height="200" id="myChart2"></canvas>
 				<canvas width="400" height="200" id="myChart3"></canvas>
