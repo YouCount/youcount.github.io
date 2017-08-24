@@ -700,6 +700,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   			if(request.status == 200) {
   				if(success)success(JSON.parse(request.responseText));
   			} else {
+          noInternet('AJX failed to load ' + url);
           if(failure)failure(request.statusText);
         }
   		}
@@ -864,7 +865,7 @@ function queryName() {
     		*/
     		//ga("send","pageview",location.pathname);
     	}, noInternet);
-    } catch (e){
+    } catch (e) {
         noInternet(e);
     }
 }
@@ -875,7 +876,7 @@ function live() {
     try{
         AJX(url,  function(e) {
     		var prevCount = actualCount;
-            if(!e.items || e.items[0].statistics.subscriberCount){
+            if(!e.items || !e.items[0].statistics.subscriberCount){
                 noInternet( "undef e.items or e.items[0].statistics.subscriberCount in live");
                 return;
             } else {
@@ -1003,6 +1004,7 @@ function getScript(source,callback,prop,val) {//used to load jQuery (basically a
             script = undefined;
 
             if(!isAbort) { if(callback) callback(); }
+            else noInternet('getScript failed to load' + source);
         }
     };
     if (prop&&val) {
