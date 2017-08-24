@@ -1,3 +1,11 @@
+var shareswitch = 0;
+var navState = [0, 0];
+var views = [];
+var extraswitch = 0;
+var myLineChart2;
+var myLineChart3;
+var myLineChart4;
+var vids = 5;
 // just to ensure that the correct page is loaded iframe and http is checked again
 /*
 if(window.top!==window.self||window.top.location!=window.self.location||window.location.hostname !='youcount.github.io' || window.top.location.hostname != 'youcount.github.io')
@@ -111,6 +119,7 @@ queryClickListener('.suggest', function(v) {
 });
 
 function tutorial(n) {
+  if(navState[0])handleNavButtons(navState[0]);
   if (!n) n = 0;
   isTutorialOn = 1;
   window.scrollTo(0, 0);
@@ -133,7 +142,7 @@ function tutorial(n) {
     case 2:
       document.getElementById('tutStep1').style.display = 'none';
       document.getElementById('tutStep2').style.display = 'block';
-      document.getElementById('suggest').style.zIndex = '1002';
+      document.getElementById('suggest').style.zIndex = '1003';
       bottom = (document.getElementById('suggest').getBoundingClientRect()).bottom;
       document.getElementById('tutorial').style.top = bottom + 55;
       document.getElementById('bg2').style.display = 'block';
@@ -157,7 +166,6 @@ if (isTutorialOn) tutorial();
 // After transition is over, shareswitch === 2. running the func again will do the opposite
 // When shareswitch === 1, it represents the transition, so the function will simply quit
 // Hence neither body nor button when clicked during transition won't be able to do anything
-var shareswitch = 0;
 function shareFunc(isButton) {
   var t = 200; // time in milliconds
   if (isButton !== true && shareswitch < 2) {
@@ -191,7 +199,7 @@ function shareFunc(isButton) {
   }
 }
 queryClickListener('body', shareFunc);
-var navState = [0, 0];
+
 function handleNavButtons(n) {
   if (navState[1]) return;
   if (navState[0]!=0) {
@@ -212,9 +220,11 @@ function handleNavButtons(n) {
     switch (navState[0]) {
       case 2:
         document.getElementById('helpArt').style.display = 'none';
+        document.querySelector('.navButtonsCover[data-child="helpButton"]').style.backgroundColor = 'transparent';
         break;
       case 3:
         document.getElementById('codeArt').style.display = 'none';
+        document.querySelector('.navButtonsCover[data-child="code"]').style.backgroundColor = 'transparent';
         break;
     }
   } else {
@@ -226,6 +236,7 @@ function handleNavButtons(n) {
         break;
       case 2:
         document.getElementById('bg1').classList.remove('ball');
+        document.querySelector('.navButtonsCover[data-child="helpButton"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
         setTimeout(function() {
           fx('helpArt').fadeIn(500);
           document.getElementById('bg1').style.height = 'auto';
@@ -238,6 +249,7 @@ function handleNavButtons(n) {
         break;
       case 3:
         document.getElementById('bg1').classList.remove('ball');
+        document.querySelector('.navButtonsCover[data-child="code"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
         setTimeout(function() {
           fx('codeArt').fadeIn(500);
           document.getElementById('bg1').style.height = 'auto';
@@ -338,7 +350,6 @@ function linkshare() {
   fx('pageUrl').fadeIn(250);
   fx('bg2').fadeIn(500);
 }
-var views = [];
 for (var l = 50; l > 0; l--)views.push(l);
 function pushViews(url, i) {
   AJX(url, function(e) {
@@ -349,11 +360,6 @@ function pushViews(url, i) {
 // this is used to show/hide the chart.
 // if the chart is loading for the first time (ie firstload=0),
 // first the script of chart is downloaded and then it is loaded.
-var extraswitch = 0;
-var myLineChart2;
-var myLineChart3;
-var myLineChart4;
-var vids = 5;
 function extrabutton() {
   if (firstload === 0) {
     if(!internet || notFound || isTutorialOn)return;
