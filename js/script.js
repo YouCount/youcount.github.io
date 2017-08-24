@@ -7,13 +7,20 @@ var myLineChart3;
 var myLineChart4;
 var vids = 5;
 // just to ensure that the correct page is loaded iframe and http is checked again
-/*
-if(window.top!==window.self||window.top.location!=window.self.location||window.location.hostname !='youcount.github.io' || window.top.location.hostname != 'youcount.github.io')
-window.top.location = window.self.location;
-if(window.location.protocol != 'https:')
-window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-*/
-// this is to hide email from spam bots
+if(!developmentMode) {
+  // 1. Check if iframe or http
+  if (window.top !== window.self || window.top.location != window.self.location) {
+  	window.top.location = window.self.location;
+  } else if(window.location.hostname != 'youcount.github.io' || window.top.location.hostname != 'youcount.github.io') {
+    window.location.hostname = 'youcount.github.io';
+  } else if (window.location.protocol != "https:") {
+  	try {
+  		window.location.protocol = "https:";
+  	} catch (err) {
+  		window.location.protocol = "https";
+  	}
+  }
+}
 // MISC FUNCTIONS
 // below, the ids are assigned their onclicks.
 function idClickListener(ele, func) {
@@ -70,6 +77,7 @@ function fx(str) {
   };
   return fx;
 }
+// this is to hide email from spam bots
 var emailParts = ['manas.khurana20', 'gmail', 'com', '&#46;', '&#64;'];
 document.getElementById('email').innerHTML = emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2];
 document.getElementById('email').href = 'mailto:' + document.getElementById('email').innerHTML;
