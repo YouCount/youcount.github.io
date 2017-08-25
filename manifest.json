@@ -3,14 +3,30 @@
   "version": "1.0.1",
   "short_name": "YouCount",
   "name": "YouCount",
+  "start_url": "/index.html",
   "icons": [
     {
       "src": "/apple-touch-icon-precomposed.png",
       "type": "image/png",
       "sizes": "196x196"
+    },
+    {
+      "src": "/images/logo-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/images/logo-384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/images/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "theme_color": "#e52d27",
+  "theme_color": "#e61919",
   "background_color": "#fafafa",
   "display": "standalone"
 }
