@@ -33,20 +33,6 @@ function queryName(){
 var isLive = 0,counts = [[]],intervals = [[2000],[3000],[5000],[10000],[30000],[120000]],recursions = [[7],[5],[3],[3],[4],[1]],r=0,level=1;
 for(var q=0;q<15;q++)counts[q]=0;
 function checkInt(count) {
-	/*if(time=1000){
-		if(c<9){
-			counts[c++] = count;
-		} else {
-			for(var i=0;i<9;i++)if(counts[i]!=count)break;
-			time=10000;
-		}
-	} else {
-		if(c<1){
-			count[c++]=count;
-		} else {
-			if(counts[0]!=count){time=1000;0}
-		}
-	}*/
 	if(counts[recursions[level]-2]!=0&&counts[0]==count)++level;
 	else if(counts[0]!=count&&counts[0]!=0&&level!=0)--level;
 	else {counts[r] = count; r++; return;}
