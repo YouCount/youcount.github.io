@@ -397,7 +397,7 @@ function trigenter(e) { // eslint-disable-line no-unused-vars
 function linkshare() {
   fx('pageUrl').fadeIn(250);
   fx('bg2').fadeIn(500);
-  if (!username) document.querySelector('#pageUrl input').value = 'https://youcount.github.io/';
+  if (!username || !location.hash.split('#!/')[1])document.querySelector('#pageUrl input').value = 'https://youcount.github.io/';
 }
 for (var l = 50; l > 0; l--)views.push(l);
 function pushViews(url, i) {
