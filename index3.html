@@ -774,8 +774,8 @@ function startAndPops() { // manage what happens in the very beginning and also 
 }
 function getValue(v) {
   var value;
-  if (!v) value = document.getElementById('username').value;
-  else value = v;
+  if (!v) value = document.getElementById('username').value.trim();
+  else value = v.trim();
   if (!internet) {
     document.getElementById('username').value = 'Refresh the page';
     return;
@@ -790,7 +790,6 @@ function getValue(v) {
   }
   changeText(document.getElementById('username'), 'Loading...');
   document.getElementById('username').blur();
-  value = value.trim();
   rawInput = value;
   queryName();
   intervalId = setInterval(live, 1000);
