@@ -790,14 +790,13 @@ function getValue(v) {
   }
   changeText(document.getElementById('username'), 'Loading...');
   document.getElementById('username').blur();
-  value = value.trim();
   rawInput = value;
   queryName();
   intervalId = setInterval(live, 1000);
 }
 function noConnection(eP) {
   if (developmentMode) {
-    var e;
+    var e = '';
     if (!eP) e = 'No error provided!';
     else e = eP;
     console.log('noConnection:' + e);
@@ -822,7 +821,7 @@ var isChart = 0;
 var notFound = 0;
 var firstload = 0;
 function queryName(query) {
-  var u;
+  var u = '';
   if (!query) u = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + encodeURIComponent(rawInput) + '&type=channel&maxResults=1&key=';
   else u = query;
   try {
