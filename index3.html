@@ -784,9 +784,10 @@ function getValue(v) {
   if (isTutorialOn) {
     try {
       tutorial(3);
-    } catch(err) {
+    } catch (err) {
       noConnection('queryName unable to call tutorial(3)');
     }
+  }
   changeText(document.getElementById('username'), 'Loading...');
   document.getElementById('username').blur();
   value = value.trim();
