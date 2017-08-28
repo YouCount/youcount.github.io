@@ -336,8 +336,9 @@ function usernameKeyUpFunc() {
         }// else
         // show results in suggestions
         var suggests = document.querySelectorAll('.suggest');
-        suggests.forEach(function (s) {
+        suggests.forEach(function (s, x) {
           s.style.display = 'block';
+          s.dataset.id = e.items[x].snippet.channelId.trim();
         });
         document.querySelectorAll('.suggest div').forEach(function (s, x) {
           try {
