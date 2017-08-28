@@ -81,6 +81,9 @@ document.getElementById('email').innerHTML = emailParts[0] + emailParts[4] + ema
 document.getElementById('email').href = 'mailto:' + document.getElementById('email').innerHTML;
 
 var clickList = [
+  ['inputButton', function () {
+    getValue();// called like this because addEventListener by default does not send empty parameter.
+  }],
   ['fb', function () {
     window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.querySelector('#pageUrl input').getAttribute('value')), '_blank');
   }],
@@ -113,7 +116,6 @@ clickList.forEach(function (e) {
 //
 // only for single ids is a separate function created because getElementById is faster than
 // querySelectorAll and there are a lot of single ids being assigned onclicks.
-queryClickListener('#input button', getValue);
 queryClickListener('.suggest', function (v) {
   if (v.target.dataset.id) {
     username = v.target.dataset.id;
