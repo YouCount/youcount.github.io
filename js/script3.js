@@ -165,6 +165,7 @@ function tutorial(p) {
     document.getElementById('bg2').style.display = 'none';
     document.getElementById('input').style.zIndex = '50';
     document.getElementById('suggest').style.zIndex = '51';
+    document.getElementById('username').value = channelname;
     isTutorialOn = 0;
     break;
   default:
@@ -396,6 +397,7 @@ function trigenter(e) { // eslint-disable-line no-unused-vars
 function linkshare() {
   fx('pageUrl').fadeIn(250);
   fx('bg2').fadeIn(500);
+  if (!username) document.querySelector('#pageUrl input').value = 'https://youcount.github.io/';
 }
 for (var l = 50; l > 0; l--)views.push(l);
 function pushViews(url, i) {
