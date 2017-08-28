@@ -292,12 +292,12 @@ document.getElementById('username').addEventListener('focusin', function () {
     tutorial(1);
   }
   document.getElementById('username').select();
-  document.getElementById('inputButton').display = 'block';
+  document.getElementById('inputButton').style.display = 'block';
 });
 document.getElementById('username').addEventListener('focusout', function () {
   setTimeout(function () {
     document.getElementById('suggest').style.display = 'none';
-    document.getElementById('inputButton').display = 'none';
+    document.getElementById('inputButton').style.display = 'none';
     if (usernameKeyUp[0]) {
       clearInterval(usernameKeyUpInter);
       usernameKeyUp = [false, false];
