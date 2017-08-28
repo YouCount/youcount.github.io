@@ -410,7 +410,8 @@ function pushViews(url, i) {
 // if the chart is loading for the first time (ie firstload=0),
 // first the script of chart is downloaded and then it is loaded.
 function extrabutton() {
-  if (firstload === 0) {
+  if (!username) tutorial();
+  else if (firstload === 0) {
     if (!internet || notFound || isTutorialOn) return;
     document.getElementById('showextra').innerHTML = 'LOADING...';
     var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() === 'UC') ? 'id' : 'forUsername';
