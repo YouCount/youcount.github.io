@@ -436,6 +436,9 @@ function extrabutton() {
             isChart = 1;
             fx('showextra').fadeOut();
             fx('hideextra').fadeIn();
+            setTimeout(function () {
+              document.getElementById('extraContent').style.display = 'block';
+            }, 400);
             extraswitch = 1;
 
             var data1 = [];
@@ -536,9 +539,6 @@ function extrabutton() {
     } catch (e) {
       noConnection(e);
     }
-    setTimeout(function () {
-      document.getElementById('extraContent').style.display = 'block';
-    }, 250);
     firstload = 1;
   } else {
     document.getElementById('showextra').innerHTML = 'SHOW STATS';
@@ -548,7 +548,7 @@ function extrabutton() {
       fx('hideextra').fadeIn();
       setTimeout(function () {
         document.getElementById('extraContent').style.display = 'block';
-      });
+      }, 400);
       extraswitch = 1;
     } else {
       myLineChart1.destroy();
@@ -556,7 +556,7 @@ function extrabutton() {
       fx('hideextra').fadeOut(100);
       setTimeout(function () {
         document.getElementById('extraContent').style.display = 'none';
-      });
+      }, 400);
       extraswitch = 0;
       isChart = 0;
     }
