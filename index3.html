@@ -375,7 +375,7 @@ width:90%;
 box-shadow: inset 0 -5px 0 0 rgb(230,25,25);
 }
 #username:focus ~ #inputButton {
-    opacity:1;
+    display: block;
 }
 #suggest {
   position:absolute;
@@ -1069,11 +1069,13 @@ function getScript(source, callback, prop, val) {// used to load jQuery (basical
   script.src = source;
 }
 window.onload = function () {
-  getScript('js/script.js');
   if (!developmentMode) {
+    getScript('js/script.js');
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
     }
+  } else {
+    getScript('js/script3.js');
   }
 };
 </script>
