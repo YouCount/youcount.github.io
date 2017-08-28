@@ -781,7 +781,12 @@ function getValue(v) {
     return;
   }
   if (!value || value === 'Not Found!' || value === 'Loading...' || value === 'Refresh the page') return;
-  if (isTutorialOn) tutorial(3);
+  if (isTutorialOn) {
+    try {
+      tutorial(3);
+    } catch(err) {
+      noConnection('queryName unable to call tutorial(3)');
+    }
   changeText(document.getElementById('username'), 'Loading...');
   document.getElementById('username').blur();
   value = value.trim();
@@ -848,7 +853,7 @@ function queryName(query) {
       document.getElementById('dp').style.display = 'block';
       document.getElementById('extra').style.display = 'block';
       // if tutorial is on, disable it (happens when clicked on suggest as getvalue is not called)
-      tutorial(3);
+      if (isTutorialOn) tutorial(3);
       // set channel name in input box and title
       channelname = e.items[0].snippet.title;
       changeText(document.getElementById('username'), channelname);
