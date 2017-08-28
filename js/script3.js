@@ -435,10 +435,8 @@ function extrabutton() {
           getScript('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js', function () {
             isChart = 1;
             fx('showextra').fadeOut();
-            fx('hideextra').fadeIn();
-            setTimeout(function () {
-              document.getElementById('extraContent').style.display = 'block';
-            }, 400);
+            document.getElementById('hideextra').style.display = 'block';
+            document.getElementById('extraContent').style.display = 'block';
             extraswitch = 1;
 
             var data1 = [];
@@ -546,17 +544,13 @@ function extrabutton() {
       isChart = 1;
       fx('showextra').fadeOut();
       fx('hideextra').fadeIn();
-      setTimeout(function () {
-        document.getElementById('extraContent').style.display = 'block';
-      }, 400);
+      document.getElementById('extraContent').style.display = 'block';
       extraswitch = 1;
     } else {
       myLineChart1.destroy();
       fx('showextra').fadeIn();
       fx('hideextra').fadeOut(100);
-      setTimeout(function () {
-        document.getElementById('extraContent').style.display = 'none';
-      }, 400);
+      document.getElementById('extraContent').style.display = 'none';
       extraswitch = 0;
       isChart = 0;
     }
