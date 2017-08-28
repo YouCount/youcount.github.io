@@ -314,8 +314,7 @@ label[for="username"] {
   border-radius:6vw; /*for both 8vw and 12vw sizes */
   cursor:pointer;
 }
-#username,#input button{
-
+#username,#input button {
   border:none;
   outline:none;
 }
@@ -344,6 +343,7 @@ label[for="username"] {
   float: right;
   display:none;
   padding: 0;
+  opacity: 0;
 }
 #username {
   color:black;
@@ -375,7 +375,7 @@ width:90%;
 box-shadow: inset 0 -5px 0 0 rgb(230,25,25);
 }
 #username:focus ~ #inputButton {
-    display: block;
+    opacity: 1;
 }
 #suggest {
   position:absolute;
