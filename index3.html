@@ -57,6 +57,7 @@ body {
   font-family: Arial, sans-serif;
   outline:none;
   margin:0;
+  overflow-x: hidden;
   -webkit-tap-highlight-color:rgba(0,0,0,0);
   -webkit-transition: background-color 0.5s linear;
   transition: background-color 0.5s linear;
@@ -219,12 +220,12 @@ ol li {
   padding-bottom: 5px;
 }
 .ball {
-  display:none;
   -webkit-transform: translate(100%, -100%);
   transform: translate(100%, -100%);
   opacity: 0;
 }
 #bg1 {
+  display: block;
   overflow-x: hidden;
   -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
