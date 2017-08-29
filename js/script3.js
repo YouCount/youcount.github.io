@@ -448,7 +448,7 @@ function extrabutton() {
             var myLineChart2Data = {
               labels: labels1,
               datasets: [{
-                label: 'Views of last' + vids + ' videos',
+                label: 'Views of last ' + vids + ' videos',
                 fill: false,
                 borderColor: 'rgba(255,50,50,0.5)',
                 pointBorderColor: 'rgba(255,50,50,0.5)',
@@ -500,7 +500,7 @@ function extrabutton() {
               maintainAspectRatio: false
             });
             var data3 = [totviews[0], totviews[1]];
-            var labels3 = ['last' + vids + ' videos (total views)', 'last to last ' + vids + ' videos (total views)'];
+            var labels3 = ['last ' + vids + ' videos (total views)', 'last to last ' + vids + ' videos (total views)'];
             var myLineChart4Data = {
               labels: labels3,
               datasets: [{
@@ -535,6 +535,7 @@ function extrabutton() {
         noConnection('1. extrabutton no response from ajx (script.js)');
       });
     } catch (e) {
+      upCharts();
       noConnection(e);
     }
     firstload = 1;
