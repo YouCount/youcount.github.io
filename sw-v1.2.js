@@ -5,20 +5,27 @@ var urlsToCache = [
   '/images/social.png',
   '/js/script.js'
 ];
-self.addEventListener('install', function (event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function (cache) {
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
+function retrieve(event) {
+  if (event) {
+    event.waitUntil(
+      caches.open(CACHE_NAME)
+        .then(function (cache) {
+          return cache.addAll(urlsToCache);
+        })
+    );
+  } else {
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache.addAll(urlsToCache);
+    });
+  }
+}
+self.addEventListener('install', retrieve(event));
 self.addEventListener('fetch', function (event) {
   try {
     event.respondWith(
       caches.match(event.request)
         .then(function (response) {
+          retrieve();
           if (response) {
             return response;
           }
