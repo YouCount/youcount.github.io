@@ -257,7 +257,7 @@ function handleNavButtons(n) {
       document.getElementById('bg1').classList.remove('ball');
       document.querySelector('.navButtonsCover[data-child="helpButton"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
       setTimeout(function () {
-        fx('helpArt').fadeIn(500);
+        fx('helpArt').fadeIn(200);
         document.getElementById('bg1').style.height = 'auto';
         document.getElementById('mainPage').style.display = 'none';
       }, 500);
@@ -270,7 +270,7 @@ function handleNavButtons(n) {
       document.getElementById('bg1').classList.remove('ball');
       document.querySelector('.navButtonsCover[data-child="code"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
       setTimeout(function () {
-        fx('codeArt').fadeIn(500);
+        fx('codeArt').fadeIn(200);
         document.getElementById('bg1').style.height = 'auto';
         document.getElementById('mainPage').style.display = 'none';
       }, 500);
