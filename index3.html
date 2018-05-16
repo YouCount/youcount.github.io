@@ -552,13 +552,13 @@ a {text-decoration:none;}
     <div class="navButtonsCover" data-child="logo" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
         <div id="logo" class="navButtons" alt="YouCount Logo/Homepage"></div>
     </div>
-    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
+    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(4)})()">
         <div id="share" class="navButtons" alt="Share button"></div>
     </div>
-    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
+    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(3)})()">
         <div id="code" class="navButtons" alt="Get YouCount embed or widget"></div>
     </div>
-    <div class="navButtonsCover" data-child="helpButton" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
+    <div class="navButtonsCover" data-child="helpButton" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(2)})()">
         <div id="helpButton" class="navButtons" alt="Help button"></div>
     </div>
       <ul id="sharebox">
@@ -1074,7 +1074,6 @@ document.getElementById('username').addEventListener('focusout', function () {
     document.getElementById('suggest').style.display = 'none';
     document.getElementById('inputButton').style.display = 'none';
     if (typeof(usernameKeyUp)!=='undefined' && usernameKeyUp[0]) {//shortcircuiting AND in case usernameKeyUp is not defined.
-      console.log('aa');
         clearInterval(usernameKeyUpInter);
       usernameKeyUp = [false, false];
     }
