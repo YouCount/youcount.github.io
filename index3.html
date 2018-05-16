@@ -1080,6 +1080,8 @@ document.getElementById('username').addEventListener('focusout', function () {
     }
   }, 200);
 });
+
+// this allows inputting of value using enter.
 function trigenter(e) { // eslint-disable-line no-unused-vars
   if (e.keyCode === 13) {
     getValue();
@@ -1113,7 +1115,7 @@ window.onload = function () {
       navigator.serviceWorker.register('/sw.js');
     }
   } else {
-    getScript('js/script32.js');
+    getScript('js/script3.js');
   }
 };
 </script>
