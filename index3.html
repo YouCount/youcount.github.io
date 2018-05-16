@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,7 +129,8 @@ margin-bottom:5px;
 border-radius:50%;
 cursor:pointer;
 display:none;
-background-image: url(/images/social.png);
+/*background-image: url(/images/social.png);*/
+/*This is done at the end of script3.js so image is downloaded at the very last.*/
 }
 #tw {
 background-position: -50px 0;
@@ -547,16 +549,16 @@ a {text-decoration:none;}
 </head>
 <body>
 <section id="menu">
-    <div class="navButtonsCover" data-child="logo" onClick="handleNavButtons(1)">
+    <div class="navButtonsCover" data-child="logo" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
         <div id="logo" class="navButtons" alt="YouCount Logo/Homepage"></div>
     </div>
-    <div class="navButtonsCover" data-child="share" onClick="handleNavButtons(4)">
+    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
         <div id="share" class="navButtons" alt="Share button"></div>
     </div>
-    <div class="navButtonsCover" data-child="code" onClick="handleNavButtons(3)">
+    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
         <div id="code" class="navButtons" alt="Get YouCount embed or widget"></div>
     </div>
-    <div class="navButtonsCover" data-child="helpButton" onClick="handleNavButtons(2)">
+    <div class="navButtonsCover" data-child="helpButton" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
         <div id="helpButton" class="navButtons" alt="Help button"></div>
     </div>
       <ul id="sharebox">
@@ -719,10 +721,9 @@ function getKey() {
 }
 // ------ Assigns forEach to NodeList if not already available (minimum requirement  = ES5)------
 if (window.NodeList && !NodeList.prototype.forEach) {
-  NodeList.prototype.forEach = function (callback, thisArg) {
-    var t = thisArg || window;
+  NodeList.prototype.forEach = function (callback, thisArg = window) {
     for (var i = 0; i < this.length; i++) {
-      callback.call(t, this[i], i, this);
+      callback.call(thisArg, this[i], i, this);
     }
   };
 }
@@ -734,7 +735,7 @@ function ajx(url, success, failure) {
       if (request.status === 200) {
         if (success)success(JSON.parse(request.responseText));
       } else {
-        noConnection('ajx failed to load ' + url);
+        noConnection('ajx failed to load: ' + url, true);
         if (failure)failure(request.statusText);
       }
     }
@@ -753,7 +754,7 @@ function changeText(elem, changeVal) {
 
 // --------MAIN PROGRAM---------
 // ----receives value inputted by user and sends it while input box is starts showing 'Loading...'----
-var isTutorialOn = 0;
+var isTutorialOn = [0,0];
 function startAndPops() { // manage what happens in the very beginning and also on popstate
   if (location.hash.split('#!/')[1]) {// if something is there after #!/, make that the search query else set page as homepage.
     if (isBackPressed) {
@@ -770,20 +771,17 @@ function startAndPops() { // manage what happens in the very beginning and also 
     try {
       tutorial();
     } catch (e) {
-      isTutorialOn = 1;
+      isTutorialOn[0] = 1;
     }
   }
 }
-function getValue(v) {
-  var value = '';
-  if (!v) value = document.getElementById('username').value;
-  else value = v;
+function getValue(value = document.getElementById('username').value) {
   if (!internet) {
     document.getElementById('username').value = 'Refresh the page';
     return;
   }
   if (!value || value === 'Not Found!' || value === 'Loading...' || value === 'Refresh the page') return;
-  if (isTutorialOn) {
+  if (isTutorialOn[0]) {
     try {
       tutorial(3);
     } catch (err) {
@@ -796,13 +794,10 @@ function getValue(v) {
   queryName();
   intervalId = setInterval(live, 1000);
 }
-function noConnection(eP) {
+function noConnection(e = 'No error provided!', noStop = false) {
   if (developmentMode) {
-    var e = '';
-    if (!eP) e = 'No error provided!';
-    else e = eP;
     console.log('noConnection:' + e);
-  } else {
+  } else if(!noStop) {
     internet = 0;
     document.getElementById('actualCount').innerHTML = 'No Internet';
     var arr = ['totalViews', 'totalVideos', 'pubDate', 'username'];
@@ -855,7 +850,7 @@ function queryName(query) {
       document.getElementById('dp').style.display = 'block';
       document.getElementById('extra').style.display = 'block';
       // if tutorial is on, disable it (happens when clicked on suggest as getvalue is not called)
-      if (isTutorialOn) tutorial(3);
+      if (isTutorialOn[0]) tutorial(3);
       // set channel name in input box and title
       channelname = e.items[0].snippet.title;
       changeText(document.getElementById('username'), channelname);
@@ -945,7 +940,7 @@ function live() {
     ajx(url,  function (e) {
       var prevCount = actualCount;
       if (!e.items || !e.items[0].statistics.subscriberCount) {
-        noConnection( 'undef e.items or e.items[0].statistics.subscriberCount in live');
+        noConnection( 'undef e.items or e.items[0].statistics.subscriberCount in live', true);
       } else {
         actualCount = e.items[0].statistics.subscriberCount;// set actualCount to realtime subscribers
 
@@ -1025,10 +1020,10 @@ function live() {
         }
       }
     }, function () {
-      noConnection('live no response from ajx');
+      noConnection('live no response from ajx', true);
     });
   } catch (e) {
-    noConnection(e);
+    noConnection(e, true);
   }
 }
 
@@ -1055,6 +1050,42 @@ window.onpopstate = function () {
   startAndPops();
 };
 // --------MAIN PROGRAM ENDS---------
+// --------OTHER PROGRAMS------------
+
+// Only one program atm is used because it gives very basic functionality,
+// which makes input work properly if the script doesn't load. The rest is supposed to be in the other script.
+
+// this thing gives the search box it's effects (material design thing + fading in search button)
+// when it is clicked or focussed upon and effectively hides them as well.
+
+tutorial=undefined;//to circumvent automatic assignment of tutorial to document.getElementById('tutorial'),
+//until it is defined as a function; goog: 'global variables id'
+
+document.getElementById('username').addEventListener('focusin', function () {
+  if (isTutorialOn[0] && tutorial) {
+    document.getElementById('username').value = '';
+    tutorial(1);
+  }
+  document.getElementById('username').select();
+  document.getElementById('inputButton').style.display = 'block';
+});
+document.getElementById('username').addEventListener('focusout', function () {
+  setTimeout(function () {
+    document.getElementById('suggest').style.display = 'none';
+    document.getElementById('inputButton').style.display = 'none';
+    if (typeof(usernameKeyUp)!=='undefined' && usernameKeyUp[0]) {//shortcircuiting AND in case usernameKeyUp is not defined.
+      console.log('aa');
+        clearInterval(usernameKeyUpInter);
+      usernameKeyUp = [false, false];
+    }
+  }, 200);
+});
+function trigenter(e) { // eslint-disable-line no-unused-vars
+  if (e.keyCode === 13) {
+    getValue();
+  }
+}
+// --------OTHER PROGRAMS END------------
 function getScript(source, callback, prop, val) {// used to load jQuery (basically a replacement for $.getScript)
   var script = document.createElement('script');
   var prior = document.getElementsByTagName('script')[0];
@@ -1082,7 +1113,7 @@ window.onload = function () {
       navigator.serviceWorker.register('/sw.js');
     }
   } else {
-    getScript('js/script3.js');
+    getScript('js/script32.js');
   }
 };
 </script>
