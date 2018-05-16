@@ -4,9 +4,9 @@ var shareswitch = 0;
 var navState = [0, 0];
 var views = [];
 var extraswitch = 0;
-var myLineChart2;
-var myLineChart3;
-var myLineChart4;
+var myLineChart2 = {};
+var myLineChart3 = {};
+var myLineChart4 = {};
 var vids = 5;
 // just to ensure that the correct page is loaded iframe and http is checked again
 if (!developmentMode) {
@@ -505,6 +505,8 @@ function extrabutton() {
               changeText(document.getElementById('totalVideos'), b.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
               changeText(document.getElementById('totalViews'), b.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
             });
+            firstload = 1;
+            upCharts();
           });
         });
       }, function () {
@@ -513,8 +515,6 @@ function extrabutton() {
     } catch (e) {
       noConnection(e);
     }
-    firstload = 1;
-    upCharts();
   } else {
     document.getElementById('showextra').innerHTML = 'SHOW STATS';
     if (extraswitch === 0) {
