@@ -514,6 +514,7 @@ function extrabutton() {
       noConnection(e);
     }
     firstload = 1;
+    upCharts();
   } else {
     document.getElementById('showextra').innerHTML = 'SHOW STATS';
     if (extraswitch === 0) {
@@ -534,8 +535,15 @@ function extrabutton() {
 }
 
 function upCharts() {
-  if (Number(document.getElementById('vids').value) > 25) return;
+  if (!firstload) {
+    noConnection('upCharts was called before firstload==1', true);
+    return;
+  }
   vids = Number(document.getElementById('vids').value);
+  if (vids > 25) {
+    document.getElementById('vids') = vids = 25;
+
+  }
   var sum1 = 0;
   var sum2 = 0;
   for (var i = 0; i < vids; i++) {
