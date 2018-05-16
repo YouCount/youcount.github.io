@@ -43,10 +43,7 @@ function fx(str) {
       }, 50 * (i + 1));
     }
   };
-  fx.fadeIn = function (ti) {
-    var t;
-    if (!ti) t = 400;
-    else t = ti;
+  fx.fadeIn = function (t = 400) {
     parts = t / 50;
     if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') {
       if (ele.dataset.fxDisplay)ele.style.display = ele.dataset.fxDisplay;
@@ -56,10 +53,7 @@ function fx(str) {
       fx.transition(0, op, 1, function (v) {ele.style.opacity = v; }, t);
     }
   };
-  fx.fadeOut = function (ti) {
-    var t;
-    if (!ti) t = 400;
-    else t = ti;
+  fx.fadeOut = function (t = 400) {
     parts = t / 50;
     if (window.getComputedStyle(ele).getPropertyValue('display') !== 'none') {
       ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
@@ -101,7 +95,7 @@ var clickList = [
   }],
   ['link', linkshare],
   ['bg2', function () {
-    if (isTutorialOn) {
+    if (isTutorialOn[0]) {
       tutorial(3);
     } else {
       fx('pageUrl').fadeOut(250);
@@ -127,12 +121,10 @@ queryClickListener('.suggest', function (v) {
   idClickListener(e, extrabutton);
 });
 
-function tutorial(p) {
+function tutorial(n = 0) {
   if (navState[0])handleNavButtons(navState[0]);
-  var n;
-  if (!p) n = 0;
-  else n = p;
-  isTutorialOn = 1;
+  isTutorialOn[0] = 1;
+  isTutorialOn[1] = n+1;
   window.scrollTo(0, 0);
   var bottom = 0;
   switch (n) {
@@ -145,6 +137,13 @@ function tutorial(p) {
     document.getElementById('bg2').style.display = 'block';
     document.getElementById('tutStep1').style.display = 'block';
     document.getElementById('tutStep2').style.display = 'none';
+    if(!isLive) document.getElementById('actualCount').innerHTML='Tutorial'
+    //when clicking on 'Click Here', the username is automatically focussed.
+    document.getElementById('tutorial').addEventListener('click',function(){
+      if(isTutorialOn[1]===1)
+        document.getElementById('username').focus();
+    });
+
     break;
   case 1:
     document.getElementById('tutStep1').style.display = 'none';
@@ -166,14 +165,17 @@ function tutorial(p) {
     document.getElementById('input').style.zIndex = '50';
     document.getElementById('suggest').style.zIndex = '51';
     document.getElementById('username').value = channelname;
-    isTutorialOn = 0;
+    isTutorialOn[0] = 0;
+    isTutorialOn[1] = 0;
     break;
   default:
+    isTutorialOn[0] = 0;
+    isTutorialOn[1] = 0;
     break;
   }
 }
 
-if (isTutorialOn) tutorial();
+if (isTutorialOn[0]) tutorial();
 
 // this function gives the share button its clicking function.
 // if the button is clicked (ie shareswitch === 0),
@@ -287,26 +289,6 @@ function handleNavButtons(n) {
     }
   }
 }
-// this thing gives the search box it's effects (material design thing + fading in search button)
-// when it is clicked or focussed upon and effectively hides them as well.
-document.getElementById('username').addEventListener('focusin', function () {
-  if (isTutorialOn) {
-    document.getElementById('username').value = '';
-    tutorial(1);
-  }
-  document.getElementById('username').select();
-  document.getElementById('inputButton').style.display = 'block';
-});
-document.getElementById('username').addEventListener('focusout', function () {
-  setTimeout(function () {
-    document.getElementById('suggest').style.display = 'none';
-    document.getElementById('inputButton').style.display = 'none';
-    if (usernameKeyUp[0]) {
-      clearInterval(usernameKeyUpInter);
-      usernameKeyUp = [false, false];
-    }
-  }, 200);
-});
 
 var usernameKeyUp = [false, false];
 // eslint-disable-next-line no-unused-vars
@@ -321,7 +303,7 @@ function usernameKeyUpFunc() {
     document.getElementById('suggest').style.display = 'none';
     clearInterval(usernameKeyUpInter);
     usernameKeyUp = [false, false];
-    if (isTutorialOn) {
+    if (isTutorialOn[0]) {
       tutorial(1);
     }
     return;
@@ -330,7 +312,7 @@ function usernameKeyUpFunc() {
     function (e) {
       try {
         if (!e.items) {
-          noConnection('undef e.items in username keyup (script.js)');
+          noConnection('undef e.items in username keyup (script.js)', true);
           return;
         }
         if (e.pageInfo.totalResults < 1) {
@@ -360,10 +342,10 @@ function usernameKeyUpFunc() {
           }
         });
       } catch (err) {
-        noConnection(err);
+        noConnection(err, true);
       }
     }, function () {
-      noConnection('username keyup no ajx response (script.js)');
+      noConnection('username keyup no ajx response (script.js)', true);
     });
 }
 document.getElementById('username').addEventListener('keyup', function () {
@@ -372,7 +354,7 @@ document.getElementById('username').addEventListener('keyup', function () {
     usernameKeyUp[1] = true;
     document.getElementById('suggest').style.display = 'block';
 
-    if (isTutorialOn) {
+    if (isTutorialOn[0]) {
       tutorial(2);
     }
 
@@ -412,7 +394,7 @@ function pushViews(url, i) {
 function extrabutton() {
   if (!username) tutorial();
   else if (firstload === 0) {
-    if (!internet || notFound || isTutorialOn) return;
+    if (!internet || notFound || isTutorialOn[0]) return;
     document.getElementById('showextra').innerHTML = 'LOADING...';
     var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() === 'UC') ? 'id' : 'forUsername';
     var url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' + reqType + '=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
@@ -585,13 +567,19 @@ function upCharts() {
   myLineChart3.update();
   myLineChart4.update();
 }
-
-// images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
 if (internet) {
+  //downloads social and assigns it as background at the end.
+  document.querySelectorAll('.share').forEach(function(e){
+    e.style.backgroundImage = 'url(/images/social.png)';
+  });
+  // images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
+  /*
   var images = document.getElementsByTagName('img');
   for (var pl = 0; pl < images.length; pl++) {
     if (!images[pl].src && images[pl].id && images[pl].id !== 'dp') {
       images[pl].src = '/images/' + images[pl].id + '.png';
     }
+  
   }
+  */
 }
