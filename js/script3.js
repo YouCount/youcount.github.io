@@ -368,12 +368,6 @@ document.getElementById('username').addEventListener('keyup', function () {
     usernameKeyUp[1] = true;
   }
 });
-// this allows inputting of value using enter.
-function trigenter(e) { // eslint-disable-line no-unused-vars
-  if (e.keyCode === 13) {
-    getValue();
-  }
-}
 
 // this shows/hides the sharable link of the page.
 function linkshare() {
@@ -517,7 +511,6 @@ function extrabutton() {
         noConnection('1. extrabutton no response from ajx (script.js)');
       });
     } catch (e) {
-      upCharts();
       noConnection(e);
     }
     firstload = 1;
