@@ -837,7 +837,7 @@ var isChart = 0;
 var notFound = 0;
 var firstload = 0;
 function queryName(query) {
-  var qType = 'q'
+  var qType = 'q';
   if (rawInput.slice(0, 2).toUpperCase()==='UC' && rawInput.length===24) qType = 'id';//change query type to id if rawinput is id.
   var u = '';
   if (!query) u = 'https://www.googleapis.com/youtube/v3/search?part=snippet&'+qType+'=' + encodeURIComponent(rawInput) + '&fields=items/snippet&type=channel&maxResults=1&key=';
@@ -848,7 +848,7 @@ function queryName(query) {
         noConnection( 'undef e.items in queryName');
         return;
       }
-      if (!query && e.pageInfo.totalResults < 1) {// if no result found and queryName not called by suggests (!query)
+      if (!query && !e.items[0].snippet.channelId.trim()) {// if no result found and queryName not called by suggests (!query)
         //, show not found and hide stuff 
         changeText('username','Not Found!');
         document.getElementById('actualCount').style.display = 'none';
