@@ -750,7 +750,7 @@ function changeText(elem, changeVal) {
   if (typeof(elem)==='string') {
     elem = document.getElementById(elem);
   }
-  if ('form' in elem) {
+  if (elem.nodeName.toUpperCase()==='INPUT') {
     elem.value = String(changeVal).trim();
   } else {
     elem.textContent = String(changeVal).trim();
@@ -761,7 +761,7 @@ function getText(elem) {
   if (typeof(elem)==='string') {
     elem = document.getElementById(elem);
   }
-  if ('form' in elem) {
+  if (elem.nodeName.toUpperCase()==='INPUT') {
     return String(elem.value).trim();
   } else {
     return String(elem.textContent).trim();
