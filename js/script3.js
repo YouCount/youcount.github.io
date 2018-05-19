@@ -113,7 +113,7 @@ clickList.forEach(function (e) {
 queryClickListener('.suggest', function (v) {
   if (v.target.dataset.id && ['Loading.','Loading..','Loading...'].indexOf(v.target.innerHTML) === -1) {
     username = v.target.dataset.id;
-    var send = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + v.target.dataset.id + '&fields=items/snippet&key=';
+    var send = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + v.target.dataset.id + '&fields=items/snippet&type=channel&maxResults=1&key=';
     
     // if tutorial is on, disable it (as getvalue is not called)
     if (isTutorialOn[0]) tutorial(3);
@@ -456,8 +456,7 @@ function extrabutton() {
   else if (firstload === 0) {
     if (!internet || notFound || isTutorialOn[0]) return;
     loading('showextra');
-    var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() === 'UC') ? 'id' : 'forUsername';
-    var url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' + reqType + '=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
+    var url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
     try {
       ajx(url, function (e) {
         if (!e.items[0].contentDetails.relatedPlaylists.uploads) {
@@ -562,7 +561,7 @@ function extrabutton() {
               responsive: true,
               maintainAspectRatio: false
             });
-            var url4 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&' + reqType + '=' + username + '&fields=items/statistics(videoCount,viewCount)&key=' + getKey();
+            var url4 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + username + '&fields=items/statistics(videoCount,viewCount)&key=' + getKey();
             ajx(url4, function (b) {
               if (!b.items[0].statistics.videoCount || !b.items[0].statistics.viewCount) {
                 noConnection( '4. undef b.items[0].statistics.videoCount or b.items[0].statistics.viewCount in extrabutton(script.js)');
