@@ -837,10 +837,10 @@ var isChart = 0;
 var notFound = 0;
 var firstload = 0;
 function queryName(query) {
-  var qType = 'search?part=snippet&q';
+  var qType = 'search?part=snippet&type=channel&q';
   if (rawInput.slice(0, 2).toUpperCase()==='UC' && rawInput.length===24) qType = 'channels?part=snippet&id=';//change query type to id if rawinput is id.
   var u = '';
-  if (!query) u = 'https://www.googleapis.com/youtube/v3/'+qType+'=' + encodeURIComponent(rawInput) + '&fields=items/snippet&type=channel&maxResults=1&key=';
+  if (!query) u = 'https://www.googleapis.com/youtube/v3/'+qType+'=' + encodeURIComponent(rawInput) + '&fields=items/snippet&maxResults=1&key=';
   else u = query;//query is used only for suggests.
   try {
     ajx(u + getKey(), function (e) {
