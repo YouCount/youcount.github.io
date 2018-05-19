@@ -71,27 +71,27 @@ function fx(str) {
 }
 // this is to hide email from spam bots
 var emailParts = ['manas.khurana20', 'gmail', 'com', '&#46;', '&#64;'];
-document.getElementById('email').innerHTML = emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2];
-document.getElementById('email').href = 'mailto:' + document.getElementById('email').innerHTML;
+changeText('email', emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2]);
+document.getElementById('email').href = 'mailto:' + getText('email');
 
 var clickList = [
   ['inputButton', function () {
     getValue();// called like this because addEventListener by default does not send empty parameter.
   }],
   ['fb', function () {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.querySelector('#pageUrl input').getAttribute('value')), '_blank');
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
   }],
   ['tw', function () {
-    window.open('https://twitter.com/share?text=' + document.getElementById('username').value + ' now has  ' + actualCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' subscribers!&url= ' + encodeURIComponent(document.querySelector('#pageUrl input').getAttribute('value')) + '&hashtags=YouCount', '_blank');
+    window.open('https://twitter.com/share?text=' + getText('username') + ' now has  ' + actualCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' subscribers!&url= ' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&hashtags=YouCount', '_blank');
   }],
   ['lnkdIn', function () {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.querySelector('#pageUrl input').getAttribute('value')) + '&title=' + encodeURIComponent(channelname) + '\'s%20Live%20Subscriber%20Count&source=YouCount', '_blank');
+    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + '\'s%20Live%20Subscriber%20Count&source=YouCount', '_blank');
   }],
   ['tb', function () {
-    window.open('http://www.tumblr.com/share/link?url=' + encodeURIComponent(document.querySelector('#pageUrl input').getAttribute('value')), '_blank');
+    window.open('http://www.tumblr.com/share/link?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
   }],
   ['rdit', function () {
-    window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.querySelector('#pageUrl input').getAttribute('value')) + '&title=' + encodeURIComponent(channelname) + 's%20Live%20Subscriber%20Count', '_blank');
+    window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + 's%20Live%20Subscriber%20Count', '_blank');
   }],
   ['link', linkshare],
   ['bg2', function () {
@@ -129,7 +129,7 @@ function tutorial(n = 0) {
   var bottom = 0;
   switch (n) {
   case 0:
-    document.getElementById('username').value = '';
+    changeText('username','');
     document.getElementById('input').style.zIndex = '1004';
     document.getElementById('tutorial').style.display = 'block';
     bottom = (document.getElementById('username').getBoundingClientRect()).bottom;
@@ -137,7 +137,7 @@ function tutorial(n = 0) {
     document.getElementById('bg2').style.display = 'block';
     document.getElementById('tutStep1').style.display = 'block';
     document.getElementById('tutStep2').style.display = 'none';
-    if(!isLive) document.getElementById('actualCount').innerHTML='Tutorial'
+    if(!isLive) changeText('actualCount','Tutorial');
     //when clicking on 'Click Here', the username is automatically focussed.
     document.getElementById('tutorial').addEventListener('click',function(){
       if(isTutorialOn[1]===1)
@@ -164,7 +164,7 @@ function tutorial(n = 0) {
     document.getElementById('bg2').style.display = 'none';
     document.getElementById('input').style.zIndex = '50';
     document.getElementById('suggest').style.zIndex = '51';
-    document.getElementById('username').value = channelname;
+    changeText('username',channelname);
     isTutorialOn[0] = 0;
     isTutorialOn[1] = 0;
     break;
@@ -292,14 +292,14 @@ function handleNavButtons(n) {
 
 var usernameKeyUp = [false, false];
 // eslint-disable-next-line no-unused-vars
-var usernameKeyUpInter;
+var usernameKeyUpInter = null;
 function usernameKeyUpFunc() {
-  var value = document.getElementById('username').value.trim();
+  var value = getText('username');
   if (!internet) {
-    document.getElementById('username').value = 'Refresh the page';
+    changeText('username','Refresh the page');
     return;
   }
-  if (!value || value === 'Not Found!' || value === 'Loading...' || value === 'Refresh the page') {
+  if (!value || ['Not Found!', 'Loading.', 'Loading..', 'Loading...', 'Refresh the page'].indexOf(value) > -1) {
     document.getElementById('suggest').style.display = 'none';
     clearInterval(usernameKeyUpInter);
     usernameKeyUp = [false, false];
@@ -332,7 +332,7 @@ function usernameKeyUpFunc() {
         texs.forEach(function (s, x) {
           try {
             s.dataset.id = e.items[x].snippet.channelId.trim();
-            s.textContent = e.items[x].snippet.title;
+            changeText(s,e.items[x].snippet.title);
             imas[x].style.visibility = 'hidden';// hide old image (until new image is loaded, see below)
           } catch (err) {
             noConnection('texs.forEach: ' + err + ' (script.js)', true);
@@ -370,6 +370,16 @@ document.getElementById('username').addEventListener('keyup', function () {
     usernameKeyUp[1] = true;
     document.getElementById('suggest').style.display = 'block';
 
+    document.querySelectorAll('.suggest').forEach(function (s, x) {//hide all suggest except first one which is loading...
+      if (x===0) {
+        s.style.display = 'block';
+        s.childNodes[0].style.visibility = 'hidden';
+        loading(s.childNodes[1]);
+      } else {
+        s.style.display = 'none';
+      }
+    });
+
     if (isTutorialOn[0]) {
       tutorial(2);
     }
@@ -385,11 +395,43 @@ document.getElementById('username').addEventListener('keyup', function () {
   }
 });
 
+loadingList = []
+loadingInterval = null;
+function loading(el) {
+  if (el && loadingList.indexOf(el) === -1) {
+    if (!loadingList.length) {
+      loadingInterval = setInterval(function() {
+        loading();
+      }, 500);
+    }
+    changeText(el,'Loading.');
+    loadingList.push(el);
+  } else {
+    if (!loadingList.length) {
+      clearInterval(loadingInterval);
+    } else {
+      loadingList = loadingList.filter(function(e,i){
+        var loadList = ['Loading.','Loading..','Loading...'];
+        var x = loadList.indexOf(getText(e));
+        if (x===0 || x===1) {
+          changeText(e,loadList[x+1])
+          return true;
+        } else if (x===2) {
+          changeText(e,loadList[0])
+          return true;
+        } else {
+          return false
+        }
+      });
+    }
+  }
+}
+
 // this shows/hides the sharable link of the page.
 function linkshare() {
   fx('pageUrl').fadeIn(250);
   fx('bg2').fadeIn(500);
-  if (!username || !location.hash.split('#!/')[1])document.querySelector('#pageUrl input').value = 'https://youcount.github.io/';
+  if (!username || !location.hash.split('#!/')[1])changeText(document.querySelector('#pageUrl input'),'https://youcount.github.io/');
 }
 for (var l = 50; l > 0; l--)views.push(l);
 function pushViews(url, i) {
@@ -405,7 +447,7 @@ function extrabutton() {
   if (!username) tutorial();
   else if (firstload === 0) {
     if (!internet || notFound || isTutorialOn[0]) return;
-    document.getElementById('showextra').innerHTML = 'LOADING...';
+    loading('showextra');
     var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() === 'UC') ? 'id' : 'forUsername';
     var url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' + reqType + '=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
     try {
@@ -532,7 +574,7 @@ function extrabutton() {
       noConnection(e);
     }
   } else {
-    document.getElementById('showextra').innerHTML = 'SHOW STATS';
+    changeText('showextra','Show Stats');
     if (extraswitch === 0) {
       isChart = 1;
       fx('showextra').fadeOut();
@@ -555,9 +597,9 @@ function upCharts() {
     noConnection('upCharts was called before firstload==1', true);
     return;
   }
-  vids = Number(document.getElementById('vids').value);
+  vids = Number(getText('vids'));
   if (vids > 25) {
-    document.getElementById('vids') = vids = 25;
+    changeText('vids',vids = 25);
 
   }
   var sum1 = 0;
