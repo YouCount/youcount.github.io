@@ -321,32 +321,48 @@ function usernameKeyUpFunc() {
         }// else
         // show results in suggestions
         var suggests = document.querySelectorAll('.suggest');
+        var texs = document.querySelectorAll('.suggest div');
+        var imas = document.querySelectorAll('.suggestImg');
+
         suggests.forEach(function (s, x) {
           s.style.display = 'block';
           s.dataset.id = e.items[x].snippet.channelId.trim();
         });
-        document.querySelectorAll('.suggest div').forEach(function (s, x) {
+
+        texs.forEach(function (s, x) {
           try {
             s.dataset.id = e.items[x].snippet.channelId.trim();
             s.textContent = e.items[x].snippet.title;
+            imas[x].style.visibility = 'hidden';// hide old image (until new image is loaded, see below)
           } catch (err) {
+            noConnection('texs.forEach: ' + err + ' (script.js)', true);
             suggests[x].style.display = 'none';
           }
         });
-        document.querySelectorAll('.suggestImg').forEach(function (s, x) {
+        
+        imas.forEach(function (s, x) {
           try {
             s.dataset.id = e.items[x].snippet.channelId.trim();
             s.src = e.items[x].snippet.thumbnails.default.url;
+            whenImageLoaded(s).then(function(){// show image after it has loaded
+              s.style.visibility = 'visible';
+            });
           } catch (err) {
+            noConnection('imas.forEach: ' + err + ' (script.js)', true);
             suggests[x].style.display = 'none';
           }
         });
       } catch (err) {
-        noConnection(err, true);
+        noConnection('suggest ajx: ' + err + ' (script.js)', true);
       }
     }, function () {
       noConnection('username keyup no ajx response (script.js)', true);
     });
+}
+function whenImageLoaded(el) {//takes image element and resolves promise when it has loaded.
+  return new Promise(function(resolve){
+    el.addEventListener("load", resolve);
+  });
 }
 document.getElementById('username').addEventListener('keyup', function () {
   if (!usernameKeyUp[0]) {
