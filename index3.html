@@ -849,7 +849,7 @@ function queryName(query) {
         noConnection( 'undef e.items in queryName');
         return;
       }
-      if (!query && (!isRawInputId || !e.items[0].snippet.channelId.trim())) {// if no result found and queryName not called by suggests (!query)
+      if (!query && !e.items[0].snippet.publishedAt.trim()) {// if no result found and queryName not called by suggests (!query)
         //, show not found and hide stuff 
         changeText('username','Not Found!');
         document.getElementById('actualCount').style.display = 'none';
