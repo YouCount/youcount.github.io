@@ -422,6 +422,7 @@ box-shadow: inset 0 -5px 0 0 rgb(230,25,25);
   border-radius: 50%;
   margin-left: 10px;
   margin-right: 10px;
+  visibility:hidden;
 }
 #bottomPrime {
 width:100%;
@@ -482,6 +483,7 @@ position: relative;
   cursor:pointer;
   overflow:hidden;
   z-index:2;
+  text-transform:uppercase;
 }
 #vidsText {
   font-size:25px;
@@ -653,7 +655,7 @@ Shareable Link:
   </section>
 
   <section id="extra" class="card">
-    <button class="extrabutton" id="showextra">SHOW STATS</button>
+    <button class="extrabutton" id="showextra">Show Stats</button>
     <div id="extraContent">
       <div class="myChart-wrapper">
         <canvas width="400" height="200" id="myChart1"></canvas>
@@ -684,7 +686,7 @@ Shareable Link:
         <canvas width="400" height="200" id="myChart4"></canvas>
       </div>
     </div>
-    <button class="extrabutton" id="hideextra">HIDE STATS</button>
+    <button class="extrabutton" id="hideextra">Hide Stats</button>
   </section>
 </div>
 <script>
@@ -745,10 +747,24 @@ function ajx(url, success, failure) {
 }
 // ----text changing function for code reusability----
 function changeText(elem, changeVal) {
+  if (typeof(elem)==='string') {
+    elem = document.getElementById(elem);
+  }
   if ('form' in elem) {
-    elem.value = changeVal;
+    elem.value = String(changeVal).trim();
   } else {
-    elem.textContent = changeVal;
+    elem.textContent = String(changeVal).trim();
+  }
+}
+
+function getText(elem) {
+  if (typeof(elem)==='string') {
+    elem = document.getElementById(elem);
+  }
+  if ('form' in elem) {
+    return String(elem.value).trim();
+  } else {
+    return String(elem.textContent).trim();
   }
 }
 
@@ -775,12 +791,13 @@ function startAndPops() { // manage what happens in the very beginning and also 
     }
   }
 }
-function getValue(value = document.getElementById('username').value) {
+function getValue(value = getText('username')) {
   if (!internet) {
-    document.getElementById('username').value = 'Refresh the page';
+    changeText('')
+    changeText('username', 'Refresh the page');
     return;
   }
-  if (!value || value === 'Not Found!' || value === 'Loading...' || value === 'Refresh the page') return;
+  if (!value || ['Not Found!', 'Loading.', 'Loading..', 'Loading...', 'Refresh the page'].indexOf(value) > -1) return;
   if (isTutorialOn[0]) {
     try {
       tutorial(3);
@@ -788,7 +805,10 @@ function getValue(value = document.getElementById('username').value) {
       noConnection('queryName unable to call tutorial(3)');
     }
   }
-  changeText(document.getElementById('username'), 'Loading...');
+  if (typeof(loading)==='function')
+    loading('username');
+  else 
+    changeText('username', 'Loading...');
   document.getElementById('username').blur();
   rawInput = value;
   queryName();
@@ -799,12 +819,12 @@ function noConnection(e = 'No error provided!', noStop = false) {
     console.log('noConnection:' + e);
   } else if(!noStop) {
     internet = 0;
-    document.getElementById('actualCount').innerHTML = 'No Internet';
+    changeText('actualCount','No Internet');
     var arr = ['totalViews', 'totalVideos', 'pubDate', 'username'];
     for (var x = 0; x < arr.length; x++) {
       changeText(document.getElementById(arr[x]), 'No Internet');
     }
-    document.getElementById('username').value = 'Refresh the page';
+    changeText('username','Refresh the page');
     document.getElementById('dp').style.display = 'none';
     clearInterval(intervalId);
   }
@@ -829,7 +849,7 @@ function queryName(query) {
       }
       if (!query) {
         if (e.pageInfo.totalResults < 1 && !query) {// if no result found, show not found and hide stuff
-          document.getElementById('username').value = 'Not Found!';
+          changeText('username','Not Found!');
           document.getElementById('actualCount').style.display = 'none';
           document.getElementById('milestoneBox').style.display = 'none';
           document.getElementById('dp').style.display = 'none';
@@ -1003,7 +1023,7 @@ function live() {
           changeText(document.getElementById('milestoneLeft'), subsLeft);
           changeText(document.getElementById('milestoneTarget'), target.toLocaleString('en-US'));
           if (subsLeft < 1 && subsLeft > -1) {
-            document.getElementById('milestoneBox').innerHTML = 'Congratulations!';
+            changeText('milestoneBox','Congratulations!');
           }
           // if chart is already loaded, the value of chart is updated here.
           if (isChart === 2 && seconds % 5 === 0) {
@@ -1046,7 +1066,10 @@ if (!developmentMode) {
 
 window.onpopstate = function () {
   isBackPressed = 1;
-  changeText(document.getElementById('username'), 'Loading...');
+  if (typeof(loading)==='function')
+    loading('username');
+  else 
+    changeText('username', 'Loading...');
   startAndPops();
 };
 // --------MAIN PROGRAM ENDS---------
@@ -1063,7 +1086,7 @@ tutorial=undefined;//to circumvent automatic assignment of tutorial to document.
 
 document.getElementById('username').addEventListener('focusin', function () {
   if (isTutorialOn[0] && tutorial) {
-    document.getElementById('username').value = '';
+    changeText('username','');
     tutorial(1);
   }
   document.getElementById('username').select();
