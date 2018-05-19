@@ -111,6 +111,7 @@ clickList.forEach(function (e) {
 // only for single ids is a separate function created because getElementById is faster than
 // querySelectorAll and there are a lot of single ids being assigned onclicks.
 queryClickListener('.suggest', function (v) {
+  if(['Loading.','Loading..','Loading...'].indexOf(v.target.value) > -1) return;
   if (v.target.dataset.id) {
     username = v.target.dataset.id;
     var send = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + v.target.dataset.id + '&fields=items/snippet&key=';
@@ -328,6 +329,10 @@ function usernameKeyUpFunc() {
           s.style.display = 'block';
           s.dataset.id = e.items[x].snippet.channelId.trim();
         });
+
+        if (isTutorialOn[0]) {
+          tutorial(2);
+        }
 
         texs.forEach(function (s, x) {
           try {
