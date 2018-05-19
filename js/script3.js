@@ -71,7 +71,7 @@ function fx(str) {
 }
 // this is to hide email from spam bots
 var emailParts = ['manas.khurana20', 'gmail', 'com', '&#46;', '&#64;'];
-changeText('email', emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2]);
+document.getElementById('email').innerHTML = emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2];
 document.getElementById('email').href = 'mailto:' + getText('email');
 
 var clickList = [
@@ -111,10 +111,13 @@ clickList.forEach(function (e) {
 // only for single ids is a separate function created because getElementById is faster than
 // querySelectorAll and there are a lot of single ids being assigned onclicks.
 queryClickListener('.suggest', function (v) {
-  if(['Loading.','Loading..','Loading...'].indexOf(v.target.value) > -1) return;
-  if (v.target.dataset.id) {
+  if (v.target.dataset.id && ['Loading.','Loading..','Loading...'].indexOf(v.target.innerHTML) === -1) {
     username = v.target.dataset.id;
     var send = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + v.target.dataset.id + '&fields=items/snippet&key=';
+    
+    // if tutorial is on, disable it (as getvalue is not called)
+    if (isTutorialOn[0]) tutorial(3);
+    
     queryName(send);
   }
 });
@@ -122,7 +125,7 @@ queryClickListener('.suggest', function (v) {
   idClickListener(e, extrabutton);
 });
 
-function tutorial(n = 0) {
+function tutorial(n) {
   if (navState[0])handleNavButtons(navState[0]);
   isTutorialOn[0] = 1;
   isTutorialOn[1] = n+1;
@@ -176,7 +179,7 @@ function tutorial(n = 0) {
   }
 }
 
-if (isTutorialOn[0]) tutorial();
+if (isTutorialOn[0]) tutorial(0);
 
 // this function gives the share button its clicking function.
 // if the button is clicked (ie shareswitch === 0),
@@ -449,7 +452,7 @@ function pushViews(url, i) {
 // if the chart is loading for the first time (ie firstload=0),
 // first the script of chart is downloaded and then it is loaded.
 function extrabutton() {
-  if (!username) tutorial();
+  if (!username) tutorial(0);
   else if (firstload === 0) {
     if (!internet || notFound || isTutorialOn[0]) return;
     loading('showextra');
