@@ -837,10 +837,11 @@ var isChart = 0;
 var notFound = 0;
 var firstload = 0;
 function queryName(query) {
-  var qType = 'search?part=snippet&type=channel&q';
-  if (rawInput.slice(0, 2).toUpperCase()==='UC' && rawInput.length===24) qType = 'channels?part=snippet&id';//change query type to id if rawinput is id.
+  var isRawInputId = 0;
+  var qType = ['search?part=snippet&type=channel&q','channels?part=snippet&id'];
+  if (rawInput.slice(0, 2).toUpperCase()==='UC' && rawInput.length===24) isRawInputId = 1;//change query type to id if rawinput is id.
   var u = '';
-  if (!query) u = 'https://www.googleapis.com/youtube/v3/'+qType+'=' + encodeURIComponent(rawInput) + '&fields=items/snippet&maxResults=1&key=';
+  if (!query) u = 'https://www.googleapis.com/youtube/v3/'+qType[isRawInputId]+'=' + encodeURIComponent(rawInput) + '&fields=items/snippet&maxResults=1&key=';
   else u = query;//query is used only for suggests.
   try {
     ajx(u + getKey(), function (e) {
@@ -848,7 +849,7 @@ function queryName(query) {
         noConnection( 'undef e.items in queryName');
         return;
       }
-      if (!query && !e.items[0].snippet.channelId.trim()) {// if no result found and queryName not called by suggests (!query)
+      if (!query && (!isRawInputId || !e.items[0].snippet.channelId.trim())) {// if no result found and queryName not called by suggests (!query)
         //, show not found and hide stuff 
         changeText('username','Not Found!');
         document.getElementById('actualCount').style.display = 'none';
@@ -877,7 +878,8 @@ function queryName(query) {
 
       // sets username to channel id so that further requests to find out about the channel can be made
       if (!query) {
-        username = e.items[0].snippet.channelId.trim();
+        if (isRawInputId) username = rawInput;
+        else username = e.items[0].snippet.channelId.trim();
       }
 
       // resetting charts so it loads again.
