@@ -837,26 +837,27 @@ var isChart = 0;
 var notFound = 0;
 var firstload = 0;
 function queryName(query) {
+  var qType = 'q'
+  if (rawInput.slice(0, 2).toUpperCase()==='UC' && rawInput.length===24) qType = 'id';//change query type to id if rawinput is id.
   var u = '';
-  if (!query) u = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + encodeURIComponent(rawInput) + '&type=channel&maxResults=1&key=';
-  else u = query;
+  if (!query) u = 'https://www.googleapis.com/youtube/v3/search?part=snippet&'+qType+'=' + encodeURIComponent(rawInput) + '&fields=items/snippet&type=channel&maxResults=1&key=';
+  else u = query;//query is used only for suggests.
   try {
     ajx(u + getKey(), function (e) {
       if (!e.items) {
         noConnection( 'undef e.items in queryName');
         return;
       }
-      if (!query) {
-        if (e.pageInfo.totalResults < 1 && !query) {// if no result found, show not found and hide stuff
-          changeText('username','Not Found!');
-          document.getElementById('actualCount').style.display = 'none';
-          document.getElementById('milestoneBox').style.display = 'none';
-          document.getElementById('dp').style.display = 'none';
-          document.getElementById('extra').style.display = 'none';
-          clearInterval(intervalId);
-          notFound = 1;
-          return;
-        }
+      if (!query && e.pageInfo.totalResults < 1) {// if no result found and queryName not called by suggests (!query)
+        //, show not found and hide stuff 
+        changeText('username','Not Found!');
+        document.getElementById('actualCount').style.display = 'none';
+        document.getElementById('milestoneBox').style.display = 'none';
+        document.getElementById('dp').style.display = 'none';
+        document.getElementById('extra').style.display = 'none';
+        clearInterval(intervalId);
+        notFound = 1;
+        return;
       }
       // else
       // show stuff
@@ -894,11 +895,10 @@ function queryName(query) {
       changeText(document.getElementById('pubDate'), channeldate);
       // sends request to find if customUrl is available. if available, uses it for setting url, otherwise uses title for setting url
       // if pushState has to not be set during a queryName run, isBackPressed is set to 0. It automatically resets to 1 after not running once.
-      var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() === 'UC') ? 'id' : 'forUsername';
       if (isBackPressed === 0) {
         var urlCandidate;
         var urlFinalName;
-        var url = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&' + reqType + '=' + username + '&fields=items/snippet&key=' + getKey();
+        var url = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + username + '&fields=items/snippet&key=' + getKey();
         ajx(url,  function (g) {
           if (g.items[0].snippet.customUrl) {
             urlCandidate =  g.items[0].snippet.customUrl.trim();
@@ -921,7 +921,7 @@ function queryName(query) {
       } else isBackPressed = 0;// resetting of isBackPressed
 
       if (firstload) {
-        url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' + reqType + '=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
+        url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
         ajx(url,  function (m) {
           url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + m.items[0].contentDetails.relatedPlaylists.uploads + '&maxResults=50&fields=items/snippet/resourceId/videoId&key=' + getKey();
           ajx(url,  function (n) {
@@ -952,8 +952,7 @@ var isLive = 0;
 var myLineChart1Data;
 var prevCounts = [0, 0, 0, 0, 0 ];
 function live() {
-  var reqType = (username.length >= 24 && username.substr(0, 2).toUpperCase() === 'UC') ? 'id' : 'forUsername';
-  var url = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&' + reqType + '=' + username + '&fields=items/statistics/subscriberCount&key=' + getKey();
+  var url = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + username + '&fields=items/statistics/subscriberCount&key=' + getKey();
   try {
     ajx(url,  function (e) {
       var prevCount = actualCount;
