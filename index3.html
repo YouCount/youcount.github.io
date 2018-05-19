@@ -785,7 +785,7 @@ function startAndPops() { // manage what happens in the very beginning and also 
     }
   } else {
     try {
-      tutorial();
+      tutorial(0);
     } catch (e) {
       isTutorialOn[0] = 1;
     }
@@ -793,7 +793,6 @@ function startAndPops() { // manage what happens in the very beginning and also 
 }
 function getValue(value = getText('username')) {
   if (!internet) {
-    changeText('')
     changeText('username', 'Refresh the page');
     return;
   }
@@ -869,8 +868,7 @@ function queryName(query) {
       }
       document.getElementById('dp').style.display = 'block';
       document.getElementById('extra').style.display = 'block';
-      // if tutorial is on, disable it (happens when clicked on suggest as getvalue is not called)
-      if (isTutorialOn[0]) tutorial(3);
+      
       // set channel name in input box and title
       channelname = e.items[0].snippet.title;
       changeText(document.getElementById('username'), channelname);
@@ -1099,6 +1097,9 @@ document.getElementById('username').addEventListener('focusout', function () {
     if (typeof(usernameKeyUp)!=='undefined' && usernameKeyUp[0]) {//shortcircuiting AND in case usernameKeyUp is not defined.
         clearInterval(usernameKeyUpInter);
       usernameKeyUp = [false, false];
+    }
+    if (isTutorialOn[1]===3) {
+      tutorial(1);
     }
   }, 200);
 });
