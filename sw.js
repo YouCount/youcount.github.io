@@ -34,7 +34,7 @@ self.addEventListener('fetch', function (event) {
           if (response) {
             return response;
           }
-          return fetch(event.request, {cache: "reload"});
+          return fetch(event.request, {mode: 'same-origin'});
         })
     );
   } catch (err) {
