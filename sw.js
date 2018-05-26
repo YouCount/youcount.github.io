@@ -34,7 +34,7 @@ self.addEventListener('fetch', function (event) {
           if (response) {
             return response;
           }
-          return fetch(event.request, {mode: 'same-origin'});
+          return fetch(event.request);
         })
     );
   } catch (err) {
