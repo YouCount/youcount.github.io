@@ -183,6 +183,23 @@ function tutorial(n) {
 
 if (isTutorialOn[0]) tutorial(0);
 
+var tutorialSize = {
+  isChanging: false,
+  change: function() {
+    tutorialSize.isChanging = true;
+    tutorial(isTutorialOn[1] - 1);
+    setTimeout(function(){
+      tutorialSize.isChanging = false;
+    },200);
+  }
+}
+
+window.onresize = function() {
+  if (!tutorialSize.isChanging && isTutorialOn[0]) {
+    tutorialSize.change();
+  }
+}
+
 // this function gives the share button its clicking function.
 // if the button is clicked (ie shareswitch === 0),
 // the sharing features are shown, meanwhile the shareswitch is set to 1.
