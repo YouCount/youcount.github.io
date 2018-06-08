@@ -11,10 +11,12 @@ var vids = 5;
 // just to ensure that the correct page is loaded iframe and http is checked again
 if (!developmentMode) {
   // 1. Check if iframe or http
-  if (window.top !== window.self || window.top.location !== window.self.location) {
-    window.top.location = window.self.location;
-  } else if (window.location.hostname !== 'youcount.github.io' || window.top.location.hostname !== 'youcount.github.io') {
-    window.location.hostname = 'youcount.github.io';
+  try {
+    if (window.top !== window.self || window.top.location !== window.self.location) {
+      window.top.location = window.self.location;
+    }
+  } catch(e) {
+    noConnection(e);
   }
 }
 // MISC FUNCTIONS
@@ -190,7 +192,7 @@ var tutorialSize = {
     tutorial(isTutorialOn[1] - 1);
     setTimeout(function(){
       tutorialSize.isChanging = false;
-    },200);
+    },100);
   }
 }
 

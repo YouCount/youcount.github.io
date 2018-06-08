@@ -707,15 +707,16 @@ var username = '';
 var rawInput = username;
 var channelname = '';
 var channeldate = '';
-var isBackPressed = 0;
+var isBackPressed = false;
 var keyIndex = -1;
 var seconds = 0;
 var actualCount = 0;
 var intervalId;
 var targets = [10, 25, 50, 1E2, 5E2, 1E3, 2.5E3, 5E3, 1E4, 2.5E4, 5E4, 1E5, 2.5E5, 5E5, 1E6, 2E6, 3E6, 4E6, 5E6, 6E6, 7E6, 10E6, 15E6, 20E6, 25E6, 30E6, 40E6, 50E6, 70E6, 1E8, 1.5E8, 2E8, 3E8];
 var myLineChart1;
-var internet = 1;// change this to 1 when uploaded.
-var developmentMode = 1;
+var internet = true;// change this to true when uploaded.
+var developmentMode = true;//change this to false when uploaded.
+var isTutorialOn = [0,0];
 // -----select APIkey randomly----
 function getKey() {
   var APIkeys = ['AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U'];
@@ -779,7 +780,6 @@ function def(ob,val){
 
 // --------MAIN PROGRAM---------
 // ----receives value inputted by user and sends it while input box is starts showing 'Loading...'----
-var isTutorialOn = [0,0];
 function startAndPops() { // manage what happens in the very beginning and also on popstate
   if (location.hash.split('#!/')[1]) {// if something is there after #!/, make that the search query else set page as homepage.
     if (isBackPressed) {
@@ -794,7 +794,7 @@ function startAndPops() { // manage what happens in the very beginning and also 
     }
   } else {
     try {
-      isBackPressed = 0;// since queryName is not called on this popstate.
+      isBackPressed = false;// since queryName is not called on this popstate.
       tutorial(0);
     } catch (e) {
       isTutorialOn[0] = 1;// load tutorial when script.js has loaded.
@@ -830,7 +830,7 @@ function noConnection(e, noStop) {
   if (developmentMode) {
     console.log('noConnection:' + e);
   } else if(!noStop) {
-    internet = 0;
+    internet = false;
     changeText('actualCount','No Internet');
     var arr = ['totalViews', 'totalVideos', 'pubDate', 'username'];
     for (var x = 0; x < arr.length; x++) {
@@ -909,8 +909,8 @@ function queryName(query) {
       channeldate = pubDate[2] + '-' + pubDate[1] + '-' + pubDate[0];
       changeText(document.getElementById('pubDate'), channeldate);
       // sends request to find if customUrl is available. if available, uses it for setting url, otherwise uses title for setting url
-      // if pushState has to not be set during a queryName run, isBackPressed is set to 0. It automatically resets to 1 after not running once.
-      if (isBackPressed === 0) {
+      // if pushState has to not be set during a queryName run, isBackPressed is set to false. It automatically resets to 1 after not running once.
+      if (!isBackPressed) {
         var urlCandidate;
         var urlFinalName;
         var url = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + username + '&fields=items/snippet&key=' + getKey();
@@ -933,7 +933,7 @@ function queryName(query) {
             changeText(document.querySelector('#pageUrl input'), 'https://youcount.github.io/#!/' + urlFinalName);
           });
         });
-      } else isBackPressed = 0;// resetting of isBackPressed
+      } else isBackPressed = false;// resetting of isBackPressed
 
       if (firstload) {
         url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
@@ -1063,13 +1063,15 @@ function live() {
 
 if (!developmentMode) {
   // 1. Check if iframe or http
-  if (window.top !== window.self || window.top.location !== window.self.location) {
-    window.top.location = window.self.location;
-  } else if (window.location.hostname !== 'youcount.github.io' || window.top.location.hostname !== 'youcount.github.io') {
-    window.location.hostname = 'youcount.github.io';
-  } else {
-    // 2. this starts the processes in the beginning.
-    startAndPops();
+  try {
+    if (window.top !== window.self || window.top.location !== window.self.location) {
+      window.top.location = window.self.location;
+    } else {
+      // 2. this starts the processes in the beginning.
+      startAndPops();
+    }
+  } catch(e) {
+    noConnection(e);
   }
 } else {
   // 2. this starts the processes in the beginning.
@@ -1077,7 +1079,7 @@ if (!developmentMode) {
 }
 
 window.onpopstate = function () {
-  isBackPressed = 1;
+  isBackPressed = true;
   if (typeof(loading)==='function')
     loading('username');
   else 
@@ -1093,7 +1095,7 @@ window.onpopstate = function () {
 // this thing gives the search box it's effects (material design thing + fading in search button)
 // when it is clicked or focussed upon and effectively hides them as well.
 
-tutorial=undefined;//to circumvent automatic assignment of tutorial to document.getElementById('tutorial'),
+tutorial=null;//to circumvent automatic assignment of tutorial to document.getElementById('tutorial'),
 //until it is defined as a function; goog: 'global variables id'
 
 document.getElementById('username').addEventListener('focusin', function () {
