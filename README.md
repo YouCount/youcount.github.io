@@ -16,7 +16,7 @@ There are other websites that allow you to do this as well, but most of them are
 - Shows a line chart which gets updated in realtime and shows the increasing/decreasing trend of the YouTube subscriber count.
 - Uses Google's Material Design language guidelines without using any Material Design libraries.
 - Has a responsive design, enabling it to work with almost every touch and non-touch device.
-- Has been highly optimized to load very quickly and uses VelocityJs to show incredibly fast transitions.
+- Has been highly optimized to load very quickly.
 - Has an embed feature which allows you to put YouCount on your own website.
 - Is absolutely free and has been made using absolutely free stuff on the internet!
 
@@ -40,8 +40,6 @@ You can also click the red button below to check out extra useful information li
 - [YouTube API](https://developers.google.com/youtube/v3)
 - [Odometer](http://github.hubspot.com/odometer)
 - [Chart.js](http://www.chartjs.org)
-- [Velocity.js](http://velocityjs.org)
-- [Google Fonts](https://www.google.com/fonts)
 - [Google Analytics](https://www.google.co.in/analytics)
 - [Google Material design](https://material.google.com)
 - [Open Graph protocol](http://ogp.me)
@@ -54,6 +52,6 @@ If you are going to utilize the code of this project, consider reading the licen
 
 ### Donations
 
-The best donation you can give is by sharing this project with your friends.
+The best donation you can give is sharing this project with your friends.
 
 Thank You!
