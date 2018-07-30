@@ -955,7 +955,8 @@ function queryName(query) {
       from https://developers.google.com/youtube/v3/docs/channels#properties
       snippet.description - Channel description
       */
-      ga('send', 'pageview',location.pathname);
+      //ga('send', 'pageview',location.pathname);
+      ga('send', 'event', 'YTChannel', 'updated');
     }, function () {
       noConnection('queryName no response from ajx');
     });
