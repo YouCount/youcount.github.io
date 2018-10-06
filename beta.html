@@ -5,7 +5,13 @@
 <head>
 <title>YouCount: YouTube® LIVE Subscriber Count</title>
 <meta name="theme-color" content="#e61919" />
-<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e61919">
+<meta name="apple-mobile-web-app-title" content="YouCount">
+<meta name="application-name" content="YouCount">
+<meta name="msapplication-TileColor" content="#e61919">
 <link rel="canonical" href="https://youcount.github.io/" />
 <link rel="amphtml" href="https://youcount.github.io/amp">
 <link rel="manifest" href="/manifest.json">
@@ -55,7 +61,8 @@
 }
 body {
   background-color:rgb(250,250,250);
-  font-family: Arial, sans-serif;
+  font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 100;
   outline:none;
   margin:0;
   overflow-x: hidden;
@@ -94,26 +101,26 @@ background-color:rgb(230,25,25);
     position: relative;
     top:10%;
     left:50%;
-    -webkit-transform:translate(-50%,0);
-    transform:translate(-50%,0);
-    height:40px;
-    width:40px;
+    -webkit-transform:translate(-50%, 7.5px);
+    transform:translate(-50%, 7.5px);
+    height:25px;
+    width:25px;
 }
 .navButtonsCover[data-child="logo"]{
     float:left;
 }
 #logo {
-  width: 58px;
+  width: 36px;
   background-position: 0 0;
 }
 #helpButton {
-  background-position: -65px 0;
+  background-position: -40px 0;
 }
 #code {
-  background-position: -115px 0;
+  background-position: -71.5px 0;
 }
 #share {
-  background-position: -171px 0;
+  background-position: -107px 0;
 }
 #sharebox {
 position:fixed;
@@ -155,13 +162,13 @@ background-position: -100px -50px;
   background-color:white;
   box-shadow: 0 0 20px -4px black;
   font-size:35px;
-  font-weight: 600;
   display:none;
 }
 #pageUrl input {
   border:none;
   outline:none;
-  font-family: Arial, sans-serif;
+  font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 100;
   font-size:30px;
   background-color:gray;
   color:white;
@@ -252,7 +259,6 @@ ol li {
   text-align:center;
   font-size:6vw;
   margin:0;
-  font-family:Impact, Arial, sans-serif;
 }
 #bg1 p, #bg1 ol {
   font-size:20px;
@@ -298,8 +304,8 @@ ol li {
   background-color:white;
 }
 #prime {
-  padding-top:2vw;
-  padding-bottom:2vw;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 #actualCount {
   font-size: 11vw !important;
@@ -352,8 +358,9 @@ label[for="username"] {
 }
 #username {
   color:black;
-  font-size:3vw;
-  font-family: Arial, sans-serif;
+  font-size:2.5vw;
+  font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 100;
   text-align:center;
   float:left;
   height:100%;
@@ -371,7 +378,8 @@ label[for="username"] {
   max-width: 60%;
   margin-left:auto;
   margin-right:auto;
-  background-position: 99% 0;
+  background-position: 100% 0;
+  background-repeat: no-repeat;
 }
 #username:focus {
 background-color:rgb(255,200,200);
@@ -532,7 +540,7 @@ a {text-decoration:none;}
   width:84%;
   }
   #username {
-  font-size:6vw;
+  font-size:4vw;
   }
   #input, #dp {
   height:12vw;
@@ -576,7 +584,7 @@ a {text-decoration:none;}
       </ul>
 </section>
 <span id="pageUrl">
-Shareable Link:
+Shareable Link
 <br><input type="text" value="" onclick="this.select()" readonly />
 </span>
 
@@ -946,7 +954,7 @@ function queryName(query) {
             }
           });
         });
-      }
+      } else if(typeof(extrabutton)!=='undefined') extrabutton();
 
 
       // set profile picture of channel
