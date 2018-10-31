@@ -996,10 +996,6 @@ function live() {
         }
         var subsLeft = target - actualCount;
 
-        if ((actualCount - prevCount) > 0)document.body.style.backgroundColor = 'rgb(240,255,240)';
-        else if ((actualCount - prevCount) === 0)document.body.style.backgroundColor = 'rgb(250,250,250)';
-        else document.body.style.backgroundColor = 'rgb(255,240,240)';
-
         // load chart if not already loaded and update it.
         if (isChart === 1) {
           myLineChart1Data = {
