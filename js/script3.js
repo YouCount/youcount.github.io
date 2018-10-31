@@ -41,7 +41,9 @@ function fx(str) {
     for (var i = 0; i < parts; i++) {
       setTimeout(function () { // eslint-disable-line no-loop-func
         val += Number((fin - ini) / parts);
-        func(val);
+        window.requestAnimationFrame(function() {
+          func(val);
+        });
       }, 50 * (i + 1));
     }
   };
