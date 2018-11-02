@@ -35,10 +35,14 @@ function fx(str) {
   var ele = document.getElementById(str);
   var duration = 1000/60;
   var interval;
+  fx.xnor = function(a, b) {
+    if ((a && b) || (!a && !b)) return true;
+    else return false;
+  }
   fx.transition = function (val, fin, change, func) {
-    if (fin > (val + change)) {
+    if (fx.xnor(fin > val, fin > (val + change))) {
       func(val + change);
-      if (window.requestAnimationFrame) {
+      if (typeof window.requestAnimationFrame == 'function') {
         interval = requestAnimationFrame(function() {
           fx.transition(val + change, fin, change, func);
         });
@@ -69,7 +73,7 @@ function fx(str) {
 
     ele.dataset.fxOpacity = ele.dataset.fxOpacity ||  Number(ele.style.opacity) || 1;
     ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
-    fx.transition(ele.dataset.fxOpacity, 0, Number(ele.dataset.fxOpacity) * duration / t, function (v) {
+    fx.transition(ele.dataset.fxOpacity, 0, -1 * Number(ele.dataset.fxOpacity) * duration / t, function (v) {
       ele.style.opacity = v;
     });
     setTimeout(function () {
