@@ -1,7 +1,7 @@
 /* global developmentMode:false, ajx:false, getKey:false, getValue:false, changeText:false, noConnection:false, queryName:false, getScript:false, Chart:false, username:true, channelname:true, actualCount:false, isTutorialOn:true, internet:false, firstload:true, notFound:false, isChart:true, myLineChart1:false
 */
-var shareswitch = 0;
-var navState = [0, 0];
+var shareswitch = 0; // 0 === share stuff hidden, 1 === share stuff is in transition, 2 === share stuff is showing
+var navState = [null, false];
 var views = [];
 var extraswitch = 0;
 var myLineChart2 = {};
@@ -35,38 +35,54 @@ function fx(str) {
   var ele = document.getElementById(str);
   var ini = 0;
   var op = 1;
-  var parts = 1;
-  fx.transition = function (value, fin, sign, func) {
-    var val = value;
-    for (var i = 0; i < parts; i++) {
+  var frames = 60;
+  fx.transition = function (val, fin, func, time) {
+    ini = val;
+    for (var i = 0; i < frames; i++) {
       setTimeout(function () { // eslint-disable-line no-loop-func
-        val += Number((fin - ini) / parts);
-        window.requestAnimationFrame(function() {
-          func(val);
-        });
-      }, 50 * (i + 1));
+        val += Number((fin - ini) / frames);
+        func(val);
+      }, time / frames * (i + 1));
     }
   };
   fx.fadeIn = function (t) {
-    t = def(t,400);
-    parts = t / 50;
-    if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') {
-      if (ele.dataset.fxDisplay)ele.style.display = ele.dataset.fxDisplay;
-      else ele.style.display = 'block';
-      op = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
-      ele.style.opacity = 0;
-      fx.transition(0, op, 1, function (v) {ele.style.opacity = v; }, t);
+    if(window.getComputedStyle(ele).getPropertyValue('display') !== 'none') return;
+    t = def(t, 400);
+    op = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
+    if(window.requestAnimationFrame) {
+      window.requestAnimationFrame(function() {
+        if (ele.dataset.fxDisplay)ele.style.display = ele.dataset.fxDisplay;
+        else ele.style.display = 'block';
+        ele.style.opacity = 0;
+      });
+      ele.style.opacity = op;
+      setTimeout(function() {
+        ele.style.transition = ele.dataset.fxTransition;
+      }, t);
+    } else {
+      fx.transition(0, op, function (v) {ele.style.opacity = v; }, t);
     }
   };
   fx.fadeOut = function (t) {
-    t = def(t,400);
-    parts = t / 50;
-    if (window.getComputedStyle(ele).getPropertyValue('display') !== 'none') {
-      ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
-      if (ele.style.opacity)op = Number(ele.style.opacity); else op = 1;
-      ele.dataset.fxOpacity = op;
-      ini = op;
-      fx.transition(op, 0, -1, function (v) {ele.style.opacity = v;}, t);
+    if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') return;
+    t = def(t, 400);
+    ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
+    ele.dataset.fxTransition = ele.style.transition;
+    ele.dataset.fxOpacity = op = ele.style.opacity? Number(ele.style.opacity): 1;
+
+    if (window.requestAnimationFrame) {
+      window.requestAnimationFrame(function() {
+        ele.style.transition = 'opacity ' + t/1000 + 's';
+        ele.style.opacity = op;
+      });
+      ele.style.opacity = 0;
+      setTimeout(function () {
+        ele.style.display = 'none';
+        ele.style.opacity = ele.dataset.fxOpacity;
+        ele.style.transition = ele.dataset.fxTransition
+      }, t);
+    } else {
+      fx.transition(op, 0, function (v) {ele.style.opacity = v;}, t);
       setTimeout(function () {
         ele.style.display = 'none';
         ele.style.opacity = ele.dataset.fxOpacity;
@@ -204,17 +220,15 @@ window.onresize = function() {
   }
 }
 
-// this function gives the share button its clicking function.
-// if the button is clicked (ie shareswitch === 0),
-// the sharing features are shown, meanwhile the shareswitch is set to 1.
-// After transition is over, shareswitch === 2. running the func again will do the opposite
-// When shareswitch === 1, it represents the transition, so the function will simply quit
-// Hence neither body nor button when clicked during transition won't be able to do anything
-function shareFunc(isButton) {
+// shareswitch is used to record the state of share. Go to its defn on top to know what each state represents
+// the below function behaves based on the state of share, as follows:
+// if shareswitch === 0, show the share stuff; set shareswitch = 1; after transition, set shareswitch = 2
+// if shareswitch === 1, exit
+// if shareswitch === 2, hide share stuff; set shareswitch = 1; after transition, set shareswitch = 0
+// this prevents undesired behaviour, when body or button is clicked during transition.
+function shareFunc() {
+  if (shareswitch === 1) return;
   var t = 200; // time in milliconds
-  if (isButton !== true && shareswitch < 2) {
-    return;
-  }
   var shareElems = document.querySelectorAll('.share');
   switch (shareswitch) {
   case 0:
@@ -222,97 +236,75 @@ function shareFunc(isButton) {
     shareElems.forEach(function (e, i) {
       setTimeout(function () {
         fx(e.id).fadeIn(t);
-      }, 40 * (i - 1));
+      }, 40 * (i + 1));
     });
     setTimeout(function () {
       shareswitch = 2;
-    }, t + shareElems.length * 40);
+      queryClickListener('body', shareFunc);
+      navState[1] = false;
+    }, t + (shareElems.length * 40));
     break;
-  case 1:break;
   case 2:
     shareswitch = 1;
-    navState[0] = 0;
+    navState[0] = null;
     shareElems.forEach(function (e) {
       fx(e.id).fadeOut(t);
     });
     setTimeout(function () {
       shareswitch = 0;
-    }, t + shareElems.length * 40);
+      document.body.removeEventListener("click", shareFunc);
+      navState[1] = false;
+    }, t);
     break;
   default:break;
   }
 }
-queryClickListener('body', shareFunc);
 
 function handleNavButtons(n) {
   if (navState[1]) return;
-  if (navState[0] !== 0) {
-    navState[1] = 1;
+  if (navState[0] !== null) {
+    navState[1] = true;
     document.getElementById('bg1').style.height = '100%';
     document.getElementById('bg1').classList.add('ball');
     document.getElementById('mainPage').style.display = 'block';
     if (navState[0] === n) {
       setTimeout(function () {
-        navState = [0, 0];
+        navState = [null, false];
       }, 500);
     } else {
       setTimeout(function () {
-        navState = [0, 0];
+        navState = [null, false];
         handleNavButtons(n);
       }, 500);
     }
-    switch (navState[0]) {
-    case 2:
-      document.getElementById('helpArt').style.display = 'none';
-      document.getElementById('helpArt').style.opacity = '0';
-      document.querySelector('.navButtonsCover[data-child="helpButton"]').style.backgroundColor = 'transparent';
-      break;
-    case 3:
-      document.getElementById('codeArt').style.display = 'none';
-      document.getElementById('codeArt').style.opacity = '0';
-      document.querySelector('.navButtonsCover[data-child="code"]').style.backgroundColor = 'transparent';
-      break;
-    default: break;
+    if (navState[0] == 2 || navState[0] == 3) {
+      var navStateName = ['help','code'][navState[0] - 2];
+      document.getElementById(navStateName + 'Art').style.display = 'none';
+      document.getElementById(navStateName + 'Art').style.opacity = '0';
+      document.querySelector('.navButtonsCover[data-child="'+ navStateName +'"]').style.backgroundColor = 'transparent';
     }
   } else {
-    switch (n) {
-    case 1:
+    if (n == 1) {
       if (location.hash) {
         location.href = location.href.split(location.hash)[0];
       }
       navState[0] = 1;
-      break;
-    case 2:
+    } else if (n == 2 || n == 3) {
+      var navStateName = ['help','code'][n - 2];
       document.getElementById('bg1').classList.remove('ball');
-      document.querySelector('.navButtonsCover[data-child="helpButton"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
+      document.querySelector('.navButtonsCover[data-child="' + navStateName + '"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
       setTimeout(function () {
-        fx('helpArt').fadeIn(200);
+        fx('' + navStateName + 'Art').fadeIn(200);
         document.getElementById('bg1').style.height = 'auto';
         document.getElementById('mainPage').style.display = 'none';
       }, 500);
       setTimeout(function () {
-        navState[1] = 0;
-      }, 1000);
-      navState = [2, 1];
-      break;
-    case 3:
-      document.getElementById('bg1').classList.remove('ball');
-      document.querySelector('.navButtonsCover[data-child="code"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
-      setTimeout(function () {
-        fx('codeArt').fadeIn(200);
-        document.getElementById('bg1').style.height = 'auto';
-        document.getElementById('mainPage').style.display = 'none';
-      }, 500);
-      setTimeout(function () {
-        navState[1] = 0;
-      }, 1000);
-      navState = [3, 1];
-      break;
-    case 4:
+        navState[1] = false;
+      }, 700);
+      navState = [n, true];
+    } else if (n == 4) {
       shareFunc(true);
-      navState[0] = 4;
-      break;
-    default: break;
+      navState = [4, true];
     }
   }
 }
