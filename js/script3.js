@@ -34,7 +34,6 @@ function queryClickListener(ele, func) {
 function fx(str) {
   var ele = document.getElementById(str);
   var duration = 1000/60; // Max Fps = 60
-  var interval;
   fx.xnor = function(a, b) {
     if ((a && b) || (!a && !b)) return true;
     else return false;
@@ -45,7 +44,7 @@ function fx(str) {
     if (fx.xnor(fin > val, fin > (val + c))) {
       func(val + c);
       if (typeof window.requestAnimationFrame == 'function') {
-        interval = requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
           fx.transition(val + c, fin, change, time, func);
         });
       } else {
@@ -55,7 +54,6 @@ function fx(str) {
       }
     } else {
       func(fin);
-      cancelAnimationFrame(interval);
     }
   };
   fx.fadeIn = function (t) {
@@ -142,6 +140,7 @@ function tutorial(n) {
   if (navState[0])handleNavButtons(navState[0]);
   isTutorialOn[0] = 1;
   isTutorialOn[1] = n+1;
+  window.onresize = tutorialSize.change;
   window.scrollTo(0, 0);
   var bottom = 0;
   switch (n) {
@@ -184,10 +183,12 @@ function tutorial(n) {
     changeText('username',channelname);
     isTutorialOn[0] = 0;
     isTutorialOn[1] = 0;
+    window.onresize = null;
     break;
   default:
     isTutorialOn[0] = 0;
     isTutorialOn[1] = 0;
+    window.onresize = null;
     break;
   }
 }
@@ -197,17 +198,13 @@ if (isTutorialOn[0]) tutorial(0);
 var tutorialSize = {
   isChanging: false,
   change: function() {
-    tutorialSize.isChanging = true;
-    tutorial(isTutorialOn[1] - 1);
-    setTimeout(function(){
-      tutorialSize.isChanging = false;
-    },100);
-  }
-}
-
-window.onresize = function() {
-  if (!tutorialSize.isChanging && isTutorialOn[0]) {
-    tutorialSize.change();
+    if (!tutorialSize.isChanging && isTutorialOn[0]) {
+      tutorialSize.isChanging = true;
+      tutorial(isTutorialOn[1] - 1);
+      setTimeout(function(){
+        tutorialSize.isChanging = false;
+      }, 100);
+    }
   }
 }
 
