@@ -136,6 +136,19 @@ queryClickListener('.suggest', function (v) {
   idClickListener(e, extrabutton);
 });
 
+var tutorialSize = {
+  isChanging: false,
+  change: function() {
+    if (!tutorialSize.isChanging && isTutorialOn[0]) {
+      tutorialSize.isChanging = true;
+      tutorial(isTutorialOn[1] - 1);
+      setTimeout(function(){
+        tutorialSize.isChanging = false;
+      }, 100);
+    }
+  }
+};
+
 function tutorial(n) {
   if (navState[0])handleNavButtons(navState[0]);
   isTutorialOn[0] = 1;
@@ -194,19 +207,6 @@ function tutorial(n) {
 }
 
 if (isTutorialOn[0]) tutorial(0);
-
-var tutorialSize = {
-  isChanging: false,
-  change: function() {
-    if (!tutorialSize.isChanging && isTutorialOn[0]) {
-      tutorialSize.isChanging = true;
-      tutorial(isTutorialOn[1] - 1);
-      setTimeout(function(){
-        tutorialSize.isChanging = false;
-      }, 100);
-    }
-  }
-}
 
 // shareswitch is used to record the state of share. Go to its defn on top to know what each state represents
 // the below function behaves based on the state of share, as follows:
