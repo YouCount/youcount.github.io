@@ -43,13 +43,12 @@ function fx(str) {
           fx.transition(val + change, fin, change, func);
         });
       } else {
-        interval = setInterval(function() {
+        setTimeout(function() {
           fx.transition(val + change, fin, change, func);
         }, duration);
       }
     } else {
       func(fin);
-      clearInterval(interval);
       cancelAnimationFrame(interval);
     }
   };
