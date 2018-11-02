@@ -33,61 +33,49 @@ function queryClickListener(ele, func) {
 }
 function fx(str) {
   var ele = document.getElementById(str);
-  var ini = 0;
-  var op = 1;
-  var frames = 60;
-  fx.transition = function (val, fin, func, time) {
-    ini = val;
-    for (var i = 0; i < frames; i++) {
-      setTimeout(function () { // eslint-disable-line no-loop-func
-        val += Number((fin - ini) / frames);
-        func(val);
-      }, time / frames * (i + 1));
+  var duration = 1000/60;
+  var interval;
+  fx.transition = function (val, fin, change, func) {
+    if (fin > (val + change)) {
+      func(val + change);
+      if (window.requestAnimationFrame) {
+        interval = requestAnimationFrame(function() {
+          fx.transition(val + change, fin, change, func);
+        });
+      } else {
+        interval = setInterval(function() {
+          fx.transition(val + change, fin, change, func);
+        }, duration);
+      }
+    } else {
+      func(fin);
+      clearInterval(interval);
+      cancelAnimationFrame(interval);
     }
   };
   fx.fadeIn = function (t) {
     if(window.getComputedStyle(ele).getPropertyValue('display') !== 'none') return;
     t = def(t, 400);
-    ele.dataset.fxOpacity = op = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
-    if(window.requestAnimationFrame) {
-      window.requestAnimationFrame(function() {
-        if (ele.dataset.fxDisplay)ele.style.display = ele.dataset.fxDisplay;
-        else ele.style.display = 'block';
-        ele.style.opacity = 0;
-      });
-      ele.style.opacity = op;
-      setTimeout(function() {
-        ele.style.transition = ele.dataset.fxTransition;
-      }, t);
-    } else {
-      fx.transition(0, op, function (v) {ele.style.opacity = v; }, t);
-    }
+
+    ele.dataset.fxOpacity = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
+    if (ele.dataset.fxDisplay) ele.style.display = ele.dataset.fxDisplay;
+    else ele.style.display = 'block';
+  fx.transition(0, ele.dataset.fxOpacity, Number(ele.dataset.fxOpacity) * duration / t, function (v) {
+      ele.style.opacity = v;
+    });
   };
   fx.fadeOut = function (t) {
     if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') return;
     t = def(t, 400);
-    ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
-    ele.dataset.fxTransition = ele.style.transition;
-    ele.dataset.fxOpacity = op = ele.dataset.fxOpacity ||  Number(ele.style.opacity) || 1;
 
-    if (window.requestAnimationFrame) {
-      window.requestAnimationFrame(function() {
-        ele.style.transition = 'opacity ' + t/1000 + 's';
-        ele.style.opacity = op;
-      });
-      ele.style.opacity = 0;
-      setTimeout(function () {
-        ele.style.display = 'none';
-        ele.style.opacity = ele.dataset.fxOpacity;
-        ele.style.transition = ele.dataset.fxTransition
-      }, t);
-    } else {
-      fx.transition(op, 0, function (v) {ele.style.opacity = v;}, t);
-      setTimeout(function () {
-        ele.style.display = 'none';
-        ele.style.opacity = ele.dataset.fxOpacity;
-      }, t);
-    }
+    ele.dataset.fxOpacity = ele.dataset.fxOpacity ||  Number(ele.style.opacity) || 1;
+    ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
+    fx.transition(ele.dataset.fxOpacity, 0, Number(ele.dataset.fxOpacity) * duration / t, function (v) {
+      ele.style.opacity = v;
+    });
+    setTimeout(function () {
+      ele.style.display = 'none';
+    }, t);
   };
   return fx;
 }
