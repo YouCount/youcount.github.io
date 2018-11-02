@@ -68,7 +68,7 @@ function fx(str) {
     t = def(t, 400);
     ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
     ele.dataset.fxTransition = ele.style.transition;
-    ele.dataset.fxOpacity = op = ele.style.opacity? Number(ele.style.opacity): 1;
+    ele.dataset.fxOpacity = op = ele.dataset.fxOpacity ||  Number(ele.style.opacity) || 1;
 
     if (window.requestAnimationFrame) {
       window.requestAnimationFrame(function() {
