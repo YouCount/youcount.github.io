@@ -60,9 +60,11 @@ function fx(str) {
     if(window.getComputedStyle(ele).getPropertyValue('display') !== 'none') return;
     t = def(t, 400);
     
+    var op;
+    ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
     if (ele.dataset.fxDisplay) ele.style.display = ele.dataset.fxDisplay;
     else ele.style.display = 'block';
-  fx.transition(0, 1, duration / t, Date.now(), function (v) {
+  fx.transition(0, op, op * duration / t, Date.now(), function (v) {
       ele.style.opacity = v;
     });
   };
@@ -70,8 +72,10 @@ function fx(str) {
     if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') return;
     t = def(t, 400);
     
+    var op;
+    ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
     ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
-    fx.transition(1, 0, -1 * duration / t, Date.now(), function (v) {
+    fx.transition(op, 0, -1 * op * duration / t, Date.now(), function (v) {
       ele.style.opacity = v;
     });
     setTimeout(function () {
