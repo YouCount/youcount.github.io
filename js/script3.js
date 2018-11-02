@@ -33,22 +33,24 @@ function queryClickListener(ele, func) {
 }
 function fx(str) {
   var ele = document.getElementById(str);
-  var duration = 1000/60;
+  var duration = 1000/60; // Max Fps = 60
   var interval;
   fx.xnor = function(a, b) {
     if ((a && b) || (!a && !b)) return true;
     else return false;
   }
-  fx.transition = function (val, fin, change, func) {
-    if (fx.xnor(fin > val, fin > (val + change))) {
-      func(val + change);
+  fx.transition = function (val, fin, change, prev, func) {
+    var time = Date.now();
+    var c = change * Math.round((time - prev) / duration);
+    if (fx.xnor(fin > val, fin > (val + c))) {
+      func(val + c);
       if (typeof window.requestAnimationFrame == 'function') {
         interval = requestAnimationFrame(function() {
-          fx.transition(val + change, fin, change, func);
+          fx.transition(val + c, fin, change, time, func);
         });
       } else {
         setTimeout(function() {
-          fx.transition(val + change, fin, change, func);
+          fx.transition(val + c, fin, change, time, func);
         }, duration);
       }
     } else {
@@ -59,21 +61,22 @@ function fx(str) {
   fx.fadeIn = function (t) {
     if(window.getComputedStyle(ele).getPropertyValue('display') !== 'none') return;
     t = def(t, 400);
-
-    ele.dataset.fxOpacity = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
+    
+    var op;
+    ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
     if (ele.dataset.fxDisplay) ele.style.display = ele.dataset.fxDisplay;
     else ele.style.display = 'block';
-  fx.transition(0, ele.dataset.fxOpacity, Number(ele.dataset.fxOpacity) * duration / t, function (v) {
+  fx.transition(0, op, op * duration / t, Date.now(), function (v) {
       ele.style.opacity = v;
     });
   };
   fx.fadeOut = function (t) {
     if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') return;
     t = def(t, 400);
-
-    ele.dataset.fxOpacity = ele.dataset.fxOpacity ||  Number(ele.style.opacity) || 1;
+    var op;
+    ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
     ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
-    fx.transition(ele.dataset.fxOpacity, 0, -1 * Number(ele.dataset.fxOpacity) * duration / t, function (v) {
+    fx.transition(op, 0, -1 * op * duration / t, Date.now(), function (v) {
       ele.style.opacity = v;
     });
     setTimeout(function () {
