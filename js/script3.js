@@ -48,7 +48,7 @@ function fx(str) {
   fx.fadeIn = function (t) {
     if(window.getComputedStyle(ele).getPropertyValue('display') !== 'none') return;
     t = def(t, 400);
-    op = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
+    ele.dataset.fxOpacity = op = ele.dataset.fxOpacity || Number(ele.style.opacity) || 1;
     if(window.requestAnimationFrame) {
       window.requestAnimationFrame(function() {
         if (ele.dataset.fxDisplay)ele.style.display = ele.dataset.fxDisplay;
