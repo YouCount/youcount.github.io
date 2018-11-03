@@ -8,6 +8,8 @@ var myLineChart2 = {};
 var myLineChart3 = {};
 var myLineChart4 = {};
 var vids = 5;
+var loadingList = [];
+var loadingInterval = null;
 // just to ensure that the correct page is loaded iframe and http is checked again
 if (!developmentMode) {
   // 1. Check if iframe or http
@@ -425,8 +427,6 @@ document.getElementById('username').addEventListener('keyup', function () {
   }
 });
 
-loadingList = [];
-loadingInterval = null;
 function loading(el) {
   if (el && loadingList.indexOf(el) === -1) {
     if (!loadingList.length) {
