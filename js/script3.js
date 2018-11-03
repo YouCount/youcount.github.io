@@ -260,28 +260,31 @@ function shareFunc() {
   }
 }
 
+var storeScrollY = 0;
 function handleNavButtons(n) {
   if (navState[1]) return;
-  if (navState[0] !== null) {
+  if (navState[0] !== null) { // if nav already open, close everything first
     navState[1] = true;
     document.getElementById('bg1').style.height = '100%';
     document.getElementById('bg1').classList.add('ball');
     document.getElementById('mainPage').style.display = 'block';
-    if (navState[0] === n) {
-      setTimeout(function () {
-        navState = [null, false];
-      }, 500);
-    } else {
-      setTimeout(function () {
-        navState = [null, false];
-        handleNavButtons(n);
-      }, 500);
-    }
     if (navState[0] == 2 || navState[0] == 3) {
       var navStateName = ['help','code'][navState[0] - 2];
       document.getElementById(navStateName + 'Art').style.display = 'none';
       document.getElementById(navStateName + 'Art').style.opacity = '0';
       document.querySelector('.navButtonsCover[data-child="'+ navStateName +'"]').style.backgroundColor = 'transparent';
+      setTimeout(function() {window.scrollTo(0, storeScrollY);}, 500);
+    }
+    // nav closing is complete above.
+    if (navState[0] === n) { // if nav clicked == nav that is already open, the user is just trying to close open nav
+      setTimeout(function () {
+        navState = [null, false];
+      }, 500);
+    } else { // else after nav closing is done, open the newly clicked nav
+      setTimeout(function () {
+        navState = [null, false];
+        handleNavButtons(n); // since nav closing is complete, this will simply open the new nav
+      }, 500);
     }
   } else {
     if (n == 1) {
@@ -290,10 +293,12 @@ function handleNavButtons(n) {
       }
       navState[0] = 1;
     } else if (n == 2 || n == 3) {
+      storeScrollY = window.scrollY;
       var navStateName = ['help','code'][n - 2];
       document.getElementById('bg1').classList.remove('ball');
       document.querySelector('.navButtonsCover[data-child="' + navStateName + '"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
       setTimeout(function () {
+        window.scrollTo(0, 0);
         fx('' + navStateName + 'Art').fadeIn(200);
         document.getElementById('bg1').style.height = 'auto';
         document.getElementById('mainPage').style.display = 'none';
