@@ -266,6 +266,7 @@ function handleNavButtons(n) {
   if (navState[0] !== null) { // if nav already open, close everything first
     navState[1] = true;
     document.getElementById('bg1').style.height = '100%';
+    document.getElementById('bg1').style.position = 'fixed';
     document.getElementById('bg1').classList.add('ball');
     document.getElementById('mainPage').style.display = 'block';
     if (navState[0] == 2 || navState[0] == 3) {
@@ -299,6 +300,7 @@ function handleNavButtons(n) {
       document.querySelector('.navButtonsCover[data-child="' + navStateName + '"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
       setTimeout(function () {
         window.scrollTo(0, 0);
+        document.getElementById('bg1').style.position = 'absolute';
         fx('' + navStateName + 'Art').fadeIn(200);
         document.getElementById('bg1').style.height = 'auto';
         document.getElementById('mainPage').style.display = 'none';
