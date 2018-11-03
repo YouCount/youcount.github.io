@@ -273,7 +273,7 @@ function handleNavButtons(n) {
       document.getElementById(navStateName + 'Art').style.display = 'none';
       document.getElementById(navStateName + 'Art').style.opacity = '0';
       document.querySelector('.navButtonsCover[data-child="'+ navStateName +'"]').style.backgroundColor = 'transparent';
-      setTimeout(function() {window.scrollTo(0, storeScrollY);}, 500);
+      window.scrollTo(0, storeScrollY);
     }
     // nav closing is complete above.
     if (navState[0] === n) { // if nav clicked == nav that is already open, the user is just trying to close open nav
