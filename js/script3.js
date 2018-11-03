@@ -140,71 +140,79 @@ queryClickListener('.suggest', function (v) {
   idClickListener(e, extrabutton);
 });
 
-var tutorialSize = {
-  isChanging: false,
-  change: function() {
-    if (!tutorialSize.isChanging && isTutorialOn[0]) {
-      tutorialSize.isChanging = true;
-      tutorial(isTutorialOn[1] - 1);
-      setTimeout(function(){
-        tutorialSize.isChanging = false;
-      }, 100);
+function tutorial(n) {
+  function toggleTutorial(b) { // if b is true, show tutorial and background, else hide them.
+    if (b) {
+      fx('tutorial').fadeIn();
+      fx('bg2').fadeIn();
+    } else {
+      fx('tutorial').fadeOut();
+      fx('bg2').fadeOut();
     }
   }
-};
-
-function tutorial(n) {
-  if (navState[0])handleNavButtons(navState[0]);
-  isTutorialOn[0] = 1;
-  isTutorialOn[1] = n+1;
-  window.onresize = tutorialSize.change;
+  function toggleZIndex(b) {
+    var zI = b? ['1004', '1004']: ['50', '51']; // if b is true, bring elements to top, else set original zIndex.
+    document.getElementById('input').style.zIndex = zI[0];
+    document.getElementById('suggest').style.zIndex = zI[1];
+  }
+  function showTutStep(show) { // show one of the two tutSteps and hide the other one
+    var hide = show==1? 2: 1; // if show == 1, hide = 2, else show == 2, hence hide = 1
+    document.getElementById('tutStep' + show).style.display = 'block';
+    document.getElementById('tutStep' + hide).style.display = 'none';
+  }
+  function setTutorialPos(elem) { // get bottom pos of elem and set top of tutorial below it.
+    var bottom = (document.getElementById(elem).getBoundingClientRect()).bottom;
+    document.getElementById('tutorial').style.top = (bottom + 35) + 'px'; // extra 35 px for arrow.
+  }
+  var tutorialSize = {
+    isChanging: false,
+    change: function() {
+      if (!tutorialSize.isChanging && isTutorialOn[0]) {
+        tutorialSize.isChanging = true;
+        tutorial(isTutorialOn[1] - 1);
+        setTimeout(function(){
+          tutorialSize.isChanging = false;
+        }, 100);
+      }
+    }
+  }
+  if (navState[0]) handleNavButtons(navState[0]);
+  isTutorialOn = [1, n + 1];
   window.scrollTo(0, 0);
-  var bottom = 0;
   switch (n) {
-  case 0:
-    changeText('username','');
-    document.getElementById('input').style.zIndex = '1004';
-    document.getElementById('tutorial').style.display = 'block';
-    bottom = (document.getElementById('username').getBoundingClientRect()).bottom;
-    document.getElementById('tutorial').style.top = (bottom + 35) + 'px';
-    document.getElementById('bg2').style.display = 'block';
-    document.getElementById('tutStep1').style.display = 'block';
-    document.getElementById('tutStep2').style.display = 'none';
+  case 0: // show tutorial stuff
+    toggleTutorial(true);
+    toggleZIndex(true);
+    showTutStep(1);
+    setTutorialPos('username');
+    changeText('username', '');
     if(!isLive) changeText('actualCount','Tutorial');
     //when clicking on 'Click Here', the username is automatically focussed.
-    document.getElementById('tutorial').addEventListener('click',function(){
+    document.getElementById('tutorial').addEventListener('click', function() {
       if(isTutorialOn[1]===1)
         document.getElementById('username').focus();
     });
-
+    window.onresize = tutorialSize.change;
     break;
-  case 1:
-    document.getElementById('tutStep1').style.display = 'none';
-    document.getElementById('tutStep2').style.display = 'block';
-    bottom = (document.getElementById('username').getBoundingClientRect()).bottom;
-    document.getElementById('tutorial').style.top = (bottom + 35) + 'px';
+  case 1: // show step 2 (this happens after user has clicked on input box)
+    showTutStep(2);
+    setTutorialPos('username');
     break;
-  case 2:
-    document.getElementById('tutStep1').style.display = 'none';
-    document.getElementById('tutStep2').style.display = 'block';
-    document.getElementById('suggest').style.zIndex = '1004';
-    bottom = (document.getElementById('suggest').getBoundingClientRect()).bottom;
-    document.getElementById('tutorial').style.top = (bottom + 35) + 'px';
-    document.getElementById('bg2').style.display = 'block';
+  case 2: // show step 2 below suggest (this happens after user starts typing)
+    showTutStep(2);
+    setTutorialPos('suggest');
     break;
-  case 3:
-    document.getElementById('tutorial').style.display = 'none';
-    document.getElementById('bg2').style.display = 'none';
-    document.getElementById('input').style.zIndex = '50';
-    document.getElementById('suggest').style.zIndex = '51';
-    changeText('username',channelname);
-    isTutorialOn[0] = 0;
-    isTutorialOn[1] = 0;
+  case 3: // hide stuff and reset (this happens after search button or enter is pressed)
+    toggleTutorial(false);
+    toggleZIndex(false);
+    changeText('username', channelname);
+    isTutorialOn = [0, 0];
+    document.getElementById('tutorial').onclick = null;
     window.onresize = null;
     break;
   default:
-    isTutorialOn[0] = 0;
-    isTutorialOn[1] = 0;
+    isTutorialOn = [0, 0];
+    document.getElementById('tutorial').onclick = null;
     window.onresize = null;
     break;
   }
