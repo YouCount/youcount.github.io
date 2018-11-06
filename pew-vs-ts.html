@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>YouCount: YouTube® LIVE Subscriber Count</title>
+<meta name="theme-color" content="#e61919" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e61919">
+<meta name="apple-mobile-web-app-title" content="YouCount">
+<meta name="application-name" content="YouCount">
+<meta name="msapplication-TileColor" content="#e61919">
+<link rel="canonical" href="https://youcount.github.io/" />
+<link rel="amphtml" href="https://youcount.github.io/amp">
+<link rel="manifest" href="/manifest.json">
+<meta charset="utf-8">
+<meta http-equiv="EXPIRES" content="Thu, 10 Jan 2030 12:00:00 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website."/>
+<meta property="og:title" content="YouCount: YouTube® LIVE Subscriber Count"/>
+<meta property="og:description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website." />
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="https://youcount.github.io/images/fblogo.jpg" />
+<meta property="og:site_name" content="YouCount" />
+<meta property="article:author" content="https://www.facebook.com/20manas"/>
+<script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "YouCount: YouTube® LIVE Subscriber Count",
+        "datePublished": "2018-11-03T12:02:41Z",
+    "publisher": {
+      "@type": "Organization",
+      "name":"YouCount",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://youcount.github.io/images/amplogo.jpg",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "author":"Manas Khurana",
+        "image": {
+      "@type": "ImageObject",
+      "url": "https://youcount.github.io/images/fblogo.jpg",
+      "width": 1203,
+      "height": 630
+        },
+    "description":"See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website."
+      }
+</script>
+<style>
+/* Odometer */
+.odometer.odometer-auto-theme,.odometer.odometer-auto-theme .odometer-digit,.odometer.odometer-theme-minimal,.odometer.odometer-theme-minimal .odometer-digit{display:inline-block;position:relative}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;backface-visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0);transform:translateZ(0)}.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s}.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s;-webkit-transform:translateY(0);transform:translateY(0)}
+/*Odometer End*/
+.navButtonsCover .navButtons, #search {
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAd0AAABGCAMAAAC+Nb5oAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA25pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0Nzk5OWVkZC01ZWUyLWU3NGMtYjQzOC1jYjEzNDk5MWUyNGYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkM2MTYxMTk4OEZCMTFFN0E0RkY5QTAwNkRCMTYzMzIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkM2MTYxMTg4OEZCMTFFN0E0RkY5QTAwNkRCMTYzMzIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDY0NUZGRUY4Njc1MTFFN0I5MTdEQTcwMDU2Q0NCMzciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDY0NUZGRjA4Njc1MTFFN0I5MTdEQTcwMDU2Q0NCMzciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5g/RDXAAAACVBMVEX////lLScAAAA8bF9eAAAAA3RSTlP//wDXyg1BAAAEe0lEQVR42uzd2XIbIRAF0Kv+/49OVapScawBerm9iHjeLEuzcAZoGkaCnDacN2Ft7P0N2PiFZDm4VVK7+YvhJuLmK0IKrf1qctuECbYd14M0W8vl5Lf5E3Bpl6PeGTJxlZdT06cPwGVcjWl/yLRV3mCo4i29YRKuxrzLbF1EcZkYle1BwtXYd4lk3HPjUT/gKtZ9+pNou9snsnERxiUHI8W6rIO7SihfF+awMou3UvfhUKGj+wp5lm7uSLFQF2TdRVmcSgjpuHCF95fockL2TUHsi6hAF+Zb0jyuGxdUJela/9mqu31TUHdzn2/ekjqyDmfgzf8eU3djSZnnT+9LIbMeM3X1xfigi0bd7anHdRddeUHiiqgbKcVuXVF0KIEiwfK13BBrFyhmpE8bdRVnZu6VTYmiB13U6/rqri0pNE/3+xKCeNXdDw5VI0VWjpnVMPveNkJX0nSP3S6f95igycBdVN6xuoE9QKObxLu4+uiN6o3jhurScd/rTnA0fUgdkQpD/5n/TleUugicnHXCS3J18Qm6fFzZTlVEGl8DbVZMZdF9/d6eXnx847eNv/qVk3F3TLEoe9aVOaEkLJ8i62pxEcMFBVcOTWkgbMKqPrNu8w5dNS4GtMssXVvzS+qh4slXs64eFwPaZTmEWozFuYwDDNE14GIArpxiLVPowutYp9bdrJg5B1czQnW0+9lr62/T5dR6ydUlTVM26r424i+bdXl62aBr4d0vXMuba/LHzDref18x4qK/Xd7NpNlX1sfn9Tp133hjuCipujpcGBv0z9GFWncbEZtxvbpEXKWuZwVE/QqesC6YuOivuspFo+N0JUcXRNwSXUrLPFXXPb+r5Q3goqBh9gdVwX4Xn6mLxyzUK7XusrLTJl37iEjqeI2n5smKnwbDM3QdeUjqeBedldej+1rP+6XrBm507RwCO1eFtsoLlq6Dt6bqRnXtuU7a+s8or2+Z17OjZXqoVPe8MAMxXMequLC65gQVDZNa18xb1DBveClzCNo4JXQAB++mYRKHrpW3Tle5ljlQ9pauiNRqH3awixhdukbeqbqkVXNYQNI6ZehCfvMTnks1E2+h7rPYUdd5hN0SOWbMpVnY89jxDFrPzIk9t6vXhNEnKtfIIYkX+1bkbl3ZlQMp4FFWpSxe9e6n6jJGiO+65GhWqUAOnS0rMq/WRU7VNSkYhq1e3mUIcaPuG1xxfhiWyC7uu4kQ5z6dTWybsc0P5x+fN5mkeu7hdl0x6NZN3HEOqBgdlepKn65i5u7TdP/sShVNtn4bWTZvUVkr0/rpxfEeyl2qK4pwtXrBTH5xvIVat+qK4ouvP+R7IgPh5CDdrDui4Tar7wseeZu/fftHN5X3R7eMt+gkvpbh/6TbN+Auvce+TkKK9P5iTb5uT3S3SpdV/igDfnTzi7h8BLG8szqHQze1zMsyrTy2QHJ5ZYDuMnXXwFt57Bm/4Vmh25cN7Uns/B0RpfkGSkOu5C0/AU0gUJSAvE5XmnHF+nRCZmL5Pt38RwT32y8BBgDINqoX+oHxQgAAAABJRU5ErkJggg==);
+background-size: auto 100%;
+}
+body {
+background-color:rgb(250,250,250);
+font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 100;
+outline:none;
+margin:0;
+overflow-x: hidden;
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+-webkit-transition: background-color 0.5s linear;
+transition: background-color 0.5s linear;
+}
+img {
+color:transparent;
+}
+ul {
+list-style-type:none;
+}
+#menu {
+position:fixed;
+width:100vw;
+height:50px;
+box-shadow: 0 0 20px -4px black;
+left:0;
+top:0;
+z-index:1001;
+background-color:rgb(230,25,25);
+backface-visibility: hidden;
+}
+.navButtonsCover {
+position:relative;
+height:100%;
+width:15vh;
+min-height:40px;
+float:right;
+top:0;
+cursor:pointer;
+-webkit-transition: background-color 0.5s linear;
+transition: background-color 0.5s linear;
+}
+.navButtonsCover .navButtons {
+position: relative;
+top:10%;
+left:50%;
+-webkit-transform:translate(-50%, 7.5px);
+transform:translate(-50%, 7.5px);
+height:25px;
+width:25px;
+}
+.navButtonsCover[data-child="logo"]{
+float:left;
+}
+#logo {
+width: 36px;
+background-position: 0 0;
+}
+#help {
+background-position: -40px 0;
+}
+#code {
+background-position: -71.5px 0;
+}
+#share {
+background-position: -107px 0;
+}
+#sharebox {
+position:fixed;
+top:60px;
+right:5px;
+margin:0;
+padding:0;
+list-style-type:none;
+}
+.share {
+height:50px;
+width:50px;
+margin-bottom:5px;
+border-radius:50%;
+cursor:pointer;
+display:none;
+/*background-image: url(/images/social.png);*/
+/*This is done at the end of script3.js so image is downloaded at the very last.*/
+}
+#tw {
+background-position: -50px 0;
+}
+#lnkdIn {
+background-position: -100px 0;
+}
+#tb {
+background-position: 0 -50px;
+}
+#rdit {
+background-position: -50px -50px;
+}
+#link {
+background-position: -100px -50px;
+}
+#pageUrl {
+position:fixed;
+top:20%;
+z-index:1010;
+background-color:white;
+box-shadow: 0 0 20px -4px black;
+font-size:35px;
+display:none;
+}
+#pageUrl input {
+border:none;
+outline:none;
+font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 100;
+font-size:30px;
+background-color:gray;
+color:white;
+}
+#pageUrl, #pageUrl input {
+text-align:center;
+width:80%;
+left:10%;
+border-radius:4px;
+padding: 0;
+margin: 0;
+padding-top: 20px;
+padding-bottom: 20px;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+.ball {
+-webkit-transform: translate3d(0, -100%, 0) scale(0, 0);
+transform: translate3d(0, -100%, 0) scale(0, 0);
+opacity: 0;
+}
+#bg1 {
+display: block;
+overflow-x: hidden;
+-webkit-transition: all 0.5s linear;
+transition: all 0.5s linear;
+min-height: 100%;
+width: 100%;
+right: 0;
+top:0;
+position: fixed;
+background-color:white;
+z-index:501;
+}
+#bg1 div {
+margin-top: 60px;
+-webkit-transition: all 0.5s;
+transition: all 0.5s;
+opacity: 0;
+display: none;
+}
+#bg1 h2 {
+text-align:center;
+font-size:6vw;
+margin:0;
+}
+#bg1 p, #bg1 ol {
+font-size:20px;
+text-align:left;
+margin-left:20px;
+margin-right:20px;
+}
+#bg1 a {
+color:rgb(230,25,25);
+font-weight: 600;
+}
+#bg1 .extrabutton {
+display: block;
+}
+#bg2 {
+display: none;
+left:0;
+top:0;
+background-color:rgba(0,0,0,0.5);
+z-index: 1001;
+height: 100%;
+width: 100%;
+position:fixed;
+}
+#mainPage {
+position:absolute;
+width:100%;
+left:0;
+bottom:0;
+top:50px;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+}
+.card {
+position:relative;
+display: block;
+float: left;
+width: calc(50% - 20px);
+/* menu (50px) + margin (20px) + padding (30px + 30px) + 20px extra space (so bottom is within viewport)  = 140px */
+height: calc(100vh - 150px);
+margin: 20px 10px;
+font-size:1vw;
+box-shadow: 0 0 20px -4px black;
+border-radius:4px !important;
+background-color:white;
+padding-top: 30px;
+padding-bottom: 30px;
+backface-visibility: hidden;
+}
+.actualCount {
+font-size: 8vw !important;
+}
+.dp {
+float: left;
+height: 8vw;
+width: 8vw;
+margin-left: 10px;
+margin-right: 10px;
+border-radius: 6vw; /*for both 8vw and 12vw sizes */
+cursor: pointer;
+}
+.username {
+border:none;
+outline:none;
+display: inline-block;
+color:black;
+font-size:2.5vw;
+font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 100;
+text-align:center;
+height:8vw;
+width:calc(42vw - 50px); /* total card width (50vw - 20px) - dp width (8vw) - dp margin (10px + 10px) - 10px extra*/
+padding:0;
+background-color:transparent;
+-webkit-transition:width 0.25s;
+transition:width 0.25s;
+border-radius:3px 0 0 3px;
+}
+@media only screen and (max-width: 800px), screen and (orientation: portrait) {
+  .navButtonsCover {
+    width: 25%;
+  }
+  #bg1 h2 {
+    font-size: 12vw;
+  }
+  #pageUrl, #pageUrl input {
+    width:100%;
+    left: 0;
+  }
+  .card {
+    width: calc(100% - 10px);
+    margin: 10px 5px;
+    height: auto;
+    font-size: 3vw;
+  }
+  .dp {
+      width: 12vw;
+      height: 12vw;
+  }
+  .username {
+    height: 12vw;
+    width: calc(100% - 30px - 12vw); /* card width (100% - 10px) - dp width (12vw) - dp margins (10px + 10px) */
+  }
+  .actualCount {
+    font-size: 15vw !important;
+  }
+}
+</style>
+</head>
+<body>
+<section id="menu">
+    <div class="navButtonsCover" data-child="logo" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
+        <div id="logo" class="navButtons" alt="YouCount Logo/Homepage"></div>
+    </div>
+    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(4)})()">
+        <div id="share" class="navButtons" alt="Share button"></div>
+    </div>
+    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(3)})()">
+        <div id="code" class="navButtons" alt="Get YouCount embed or widget"></div>
+    </div>
+    <div class="navButtonsCover" data-child="help" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(2)})()">
+        <div id="help" class="navButtons" alt="Help button"></div>
+    </div>
+      <ul id="sharebox">
+        <li id="fb" class="share"></li>
+        <li id="tw" class="share"></li>
+        <li id="lnkdIn" class="share"></li>
+        <li id="tb" class="share"></li>
+        <li id="rdit" class="share"></li>
+        <li id="link" class="share"></li>
+      </ul>
+</section>
+<span id="pageUrl">
+Shareable Link
+<br><input type="text" value="" onclick="this.select()" readonly />
+</span>
+<div class="bg ball" id="bg1">
+    <div id="helpArt">
+      <h2>About YouCount</h2>
+      <p>
+        YouTube updates the number of subscribers a channel has (its subscriber count) after a long time.
+      </p>
+      <p>
+        On YouCount, the subscriber count, of any YouTube channel, is live and is updated every second!
+      </p>
+      <p>SHOW STATS button can be clicked to see extra insights of the YouTube channel.</p>
+      <p>YouCount has been specifically designed using the Material Design language to make it look awesome! It is also optimized for mobile devices and has been made to work even with older browsers.
+      </p>
+      <p>To know more or to get in contact:
+      <ol>
+          <li><a href="//github.com/YouCount/youcount.github.io">Visit the GitHub Project site</a></li>
+          <li>Send an Email: <a id="email"></a></li>
+      </ol>
+      </p>
+      <p>Support the website by sharing it with your friends!</p>
+      <input type="button" class="extrabutton" value="How to Use" onclick="tutorial(0)">
+    </div>
+    <div id="codeArt">
+      <h2>Embed This!</h2>
+      <p>
+      Copy the code below and paste it where you want to embed this:</p>
+      <p><code id="embedUrl"></code></p>
+      <p>
+      Adjust its size by changing the "height" and "width" attribute of the iframe.
+      The size will automatically adjust to the size of the iframe.
+      </p>
+    </div>
+</div>
+<div class="bg" id="bg2"></div>
+  
+<div id="mainPage">
+    <section class="card">
+        <img class="dp" alt="Channel Image">
+        <span class="username" >Loading...</span>
+        <span class="actualCount">Loading...</span>
+    </section>
+    <section class="card">
+        <img class="dp" alt="Channel Image">
+        <div class="username" >Loading...</div><br>
+        <span class="actualCount">Loading...</span>
+    </section>
+</div>
+<script>
+var ids = ['UC-lHJZR3Gqxm24_Vd_AJ5Yw', 'UCq-Fj5jknLsUf-MWSy4_brA'];
+var isLive = 0;
+var developmentMode = true;
+var intervalId = null;
+var shareswitch = 0; // 0 === share stuff hidden, 1 === share stuff is in transition, 2 === share stuff is showing
+var navState = [null, false];
+var loadingList = [];
+var loadingInterval = null;
+// -----select APIkey randomly----
+var API = {
+    keys: ['AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U'],
+    index: -1,
+    get key() {
+        if (API.index === -1) API.index = Math.round(Math.random() * (API.keys.length - 1));
+        else if (API.index === API.keys.length) API.index = 0;
+        return API.keys[API.index++];
+    }
+}
+// ------ Assigns forEach to NodeList if not already available (minimum requirement  = ES5)------
+if (window.NodeList && !NodeList.prototype.forEach) {
+  NodeList.prototype.forEach = function (callback, thisArg) {
+    thisArg = def(thisArg, window);
+    for (var i = 0; i < this.length; i++) {
+      callback.call(thisArg, this[i], i, this);
+    }
+  };
+}
+// ----AJAX function for code reusability----
+function ajx(url, success, failure) {
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (request.readyState === 4) {
+      if (request.status === 200) {
+        if (success)success(JSON.parse(request.responseText));
+      } else {
+        noConnection('ajx failed to load: ' + url, true);
+        if (failure)failure(request.statusText);
+      }
+    }
+  };
+  request.open('GET', url);
+  request.send();
+}
+// ----text changing function for code reusability----
+function changeText(elem, changeVal) {
+  if (typeof(elem)==='string') {
+    elem = document.getElementById(elem);
+  }
+  if (elem.nodeName.toUpperCase()==='INPUT') {
+    elem.value = String(changeVal).trim();
+  } else {
+    elem.textContent = String(changeVal).trim();
+  }
+}
+
+function getText(elem) {
+  if (typeof(elem)==='string') {
+    elem = document.getElementById(elem);
+  }
+  if (elem.nodeName.toUpperCase()==='INPUT') {
+    return String(elem.value).trim();
+  } else {
+    return String(elem.textContent).trim();
+  }
+}
+
+function def(ob, val){
+  if (typeof(ob)==='undefined') return val;// if val not declared or val = undefined.
+  else return ob;
+}
+
+function noConnection(e, noStop) {
+  e = def(e, 'No error provided!');
+  noStop = def(noStop, false);
+  if (developmentMode) {
+    console.log('noConnection:' + e);
+  } else if (!noStop) {
+    changeText('actualCount','No Internet');
+    var arr = ['totalViews', 'totalVideos', 'pubDate', 'username'];
+    for (var x = 0; x < arr.length; x++) {
+      changeText(document.getElementById(arr[x]), 'No Internet');
+    }
+    changeText('username','Refresh the page');
+    document.getElementById('dp').style.display = 'none';
+    clearInterval(intervalId);
+  }
+}
+
+function idClickListener(ele, func) {
+  document.getElementById(ele).addEventListener('click', func);
+}
+
+function queryClickListener(ele, func) {
+  var elems = document.querySelectorAll(ele);
+  elems.forEach(function (e) {
+    e.addEventListener('click', func);
+  });
+}
+function fx(str) {
+  var ele = document.getElementById(str);
+  var duration = 1000/60; // Max Fps = 60
+  fx.xnor = function (a, b) {
+    if ((a && b) || (!a && !b)) return true;
+    else return false;
+  }
+  fx.transition = function (val, fin, change, prev, func) {
+    var time = Date.now();
+    var c = change * Math.round((time - prev) / duration);
+    if (fx.xnor(fin > val, fin > (val + c))) {
+      func(val + c);
+      if (typeof window.requestAnimationFrame == 'function') {
+        requestAnimationFrame(function() {
+          fx.transition(val + c, fin, change, time, func);
+        });
+      } else {
+        setTimeout(function() {
+          fx.transition(val + c, fin, change, time, func);
+        }, duration);
+      }
+    } else {
+      func(fin);
+    }
+  };
+  fx.fadeIn = function (t) {
+    if (window.getComputedStyle(ele).getPropertyValue('display') !== 'none') return;
+    t = def(t, 400);
+    
+    var op;
+    ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
+    if (ele.dataset.fxDisplay) ele.style.display = ele.dataset.fxDisplay;
+    else ele.style.display = 'block';
+  fx.transition(0, op, op * duration / t, Date.now(), function (v) {
+      ele.style.opacity = v;
+    });
+  };
+  fx.fadeOut = function (t) {
+    if (window.getComputedStyle(ele).getPropertyValue('display') === 'none') return;
+    t = def(t, 400);
+    
+    var op;
+    ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
+    ele.dataset.fxDisplay = window.getComputedStyle(ele).getPropertyValue('display');
+    fx.transition(op, 0, -1 * op * duration / t, Date.now(), function (v) {
+      ele.style.opacity = v;
+    });
+    setTimeout(function () {
+      ele.style.display = 'none';
+    }, t);
+  };
+  return fx;
+}
+// this is to hide email from spam bots
+var emailParts = ['manas.khurana20', 'gmail', 'com', '&#46;', '&#64;'];
+document.getElementById('email').innerHTML = emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2];
+document.getElementById('email').href = 'mailto:' + getText('email');
+
+var clickList = [
+  ['fb', function () {
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
+  }],
+  ['tw', function () {
+    window.open('https://twitter.com/share?text=' + getText('username') + ' now has  ' + actualCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' subscribers!&url= ' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&hashtags=YouCount', '_blank');
+  }],
+  ['lnkdIn', function () {
+    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + '\'s%20Live%20Subscriber%20Count&source=YouCount', '_blank');
+  }],
+  ['tb', function () {
+    window.open('http://www.tumblr.com/share/link?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
+  }],
+  ['rdit', function () {
+    window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + 's%20Live%20Subscriber%20Count', '_blank');
+  }],
+  ['link', linkshare],
+  ['bg2', function () {
+    fx('pageUrl').fadeOut(250);
+    fx('bg2').fadeOut(500);
+  }]
+];
+clickList.forEach(function (e) {
+  idClickListener(e[0], e[1]);
+});
+
+// shareswitch is used to record the state of share. Go to its defn on top to know what each state represents
+// the below function behaves based on the state of share, as follows:
+// if shareswitch === 0, show the share stuff; set shareswitch = 1; after transition, set shareswitch = 2
+// if shareswitch === 1, exit
+// if shareswitch === 2, hide share stuff; set shareswitch = 1; after transition, set shareswitch = 0
+// this prevents undesired behaviour, when body or button is clicked during transition.
+function shareFunc() {
+  if (shareswitch === 1) return;
+  var t = 200; // time in milliconds
+  var shareElems = document.querySelectorAll('.share');
+  switch (shareswitch) {
+  case 0:
+    shareswitch = 1;
+    shareElems.forEach(function (e, i) {
+      setTimeout(function () {
+        fx(e.id).fadeIn(t);
+      }, 40 * (i + 1));
+    });
+    setTimeout(function () {
+      shareswitch = 2;
+      queryClickListener('body', shareFunc);
+      navState[1] = false;
+    }, t + (shareElems.length * 40));
+    break;
+  case 2:
+    shareswitch = 1;
+    navState[0] = null;
+    shareElems.forEach(function (e) {
+      fx(e.id).fadeOut(t);
+    });
+    setTimeout(function () {
+      shareswitch = 0;
+      document.body.removeEventListener("click", shareFunc);
+      navState[1] = false;
+    }, t);
+    break;
+  default:break;
+  }
+}
+
+var storeScrollY = 0;
+function handleNavButtons(n) {
+  if (navState[1]) return;
+  if (navState[0] !== null) { // if nav already open, close everything first
+    navState[1] = true;
+    document.getElementById('bg1').style.height = '100%';
+    document.getElementById('bg1').style.position = 'fixed';
+    document.getElementById('bg1').classList.add('ball');
+    document.getElementById('mainPage').style.display = 'block';
+    if (navState[0] == 2 || navState[0] == 3) {
+      var navStateName = ['help','code'][navState[0] - 2];
+      document.getElementById(navStateName + 'Art').style.display = 'none';
+      document.getElementById(navStateName + 'Art').style.opacity = '0';
+      document.querySelector('.navButtonsCover[data-child="'+ navStateName +'"]').style.backgroundColor = 'transparent';
+      window.scrollTo(0, storeScrollY);
+    }
+    // nav closing is complete above.
+    if (navState[0] === n) { // if nav clicked == nav that is already open, the user is just trying to close open nav
+      setTimeout(function () {
+        navState = [null, false];
+      }, 500);
+    } else { // else after nav closing is done, open the newly clicked nav
+      setTimeout(function () {
+        navState = [null, false];
+        handleNavButtons(n); // since nav closing is complete, this will simply open the new nav
+      }, 500);
+    }
+  } else {
+    if (n == 1) {
+      if (location.hash) {
+        location.href = location.href.split(location.hash)[0];
+      }
+      navState[0] = 1;
+    } else if (n == 2 || n == 3) {
+      storeScrollY = window.scrollY;
+      var navStateName = ['help','code'][n - 2];
+      document.getElementById('bg1').classList.remove('ball');
+      document.querySelector('.navButtonsCover[data-child="' + navStateName + '"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+        document.getElementById('bg1').style.position = 'absolute';
+        fx('' + navStateName + 'Art').fadeIn(200);
+        document.getElementById('bg1').style.height = 'auto';
+        document.getElementById('mainPage').style.display = 'none';
+      }, 500);
+      setTimeout(function () {
+        navState[1] = false;
+      }, 700);
+      navState = [n, true];
+    } else if (n == 4) {
+      shareFunc(true);
+      navState = [4, true];
+    }
+  }
+}
+
+function loading(el) {
+  if (el && loadingList.indexOf(el) === -1) {
+    if (!loadingList.length) {
+      loadingInterval = setInterval(function() {
+        loading();
+      }, 500);
+    }
+    changeText(el,'Loading.');
+    loadingList.push(el);
+  } else {
+    if (!loadingList.length) {
+      clearInterval(loadingInterval);
+    } else {
+      loadingList = loadingList.filter(function(e,i){
+        var loadList = ['Loading.','Loading..','Loading...'];
+        var x = loadList.indexOf(getText(e));
+        if (x===0 || x===1) {
+          changeText(e,loadList[x+1]);
+          return true;
+        } else if (x===2) {
+          changeText(e,loadList[0]);
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
+  }
+}
+
+// this shows/hides the sharable link of the page.
+function linkshare() {
+  fx('pageUrl').fadeIn(250);
+  fx('bg2').fadeIn(500);
+  if (!username || !location.hash.split('#!/')[1])changeText(document.querySelector('#pageUrl input'),'https://youcount.github.io/');
+}
+
+var elems = {
+    dp: [], username: [], count: [],
+    initialize: function () {
+        if (elems.username !== []) return;
+        elems.dp = document.querySelectorAll('.dp');
+        elems.username = document.querySelectorAll('.username');
+        elems.count = document.querySelectorAll('.actualCount');
+    }, showDp: function (i) {
+        elems.initialize();
+        elems.dp[i].style.display = 'block';
+    }
+};
+
+function getInfo() {
+    elems.initialize();
+    for (var i = 0; i < 2; i++) {
+        var u = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + ids[i] + '&fields=items/snippet&maxResults=1&key=';
+        try {
+            ajx(u + API.key, function (info) {
+                if (!info || !info.items || !info.items[0].snippet.publishedAt) throw 'getInfo: undef info.items';
+                
+                changeText(elems.username[i], info.items[0].snippet.title);
+
+                elems.showDp(1);
+                elems.dp[i] = info.items[0].snippet.thumbnails.default.url;
+
+                ga('send', 'event', 'YTChannel', 'updated');
+            }, function () {
+                throw 'getInfo: No response from ajx request';
+            });
+        } catch (e) {
+            noConnection(e);
+        }
+    }
+}
+
+function live() {
+    for (var i = 0; i < 2; i++) {
+        var u = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + ids[i] + '&fields=items/statistics/subscriberCount&key=';
+        try {
+            ajx(u + API.key, function(info) {
+                if (!info || !info.items || !info.items[0].statistics.subscriberCount) throw 'live: undef info.items';
+
+                var count = info.items[0].statistics.subscriberCount;
+                if (isLive <= i) {
+                    new Odometer({ // eslint-disable-line no-new
+                        el: elems.count[i],
+                        value: count,
+                        format: '(,ddd)',
+                        theme: 'minimal'
+                    });
+                    isLive = i + 1;
+                } else {
+                    changeText(elems.count[i], count);
+                }
+            });
+        } catch (e) {
+            noConnection(e, true);
+        }
+    }
+}
+
+function main() {
+    getInfo();
+    //intervalId = setInterval(live, 5000);
+}
+
+// this code below, which is not inside any function, starts in the very beginning.
+
+if (!developmentMode) {
+  // 1. Check if iframe or http
+  try {
+    if (window.top !== window.self || window.top.location !== window.self.location) {
+      window.top.location = window.self.location;
+    } else {
+      // 2. this starts the processes in the beginning.
+      main();
+    }
+  } catch(e) {
+    noConnection(e);
+  }
+} else {
+  // 2. this starts the processes in the beginning.
+  main();
+}
+
+window.onload = function () {
+    //downloads social and assigns it as background at the end.
+  document.querySelectorAll('.share').forEach(function (e) {
+    e.style.backgroundImage = 'url(/images/social.png)';
+  });
+}
+</script>
+</body>
+</html>
