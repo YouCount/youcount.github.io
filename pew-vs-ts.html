@@ -719,10 +719,13 @@ function linkshare() {
 var elems = {
     dp: [], username: [], count: [],
     initialize: function () {
-        if (elems.username !== []) return;
-        elems.dp = document.querySelectorAll('.dp');
-        elems.username = document.querySelectorAll('.username');
-        elems.count = document.querySelectorAll('.actualCount');
+        if (elems.username.length !== 0) return;
+        var dp = document.querySelectorAll('.dp');
+        var username = document.querySelectorAll('.username');
+        var count = document.querySelectorAll('.actualCount');
+        elems.dp = [dp[0], dp[1]];
+        elems.username = [username[0], username[1]];
+        elems.count = [count[0], count[1]];
     }, showDp: function (i) {
         elems.initialize();
         elems.dp[i].style.display = 'block';
@@ -731,7 +734,7 @@ var elems = {
 
 function getInfo() {
     elems.initialize();
-    for (var i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         var u = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + ids[i] + '&fields=items/snippet&maxResults=1&key=';
         try {
             ajx(u + API.key, function (info) {
