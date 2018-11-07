@@ -742,8 +742,8 @@ function getInfo() {
                 
                 changeText(elems.username[i], info.items[0].snippet.title);
 
-                elems.showDp(1);
-                elems.dp[i] = info.items[0].snippet.thumbnails.default.url;
+                elems.showDp(i);
+                (elems.dp[i]).src = info.items[0].snippet.thumbnails.default.url;
 
                 ga('send', 'event', 'YTChannel', 'updated');
             }, function () {
@@ -756,7 +756,7 @@ function getInfo() {
 }
 
 function live() {
-    for (var i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         var u = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + ids[i] + '&fields=items/statistics/subscriberCount&key=';
         try {
             ajx(u + API.key, function(info) {
