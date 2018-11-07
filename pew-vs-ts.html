@@ -348,7 +348,7 @@ border-radius:3px 0 0 3px;
 </section>
 <span id="pageUrl">
 Shareable Link
-<br><input type="text" value="" onclick="this.select()" readonly />
+<br><input type="text" value="https://youcount.github.io/pew-vs-ts.html" onclick="this.select()" readonly />
 </span>
 <div class="bg ball" id="bg1">
     <div id="helpArt">
@@ -369,7 +369,6 @@ Shareable Link
       </ol>
       </p>
       <p>Support the website by sharing it with your friends!</p>
-      <input type="button" class="extrabutton" value="How to Use" onclick="tutorial(0)">
     </div>
     <div id="codeArt">
       <h2>Embed This!</h2>
@@ -756,14 +755,14 @@ function getInfo() {
 }
 
 function live() {
-    for (let i = 0; i < 2; i++) {
-        var u = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + ids[i] + '&fields=items/statistics/subscriberCount&key=';
-        try {
+    try {
+        for (let i = 0; i < 2; i++) {
+            var u = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + ids[i] + '&fields=items/statistics/subscriberCount&key=';
             ajx(u + API.key, function(info) {
                 if (!info || !info.items || !info.items[0].statistics.subscriberCount) throw 'live: undef info.items';
 
                 var count = info.items[0].statistics.subscriberCount;
-                if (isLive <= i) {
+                if (isLive != 2) {
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.count[i],
                         value: count,
@@ -775,15 +774,16 @@ function live() {
                     changeText(elems.count[i], count);
                 }
             });
-        } catch (e) {
-            noConnection(e, true);
         }
+    } catch (e) {
+        noConnection(e, true);
     }
 }
 
 function main() {
     getInfo();
     //intervalId = setInterval(live, 5000);
+    changeText('embedUrl', '<iframe src="https://youcount.github.io/e/#!/PewDiePie" height="100" width="250" frameborder="0"></iframe>');
 }
 
 // this code below, which is not inside any function, starts in the very beginning.
