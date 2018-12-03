@@ -1,5 +1,5 @@
 /* global noConnection:false, Promise:false */
-var CACHE_NAME = 'youcount-cache-1.4';
+var CACHE_NAME = 'youcount-cache-1.5';
 var urlsToCache = [
   '/index.html',
   '/images/social.png',
