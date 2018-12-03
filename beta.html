@@ -63,7 +63,7 @@ font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubu
 font-weight: 100;
 outline:none;
 margin:0;
-overflow-x: hidden;
+overflow-x: hidden !important;
 -webkit-tap-highlight-color:rgba(0,0,0,0);
 -webkit-transition: background-color 0.5s linear;
 transition: background-color 0.5s linear;
@@ -832,7 +832,6 @@ function getValue(value) {
   document.getElementById('username').blur();
   rawInput = value;
   queryName();
-  intervalId = setInterval(live, 1000);
 }
 function noConnection(e, noStop) {
   e = def(e, 'No error provided!');
