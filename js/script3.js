@@ -128,7 +128,7 @@ clickList.forEach(function (e) {
 // only for single ids is a separate function created because getElementById is faster than
 // querySelectorAll and there are a lot of single ids being assigned onclicks.
 queryClickListener('.suggest', function (v) {
-  if (v.target.dataset.id && ['Loading.','Loading..','Loading...'].indexOf(v.target.innerHTML) === -1) {
+  if (internet && v.target.dataset.id && ['Loading.','Loading..','Loading...'].indexOf(v.target.innerHTML) === -1) {
     username = v.target.dataset.id;
     var send = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + v.target.dataset.id + '&fields=items/snippet&type=channel&maxResults=1&key=';
     

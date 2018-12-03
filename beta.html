@@ -888,7 +888,6 @@ function queryName(query) {
       if (notFound === 1) {// show HTML elements if previously hidden
         document.getElementById('actualCount').style.display = 'inline-block';
         document.getElementById('milestoneBox').style.display = 'inline';
-        intervalId = setInterval(live, 1000);
         notFound = 0;
       }
       document.getElementById('dp').style.display = 'block';
@@ -911,6 +910,7 @@ function queryName(query) {
       }
       // running live manually to get updated info immediately
       live();
+      intervalId = setInterval(live, 1000);
 
       // set date of starting youtube with months in text (jan, feb, etc)
       var pubDate = e.items[0].snippet.publishedAt.split('T')[0];
