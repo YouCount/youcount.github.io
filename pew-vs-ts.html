@@ -750,6 +750,7 @@ var rates = {
     add: function (i, a) {
         rates.vals[i] = ((rates.vals[i] * rates.divisor[i]) + a) / (rates.divisor[i] + 1);
         rates.divisor[i]++;
+        rates.vals[i] = Number(rates.vals[i].toFixed(2));
     }
 }
 
@@ -800,32 +801,26 @@ function live() {
                     });
                     isLive = i + 1;
                 } else {
-                    rates.add(i, Number(getNum(elems.count[i])) - Number(count[i]));
+                    rates.add(i, Number(count[i]) - Number(getNum(elems.count[i])));
                     changeText(elems.count[i], count[i]);
                     changeText(elems.rate[i], rates.vals[i]);
                 }
+                if ((i === 0 && !isNaN(count[1])) || (i === 1 && !isNaN(count[0]))) {
+                    var countGapEle = document.getElementById('countGap');
+                    var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
+                    if (isLive < 3) {
+                        new Odometer({ // eslint-disable-line no-new
+                            el: countGapEle,
+                            value: countGapVal,
+                            format: '(,ddd)',
+                            theme: 'minimal'
+                        });
+                        isLive = 3;
+                    } else {
+                        changeText(countGapEle, countGapVal);
+                    }
+                }
             });
-        }
-        var countGapEle = document.getElementById('countGap');
-        var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
-        console.log(count);
-        console.log(count[0]);
-        console.log(count[1]);
-        console.log(Number(count[0]));
-        console.log(Number(count[1]));
-        console.log(Number(count[0]) - Number(count[1]));
-        console.log(Math.abs(Number(count[0]) - Number(count[1])));
-        console.log(countGapVal);
-        if (isLive < 3) {
-            new Odometer({ // eslint-disable-line no-new
-                el: countGapEle,
-                value: countGapVal,
-                format: '(,ddd)',
-                theme: 'minimal'
-            });
-            isLive = 3;
-        } else {
-            changeText(countGapEle, countGapVal);
         }
     } catch (e) {
         noConnection(e, true);
