@@ -802,13 +802,18 @@ function live() {
                 } else {
                     rates.add(Number(getNum(elems.count[i])) - Number(count[i]));
                     changeText(elems.count[i], count[i]);
-                    changeText(elems.rate[i], rates.val[i]);
+                    changeText(elems.rate[i], rates.vals[i]);
                 }
             });
         }
         var countGapEle = document.getElementById('countGap');
         var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
-        console.log(count);
+        console.log(count[0]);
+        console.log(count[0]);
+        console.log(Number(count[0]));
+        console.log(Number(count[1]));
+        console.log(Number(count[0]) - Number(count[1]));
+        console.log(Math.abs(Number(count[0]) - Number(count[1])));
         console.log(countGapVal);
         if (isLive < 3) {
             new Odometer({ // eslint-disable-line no-new
