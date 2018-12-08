@@ -732,36 +732,26 @@ function linkshare() {
 }
 
 var elems = {
-    dp: [], username: [], count: [], rate: [], store: [[], []],
+    dp: [], username: [], count: [], rate: [],
     initialize: function () {
         if (elems.username.length !== 0) return;
-        var dp = document.getElementsByClassName('dp');
-        var username = document.getElementsByClassName('username');
-        var count = document.getElementsByClassName('actualCount');
-        var rates = document.getElementsByClassName('rate')
-        elems.dp = [dp[0], dp[1]];
-        elems.username = [username[0], username[1]];
-        elems.count = [count[0], count[1]];
-        elems.rate = [rates[0],rates[1]];
+        elems.dp = document.getElementsByClassName('dp');
+        elems.username = document.getElementsByClassName('username');
+        elems.count = document.getElementsByClassName('actualCount');
+        elems.rate = document.getElementsByClassName('rate');
     }, showDp: function (i) {
         elems.initialize();
         elems.dp[i].style.display = 'block';
-    }, avg: function (i) {
-        elems.initialize();
-        if (!elems.store[i][2]) {
-            if (!elems.store[i][1]) { // initialization
-                elems.store[i][1] = 1;
-            } // else return value at end
-        } else { // else find avg
-            elems.store[i][0] *= elems.store[i][1];
-            elems.store[i][0] += elems.store[i][2];
-            elems.store[i][1] += 1;
-            elems.store[i][0] /= elems.store[i][1];
-            elems.store[i].pop();
-        }
-        return elems.store[i][0];
     }
 };
+var rates = {
+    vals: [0, 0],
+    divisor: 0,
+    add: function (i, a) {
+        rates.vals[i] = ((rates.vals[i] * divisor) + a) / (divisor + 1);
+        divisor++;
+    }
+}
 
 function getInfo() {
     elems.initialize();
@@ -795,7 +785,6 @@ function live() {
                 if (!info || !info.items || !info.items[0].statistics.subscriberCount) throw 'live: undef info.items';
 
                 count[i] = info.items[0].statistics.subscriberCount;
-                elems.store[i].push(Number(getNum(elems.count[i])) - Number(count[i]));
                 if (isLive < 2) {
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.count[i],
@@ -805,19 +794,21 @@ function live() {
                     });
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.rate[i],
-                        value: elems.avg(i),
+                        value: 0,
                         format: '(,ddd)',
                         theme: 'minimal'
                     });
                     isLive = i + 1;
                 } else {
-                    changeText(elems.count[i], count);
-                    changeText(elems.rate[i], elems.avg(i));
+                    rates.add(Number(getNum(elems.count[i])) - Number(count[i]));
+                    changeText(elems.count[i], count[i]);
+                    changeText(elems.rate[i], rates.val[i]);
                 }
             });
         }
         var countGapEle = document.getElementById('countGap');
         var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
+        console.log(count);
         if (isLive < 3) {
             new Odometer({ // eslint-disable-line no-new
                 el: countGapEle,
