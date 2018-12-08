@@ -748,8 +748,8 @@ var rates = {
     vals: [0, 0],
     divisor: 0,
     add: function (i, a) {
-        rates.vals[i] = ((rates.vals[i] * divisor) + a) / (divisor + 1);
-        divisor++;
+        rates.vals[i] = ((rates.vals[i] * rates.divisor) + a) / (rates.divisor + 1);
+        rates.divisor++;
     }
 }
 
@@ -809,6 +809,7 @@ function live() {
         var countGapEle = document.getElementById('countGap');
         var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
         console.log(count);
+        console.log(countGapVal);
         if (isLive < 3) {
             new Odometer({ // eslint-disable-line no-new
                 el: countGapEle,
