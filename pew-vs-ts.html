@@ -750,7 +750,7 @@ var rates = {
     add: function (i, a) {
         rates.vals[i] = ((rates.vals[i] * rates.divisor[i]) + a) / (rates.divisor[i] + 1);
         rates.divisor[i]++;
-        rates.vals[i] = Number(rates.vals[i].toFixed(2));
+        rates.vals[i] = Number(parseFloat(rates.vals[i]).toFixed(2));
     }
 }
 
@@ -829,7 +829,8 @@ function live() {
 
 function main() {
     getInfo();
-    //intervalId = setInterval(live, 5000);
+    live();
+    intervalId = setInterval(live, 1000);
     changeText('embedUrl', '<iframe src="https://youcount.github.io/e/#!/PewDiePie" height="100" width="250" frameborder="0"></iframe>');
 }
 
