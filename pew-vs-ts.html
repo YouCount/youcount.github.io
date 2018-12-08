@@ -473,6 +473,15 @@ function getText(elem) {
   }
 }
 
+function getNum(el) {
+    el = getText(el);
+    var ret = '';
+    for (var i = 0; i < el.length; i++) {
+        if (/[0-9]/.test(el[i])) ret += el[i];
+    }
+    return ret;
+}
+
 function def(ob, val){
   if (typeof(ob)==='undefined') return val;// if val not declared or val = undefined.
   else return ob;
@@ -786,7 +795,7 @@ function live() {
                 if (!info || !info.items || !info.items[0].statistics.subscriberCount) throw 'live: undef info.items';
 
                 count[i] = info.items[0].statistics.subscriberCount;
-                elems.store[i].push(Number(getText(elems.count[i])) - Number(count[i]));
+                elems.store[i].push(Number(getNum(elems.count[i])) - Number(count[i]));
                 if (isLive < 2) {
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.count[i],
@@ -810,7 +819,7 @@ function live() {
         var countGapEle = document.getElementById('countGap');
         var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
         if (isLive < 3) {
-            new Odomter({ // eslint-disable-line no-new
+            new Odometer({ // eslint-disable-line no-new
                 el: countGapEle,
                 value: countGapVal,
                 format: '(,ddd)',
