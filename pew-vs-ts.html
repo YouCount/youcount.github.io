@@ -739,16 +739,18 @@ var elems = {
         elems.dp[i].style.display = 'block';
     }, avg: function (i) {
         elems.initialize();
-        if (!store[i][2]) {
-            if (!store[i][1]) { // initialization
-                store[i][1] = 1;
+        if (!elems.store[i][2]) {
+            if (!elems.store[i][1]) { // initialization
+                elems.store[i][1] = 1;
             } // else return value at end
         } else { // else find avg
-            store[i][0] = ((store[i][0] * store[i][1]) + store[i][2]) / (store[i][1] + 1);
-            store[i][1] += 1;
-            store[i].pop();
+            elems.store[i][0] *= elems.store[i][1];
+            elems.store[i][0] += elems.store[i][2];
+            elems.store[i][1] += 1;
+            elems.store[i][0] /= elems.store[i][1];
+            elems.store[i].pop();
         }
-        return store[i][0];
+        return elems.store[i][0];
     }
 };
 
