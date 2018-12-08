@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>YouCount: YouTube® LIVE Subscriber Count</title>
+<title>PewDiePie vs T-Series</title>
 <meta name="theme-color" content="#e61919" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -17,7 +17,7 @@
 <meta http-equiv="EXPIRES" content="Thu, 10 Jan 2030 12:00:00 GMT">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website."/>
-<meta property="og:title" content="YouCount: YouTube® LIVE Subscriber Count"/>
+<meta property="og:title" content="PewDiePie vs T-Series"/>
 <meta property="og:description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website." />
 <meta property="og:type" content="article"/>
 <meta property="og:image" content="https://youcount.github.io/images/fblogo.jpg" />
@@ -27,8 +27,8 @@
       {
         "@context": "http://schema.org",
         "@type": "Article",
-        "headline": "YouCount: YouTube® LIVE Subscriber Count",
-        "datePublished": "2018-11-03T12:02:41Z",
+        "headline": "PewDiePie vs T-Series",
+        "datePublished": "2018-12-08T12:02:41Z",
     "publisher": {
       "@type": "Organization",
       "name":"YouCount",
@@ -253,7 +253,7 @@ display: block;
 float: left;
 width: calc(50% - 20px);
 /* menu (50px) + margin (20px) + padding (30px + 30px) + 20px extra space (so bottom is within viewport)  = 140px */
-height: calc(100vh - 150px);
+height: auto;
 margin: 20px 10px;
 font-size:1vw;
 box-shadow: 0 0 20px -4px black;
@@ -262,6 +262,9 @@ background-color:white;
 padding-top: 30px;
 padding-bottom: 30px;
 backface-visibility: hidden;
+}
+#common {
+width: calc(100% - 10px);
 }
 .actualCount {
 font-size: 8vw !important;
@@ -306,7 +309,6 @@ border-radius:3px 0 0 3px;
   .card {
     width: calc(100% - 10px);
     margin: 10px 5px;
-    height: auto;
     font-size: 3vw;
   }
   .dp {
@@ -393,6 +395,11 @@ Shareable Link
         <img class="dp" alt="Channel Image">
         <div class="username" >Loading...</div><br>
         <span class="actualCount">Loading...</span>
+    </section>
+    <section class="card" id="common">
+        <span class="rate"></span>
+        <span class="rate"></span>
+        <span id="countGap"></span>
     </section>
 </div>
 <script>
@@ -716,18 +723,32 @@ function linkshare() {
 }
 
 var elems = {
-    dp: [], username: [], count: [],
+    dp: [], username: [], count: [], rate: [], store: [[]],
     initialize: function () {
         if (elems.username.length !== 0) return;
-        var dp = document.querySelectorAll('.dp');
-        var username = document.querySelectorAll('.username');
-        var count = document.querySelectorAll('.actualCount');
+        var dp = document.getElementsByClassName('dp');
+        var username = document.getElementsByClassName('username');
+        var count = document.getElementsByClassName('actualCount');
+        var rates = document.getElementsByClassName('rate')
         elems.dp = [dp[0], dp[1]];
         elems.username = [username[0], username[1]];
         elems.count = [count[0], count[1]];
+        elems.rate = [rates[0],rates[1]];
     }, showDp: function (i) {
         elems.initialize();
         elems.dp[i].style.display = 'block';
+    }, avg: function (i) {
+        elems.initialize();
+        if (!store[i][2]) {
+            if (!store[i][1]) { // initialization
+                store[i][1] = 1;
+            } // else return value at end
+        } else { // else find avg
+            store[i][0] = ((store[i][0] * store[i][1]) + store[i][2]) / (store[i][1] + 1);
+            store[i][1] += 1;
+            store[i].pop();
+        }
+        return store[i][0];
     }
 };
 
@@ -756,24 +777,46 @@ function getInfo() {
 
 function live() {
     try {
+        var count = [];
         for (let i = 0; i < 2; i++) {
             var u = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + ids[i] + '&fields=items/statistics/subscriberCount&key=';
             ajx(u + API.key, function(info) {
                 if (!info || !info.items || !info.items[0].statistics.subscriberCount) throw 'live: undef info.items';
 
-                var count = info.items[0].statistics.subscriberCount;
-                if (isLive != 2) {
+                count[i] = info.items[0].statistics.subscriberCount;
+                elems.store[i].push(Number(getText(elems.count[i])) - count[i]);
+                if (isLive < 2) {
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.count[i],
-                        value: count,
+                        value: count[i],
+                        format: '(,ddd)',
+                        theme: 'minimal'
+                    });
+                    new Odometer({ // eslint-disable-line no-new
+                        el: elems.rate[i],
+                        value: elems.avg(i),
                         format: '(,ddd)',
                         theme: 'minimal'
                     });
                     isLive = i + 1;
                 } else {
                     changeText(elems.count[i], count);
+                    changeText(elems.rate[i], elems.avg(i));
                 }
             });
+        }
+        var countGapEle = document.getElementById('countGap');
+        var countGapVal = Math.abs(count[0] - count[1]);
+        if (isLive < 3) {
+            new Odomter({ // eslint-disable-line no-new
+                el: countGapEle,
+                value: countGapVal,
+                format: '(,ddd)',
+                theme: 'minimal'
+            });
+            isLive = 3;
+        } else {
+            changeText(countGapEle, countGapVal);
         }
     } catch (e) {
         noConnection(e, true);
