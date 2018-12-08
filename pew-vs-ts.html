@@ -785,7 +785,7 @@ function live() {
             ajx(u + API.key, function(info) {
                 if (!info || !info.items || !info.items[0].statistics.subscriberCount) throw 'live: undef info.items';
 
-                count[i] = info.items[0].statistics.subscriberCount;
+                count[i] = Number(info.items[0].statistics.subscriberCount);
                 if (isLive < 2) {
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.count[i],
