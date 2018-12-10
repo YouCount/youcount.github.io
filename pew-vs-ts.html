@@ -264,7 +264,7 @@ padding-bottom: 30px;
 backface-visibility: hidden;
 }
 #common {
-width: calc(100% - 10px);
+width: calc(100% - 20px);
 }
 .actualCount {
 font-size: 8vw !important;
@@ -295,33 +295,54 @@ background-color:transparent;
 transition:width 0.25s;
 border-radius:3px 0 0 3px;
 }
+.rate::before {
+content: "Rate: ";
+}
+.rate::after {
+content: " subs / sec"
+}
+.rate {
+font-size: 25px;
+}
+#countGap {
+font-size: 8vw;
+}
+#countGapText {
+font-size: 20px;
+}
 @media only screen and (max-width: 800px), screen and (orientation: portrait) {
-  .navButtonsCover {
-    width: 25%;
-  }
-  #bg1 h2 {
-    font-size: 12vw;
-  }
-  #pageUrl, #pageUrl input {
-    width:100%;
-    left: 0;
-  }
-  .card {
-    width: calc(100% - 10px);
-    margin: 10px 5px;
-    font-size: 3vw;
-  }
-  .dp {
-      width: 12vw;
-      height: 12vw;
-  }
-  .username {
-    height: 12vw;
-    width: calc(100% - 30px - 12vw); /* card width (100% - 10px) - dp width (12vw) - dp margins (10px + 10px) */
-  }
-  .actualCount {
-    font-size: 15vw !important;
-  }
+    .navButtonsCover {
+        width: 25%;
+    }
+    #bg1 h2 {
+        font-size: 12vw;
+    }
+    #pageUrl, #pageUrl input {
+        width:100%;
+        left: 0;
+    }
+    .card {
+        width: calc(100% - 10px);
+        margin: 10px 5px;
+        font-size: 3vw;
+    }
+    #common {
+        width: calc(100% - 10px);
+    }
+    .dp {
+        width: 12vw;
+        height: 12vw;
+    }
+    .username {
+        height: 12vw;
+        width: calc(100% - 30px - 12vw); /* card width (100% - 10px) - dp width (12vw) - dp margins (10px + 10px) */
+    }
+    .actualCount {
+        font-size: 15vw !important;
+    }
+    #countGap {
+        font-size: 15vw;
+    }
 }
 </style>
 </head>
@@ -390,16 +411,19 @@ Shareable Link
         <img class="dp" alt="Channel Image">
         <span class="username" >Loading...</span>
         <span class="actualCount">Loading...</span>
+        <br><br>
+        <span class="rate">0</span>
     </section>
     <section class="card">
         <img class="dp" alt="Channel Image">
         <div class="username" >Loading...</div><br>
         <span class="actualCount">Loading...</span>
+        <br><br>
+        <span class="rate">0</span>
     </section>
     <section class="card" id="common">
-        <span class="rate"></span>
-        <span class="rate"></span>
-        <span id="countGap"></span>
+        <span id="countGapText">Subscribers Gap</span><br>
+        <span id="countGap">Loading...</span>
     </section>
 </div>
 <script>
