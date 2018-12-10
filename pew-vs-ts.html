@@ -439,6 +439,7 @@ var shareswitch = 0; // 0 === share stuff hidden, 1 === share stuff is in transi
 var navState = [null, false];
 var loadingList = [];
 var loadingInterval = null;
+var prevCount = [];
 // -----select APIkey randomly----
 var API = {
     keys: ['AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U'],
@@ -495,15 +496,6 @@ function getText(elem) {
   } else {
     return String(elem.textContent).trim();
   }
-}
-
-function getNum(el) {
-    el = getText(el);
-    var ret = '';
-    for (var i = 0; i < el.length; i++) {
-        if (/[0-9]/.test(el[i])) ret += el[i];
-    }
-    return ret;
 }
 
 function def(ob, val){
@@ -811,6 +803,7 @@ function live() {
 
                 count[i] = Number(info.items[0].statistics.subscriberCount);
                 if (isLive < 2) {
+                    prevCount[i] = count[i];
                     new Odometer({ // eslint-disable-line no-new
                         el: elems.count[i],
                         value: count[i],
@@ -825,13 +818,14 @@ function live() {
                     });
                     isLive = i + 1;
                 } else {
-                    rates.add(i, Number(count[i]) - Number(getNum(elems.count[i])));
+                    rates.add(i, count[i] - prevCount[i]);
+                    prevCount[i] = count[i];
                     changeText(elems.count[i], count[i]);
                     changeText(elems.rate[i], rates.vals[i]);
                 }
                 if ((i === 0 && !isNaN(count[1])) || (i === 1 && !isNaN(count[0]))) {
                     var countGapEle = document.getElementById('countGap');
-                    var countGapVal = Math.abs(Number(count[0]) - Number(count[1]));
+                    var countGapVal = Math.abs(count[0] - count[1]);
                     if (isLive < 3) {
                         new Odometer({ // eslint-disable-line no-new
                             el: countGapEle,
