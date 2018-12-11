@@ -497,13 +497,13 @@ function createCharts() {
     var chartStoreData = [];
 
     chartStoreData[0] = {
-        labels: [''],
+        labels: labelVals[0],
         datasets: [{
             label: 'Realtime Trend (30s)',
             fill: false,
             borderColor: 'rgba(255,50,50,0.5)',
             pointRadius: 0,
-            data: [actualCount]
+            data: dataVals[0]
         }]
     };
     chartStore[0] = new Chart(doc.i('chart0').getContext('2d'), {
@@ -514,7 +514,7 @@ function createCharts() {
         maintainAspectRatio: false
     });
     chartStoreData[1] = {
-        labels: labels[1],
+        labels: labelVals[1],
         datasets: [{
             label: 'Views of last ' + vids + ' videos',
             fill: false,
