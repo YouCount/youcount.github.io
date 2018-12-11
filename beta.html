@@ -1015,12 +1015,12 @@ function live() {
         changeText(doc.i('milestoneLeft'), subsLeft);
         changeText(doc.i('milestoneTarget'), target.toLocaleString('en-US'));
         // if chart is already loaded, the value of chart is updated here.
-        if (firstload === 2 && seconds % 5 === 4) {
+        if (firstload === 2 && seconds % 5 === 4 && isChart !== 0) {
             prevCounts.forEach(function (e) {
                 chartStore[0].data.labels.push('');
                 chartStore[0].data.datasets[0].data.push(e);
                 if (seconds > 30) {
-                    chartStore[0].labels.shift();
+                    chartStore[0].data.labels.shift();
                     chartStore[0].data.datasets[0].data.shift();
                 }
             });
