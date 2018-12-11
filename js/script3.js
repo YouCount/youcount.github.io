@@ -4,9 +4,7 @@ var shareswitch = 0; // 0 === share stuff hidden, 1 === share stuff is in transi
 var navState = [null, false];
 var views = [];
 var extraswitch = 0;
-var myLineChart2 = {};
-var myLineChart3 = {};
-var myLineChart4 = {};
+var chartStore = [];
 var vids = 5;
 var loadingList = [];
 var loadingInterval = null;
@@ -24,17 +22,17 @@ if (!developmentMode) {
 // MISC FUNCTIONS
 // below, the ids are assigned their onclicks.
 function idClickListener(ele, func) {
-  document.getElementById(ele).addEventListener('click', func);
+  doc.i(ele).addEventListener('click', func);
 }
 
 function queryClickListener(ele, func) {
-  var elems = document.querySelectorAll(ele);
+  var elems = doc.a(ele);
   elems.forEach(function (e) {
     e.addEventListener('click', func);
   });
 }
 function fx(str) {
-  var ele = document.getElementById(str);
+  var ele = doc.i(str);
   var duration = 1000/60; // Max Fps = 60
   fx.xnor = function(a, b) {
     if ((a && b) || (!a && !b)) return true;
@@ -87,28 +85,31 @@ function fx(str) {
   return fx;
 }
 // this is to hide email from spam bots
-var emailParts = ['manas.khurana20', 'gmail', 'com', '&#46;', '&#64;'];
-document.getElementById('email').innerHTML = emailParts[0] + emailParts[4] + emailParts[1] + emailParts[3] + emailParts[2];
-document.getElementById('email').href = 'mailto:' + getText('email');
+function setEmail() {
+    var e = ['urana20', 'ma', 'nas.kh', 'gmail', 'com', '&#46;', '&#64;'];
+    changeText('email', e[1] + e[2] + e[0] + e[6] + e[3] + e[5] + e[4]);
+    doc.i('email').href = 'mailto:' + getText('email');
+}
+setEmail();
 
 var clickList = [
   ['inputButton', function () {
     getValue();// called like this because addEventListener by default does not send empty parameter.
   }],
   ['fb', function () {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(getText(doc.q('#pageUrl input'))), '_blank');
   }],
   ['tw', function () {
-    window.open('https://twitter.com/share?text=' + getText('username') + ' now has  ' + actualCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' subscribers!&url= ' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&hashtags=YouCount', '_blank');
+    window.open('https://twitter.com/share?text=' + getText('username') + ' now has  ' + actualCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' subscribers!&url= ' + encodeURIComponent(getText(doc.q('#pageUrl input'))) + '&hashtags=YouCount', '_blank');
   }],
   ['lnkdIn', function () {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + '\'s%20Live%20Subscriber%20Count&source=YouCount', '_blank');
+    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(getText(doc.q('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + '\'s%20Live%20Subscriber%20Count&source=YouCount', '_blank');
   }],
   ['tb', function () {
-    window.open('http://www.tumblr.com/share/link?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
+    window.open('http://www.tumblr.com/share/link?url=' + encodeURIComponent(getText(doc.q('#pageUrl input'))), '_blank');
   }],
   ['rdit', function () {
-    window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + 's%20Live%20Subscriber%20Count', '_blank');
+    window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(getText(doc.q('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + 's%20Live%20Subscriber%20Count', '_blank');
   }],
   ['link', linkshare],
   ['bg2', function () {
@@ -154,17 +155,17 @@ function tutorial(n) {
   }
   function toggleZIndex(b) {
     var zI = b? ['1004', '1004']: ['50', '51']; // if b is true, bring elements to top, else set original zIndex.
-    document.getElementById('input').style.zIndex = zI[0];
-    document.getElementById('suggest').style.zIndex = zI[1];
+    doc.i('input').style.zIndex = zI[0];
+    doc.i('suggest').style.zIndex = zI[1];
   }
   function showTutStep(show) { // show one of the two tutSteps and hide the other one
     var hide = show==1? 2: 1; // if show == 1, hide = 2, else show == 2, hence hide = 1
-    document.getElementById('tutStep' + show).style.display = 'block';
-    document.getElementById('tutStep' + hide).style.display = 'none';
+    doc.i('tutStep' + show).style.display = 'block';
+    doc.i('tutStep' + hide).style.display = 'none';
   }
   function setTutorialPos(elem) { // get bottom pos of elem and set top of tutorial below it.
-    var bottom = (document.getElementById(elem).getBoundingClientRect()).bottom;
-    document.getElementById('tutorial').style.top = (bottom + 35) + 'px'; // extra 35 px for arrow.
+    var bottom = (doc.i(elem).getBoundingClientRect()).bottom;
+    doc.i('tutorial').style.top = (bottom + 35) + 'px'; // extra 35 px for arrow.
   }
   var tutorialSize = {
     isChanging: false,
@@ -188,11 +189,12 @@ function tutorial(n) {
     showTutStep(1);
     setTutorialPos('username');
     changeText('username', '');
-    if(!isLive) changeText('actualCount','Tutorial');
+    changeText('actualCount', 'Tutorial');
+    clearInterval(intervalId);
     //when clicking on 'Click Here', the username is automatically focussed.
-    document.getElementById('tutorial').addEventListener('click', function() {
+    doc.i('tutorial').addEventListener('click', function() {
       if(isTutorialOn[1]===1)
-        document.getElementById('username').focus();
+        doc.i('username').focus();
     });
     window.onresize = tutorialSize.change;
     break;
@@ -209,12 +211,12 @@ function tutorial(n) {
     toggleZIndex(false);
     changeText('username', channelname);
     isTutorialOn = [0, 0];
-    document.getElementById('tutorial').onclick = null;
+    doc.i('tutorial').onclick = null;
     window.onresize = null;
     break;
   default:
     isTutorialOn = [0, 0];
-    document.getElementById('tutorial').onclick = null;
+    doc.i('tutorial').onclick = null;
     window.onresize = null;
     break;
   }
@@ -231,7 +233,7 @@ if (isTutorialOn[0]) tutorial(0);
 function shareFunc() {
   if (shareswitch === 1) return;
   var t = 200; // time in milliconds
-  var shareElems = document.querySelectorAll('.share');
+  var shareElems = doc.a('.share');
   switch (shareswitch) {
   case 0:
     shareswitch = 1;
@@ -267,15 +269,15 @@ function handleNavButtons(n) {
   if (navState[1]) return;
   if (navState[0] !== null) { // if nav already open, close everything first
     navState[1] = true;
-    document.getElementById('bg1').style.height = '100%';
-    document.getElementById('bg1').style.position = 'fixed';
-    document.getElementById('bg1').classList.add('ball');
-    document.getElementById('mainPage').style.display = 'block';
+    doc.i('bg1').style.height = '100%';
+    doc.i('bg1').style.position = 'fixed';
+    doc.i('bg1').classList.add('ball');
+    doc.i('mainPage').style.display = 'block';
     if (navState[0] == 2 || navState[0] == 3) {
       var navStateName = ['help','code'][navState[0] - 2];
-      document.getElementById(navStateName + 'Art').style.display = 'none';
-      document.getElementById(navStateName + 'Art').style.opacity = '0';
-      document.querySelector('.navButtonsCover[data-child="'+ navStateName +'"]').style.backgroundColor = 'transparent';
+      doc.i(navStateName + 'Art').style.display = 'none';
+      doc.i(navStateName + 'Art').style.opacity = '0';
+      doc.q('.navButtonsCover[data-child="'+ navStateName +'"]').style.backgroundColor = 'transparent';
       window.scrollTo(0, storeScrollY);
     }
     // nav closing is complete above.
@@ -298,14 +300,14 @@ function handleNavButtons(n) {
     } else if (n == 2 || n == 3) {
       storeScrollY = window.scrollY;
       var navStateName = ['help','code'][n - 2];
-      document.getElementById('bg1').classList.remove('ball');
-      document.querySelector('.navButtonsCover[data-child="' + navStateName + '"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
+      doc.i('bg1').classList.remove('ball');
+      doc.q('.navButtonsCover[data-child="' + navStateName + '"]').style.backgroundColor = 'rgba(0,0,0,0.5)';
       setTimeout(function () {
         window.scrollTo(0, 0);
-        document.getElementById('bg1').style.position = 'absolute';
+        doc.i('bg1').style.position = 'absolute';
         fx('' + navStateName + 'Art').fadeIn(200);
-        document.getElementById('bg1').style.height = 'auto';
-        document.getElementById('mainPage').style.display = 'none';
+        doc.i('bg1').style.height = 'auto';
+        doc.i('mainPage').style.display = 'none';
       }, 500);
       setTimeout(function () {
         navState[1] = false;
@@ -328,7 +330,7 @@ function usernameKeyUpFunc() {
     return;
   }
   if (!value || ['Not Found!', 'Loading.', 'Loading..', 'Loading...', 'Refresh the page'].indexOf(value) > -1) {
-    document.getElementById('suggest').style.display = 'none';
+    doc.i('suggest').style.display = 'none';
     clearInterval(usernameKeyUpInter);
     usernameKeyUp = [false, false];
     if (isTutorialOn[0]) {
@@ -348,9 +350,9 @@ function usernameKeyUpFunc() {
           return;
         }// else
         // show results in suggestions
-        var suggests = document.querySelectorAll('.suggest');
-        var texs = document.querySelectorAll('.suggest div');
-        var imas = document.querySelectorAll('.suggestImg');
+        var suggests = doc.a('.suggest');
+        var texs = doc.a('.suggest div');
+        var imas = doc.a('.suggestImg');
 
         suggests.forEach(function (s, x) {
           s.style.display = 'block';
@@ -396,13 +398,13 @@ function whenImageLoaded(el) {//takes image element and resolves promise when it
     el.addEventListener("load", resolve);
   });
 }
-document.getElementById('username').addEventListener('keyup', function () {
+doc.i('username').addEventListener('keyup', function () {
   if (!usernameKeyUp[0]) {
     usernameKeyUp[0] = true;
     usernameKeyUp[1] = true;
-    document.getElementById('suggest').style.display = 'block';
+    doc.i('suggest').style.display = 'block';
 
-    document.querySelectorAll('.suggest').forEach(function (s, x) {//hide all suggest except first one which is loading...
+    doc.a('.suggest').forEach(function (s, x) {//hide all suggest except first one which is loading...
       if (x===0) {
         s.style.display = 'block';
         s.childNodes[0].style.visibility = 'hidden';
@@ -440,14 +442,11 @@ function loading(el) {
     if (!loadingList.length) {
       clearInterval(loadingInterval);
     } else {
+      var loadList = ['Loading.', 'Loading..', 'Loading...'];
       loadingList = loadingList.filter(function(e,i){
-        var loadList = ['Loading.','Loading..','Loading...'];
         var x = loadList.indexOf(getText(e));
-        if (x===0 || x===1) {
-          changeText(e,loadList[x+1]);
-          return true;
-        } else if (x===2) {
-          changeText(e,loadList[0]);
+        if (x >= 0) {
+          changeText(e, loadList[(x + 1) % 3]);
           return true;
         } else {
           return false;
@@ -461,7 +460,7 @@ function loading(el) {
 function linkshare() {
   fx('pageUrl').fadeIn(250);
   fx('bg2').fadeIn(500);
-  if (!username || !location.hash.split('#!/')[1])changeText(document.querySelector('#pageUrl input'),'https://youcount.github.io/');
+  if (!username || !location.hash.split('#!/')[1])changeText(doc.q('#pageUrl input'),'https://youcount.github.io/');
 }
 for (var l = 50; l > 0; l--)views.push(l);
 function pushViews(url, i) {
@@ -470,13 +469,120 @@ function pushViews(url, i) {
     if (i === ((vids * 2) - 1))upCharts();
   });
 }
+
+function createCharts() {
+    var dataVals = [];
+    var labelVals = [];
+
+    dataVals[0] =  [actualCount];
+    labelVals[0] = [''];
+
+    dataVals[1] = views.slice(0, vids);
+    labelVals[1] = Array(vids).fill('');
+
+    var totviews = [];
+    // set totviews[1] as sum of views[ 0 to (vids * 2) - 1]
+    totviews[1] = views.slice(0, vids * 2).reduce(function (s, e, i) {
+        // set totviews[0] as sum of views[0 to vids - 1]
+        if (i == vids) totviews[0] = s;
+        return s + e;
+    }, 0);
+
+    dataVals[2] = [Math.floor(totviews[0] / vids), Math.floor(totviews[1] / vids)];
+    labelVals[2] = ['last ' + vids + ' videos', 'last to last ' + vids + ' videos'];
+
+    dataVals[3] = [totviews[0], totviews[1]];
+    labelVals[3] = ['last ' + vids + ' videos (total views)', 'last to last ' + vids + ' videos (total views)'];
+
+    var chartStoreData = [];
+
+    chartStoreData[0] = {
+        labels: [''],
+        datasets: [{
+            label: 'Realtime Trend (30s)',
+            fill: false,
+            borderColor: 'rgba(255,50,50,0.5)',
+            pointRadius: 0,
+            data: [actualCount]
+        }]
+    };
+    chartStore[0] = new Chart(doc.i('chart0').getContext('2d'), {
+        type: 'line',
+        data: chartStoreData[0],
+        gridLines: {display: false},
+        responsive: true,
+        maintainAspectRatio: false
+    });
+    chartStoreData[1] = {
+        labels: labels[1],
+        datasets: [{
+            label: 'Views of last ' + vids + ' videos',
+            fill: false,
+            borderColor: 'rgba(255,50,50,0.5)',
+            pointBorderColor: 'rgba(255,50,50,0.5)',
+            pointBackgroundColor: 'rgba(255,50,50,1)',
+            data: dataVals[1]
+        }]
+    };
+    chartStore[1] = new Chart(doc.i('chart1').getContext('2d'), {
+        type: 'line',
+        data: chartStoreData[1],
+        gridLines: {
+            display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false
+    });
+    chartStoreData[2] = {
+        labels: labelVals[2],
+        datasets: [{
+            label: 'Average Views',
+            borderColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
+            backgroundColor: ['rgba(50,50,255,0.2)', 'rgba(50,255,50,0.2)'],
+            hoverBackgroundColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
+            data: dataVals[2] 
+        }]
+    }
+    chartStore[2] = new Chart(doc.i('chart2').getContext('2d'), {
+        type: 'bar',
+        data: chartStoreData[2],
+        gridLines: {
+            display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false
+    });
+    chartStoreData[3] = {
+        labels: labelVals[3],
+        datasets: [{
+            label: 'Total Views',
+            borderColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
+            backgroundColor: ['rgba(50,50,255,0.2)', 'rgba(50,255,50,0.2)'],
+            hoverBackgroundColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
+            data: dataVals[3]
+        }]
+    };
+    chartStore[3] = new Chart(doc.i('chart3').getContext('2d'), {
+        type: 'doughnut',
+        data: chartStoreData,
+        gridLines: {
+            display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false
+    });
+}
+
 // this is used to show/hide the chart.
-// if the chart is loading for the first time (ie firstload=0),
+// charts not loaded: firstload == 0,
+// charts loading: firstload == 1
+// charts loaded: firstload == 2
 // first the script of chart is downloaded and then it is loaded.
 function extrabutton() {
   if (!username) tutorial(0);
   else if (firstload === 0) {
     if (!internet || notFound || isTutorialOn[0]) return;
+    firstload = 1;
     loading('showextra');
     var url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
     try {
@@ -498,102 +604,24 @@ function extrabutton() {
           getScript('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js', function () {
             isChart = 1;
             fx('showextra').fadeOut();
-            document.getElementById('hideextra').style.display = 'block';
-            document.getElementById('extraContent').style.display = 'block';
+            doc.i('hideextra').style.display = 'block';
+            doc.i('extraContent').style.display = 'block';
             extraswitch = 1;
 
-            var data1 = [];
-            var labels1 = [];
-            for (var j = 0; i < vids; j++) {
-              data1[j] = views[j];
-              labels1[j] = '';
-            }
-            var myLineChart2Data = {
-              labels: labels1,
-              datasets: [{
-                label: 'Views of last ' + vids + ' videos',
-                fill: false,
-                borderColor: 'rgba(255,50,50,0.5)',
-                pointBorderColor: 'rgba(255,50,50,0.5)',
-                pointBackgroundColor: 'rgba(255,50,50,1)',
-                data: data1
-              }]
-            };
-            myLineChart2 = new Chart(document.getElementById('myChart2').getContext('2d'), {
-              type: 'line',
-              data: myLineChart2Data,
-              gridLines: {
-                display: false
-              },
-              responsive: true,
-              maintainAspectRatio: false
-            });
-            var totviews = [(function () {
-              var tot = 0;
-              for (var k = 0; k < vids; k++) {
-                tot += Number(views[k]);
-              }
-              return tot;
-            })(), (function () {
-              var tot = 0;
-              for (var x = vids; x < (vids * 2); x++) {
-                tot += Number(views[x]);
-              }
-              return tot;
-            })()];
-            var data2 = [Math.floor(totviews[0] / vids), Math.floor(totviews[1] / vids)];
-            var labels2 = ['last ' + vids + ' videos', 'last to last ' + vids + ' videos'];
-            var myLineChart3Data = {
-              labels: labels2,
-              datasets: [{
-                label: 'Average Views',
-                borderColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
-                backgroundColor: ['rgba(50,50,255,0.2)', 'rgba(50,255,50,0.2)'],
-                hoverBackgroundColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
-                data: data2
-              }]
-            };
-            myLineChart3 = new Chart(document.getElementById('myChart3').getContext('2d'), {
-              type: 'bar',
-              data: myLineChart3Data,
-              gridLines: {
-                display: false
-              },
-              responsive: true,
-              maintainAspectRatio: false
-            });
-            var data3 = [totviews[0], totviews[1]];
-            var labels3 = ['last ' + vids + ' videos (total views)', 'last to last ' + vids + ' videos (total views)'];
-            var myLineChart4Data = {
-              labels: labels3,
-              datasets: [{
-                label: 'Total Views',
-                borderColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
-                backgroundColor: ['rgba(50,50,255,0.2)', 'rgba(50,255,50,0.2)'],
-                hoverBackgroundColor: ['rgba(0,0,255,1)', 'rgba(0,255,0,1)'],
-                data: data3
-              }]
-            };
-            myLineChart4 = new Chart(document.getElementById('myChart4').getContext('2d'), {
-              type: 'doughnut',
-              data: myLineChart4Data,
-              gridLines: {
-                display: false
-              },
-              responsive: true,
-              maintainAspectRatio: false
-            });
+            createCharts();
+
+            seconds = -1;
+            firstload = 2;
+            upCharts();
             var url4 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + username + '&fields=items/statistics(videoCount,viewCount)&key=' + getKey();
             ajx(url4, function (b) {
               if (!b.items[0].statistics.videoCount || !b.items[0].statistics.viewCount) {
                 noConnection( '4. undef b.items[0].statistics.videoCount or b.items[0].statistics.viewCount in extrabutton(script.js)');
                 return;
               }
-              changeText(document.getElementById('totalVideos'), b.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-              changeText(document.getElementById('totalViews'), b.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+              changeText(doc.i('totalVideos'), b.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+              changeText(doc.i('totalViews'), b.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
             });
-            firstload = 1;
-            upCharts();
           });
         });
       }, function () {
@@ -602,19 +630,19 @@ function extrabutton() {
     } catch (e) {
       noConnection(e);
     }
-  } else {
+  } else if (firstload == 2) {
     changeText('showextra','Show Stats');
     if (extraswitch === 0) {
       isChart = 1;
       fx('showextra').fadeOut();
       fx('hideextra').fadeIn();
-      document.getElementById('extraContent').style.display = 'block';
+      doc.i('extraContent').style.display = 'block';
       extraswitch = 1;
     } else {
-      myLineChart1.destroy();
+      chartStore[0].destroy();
       fx('showextra').fadeIn();
       fx('hideextra').fadeOut(100);
-      document.getElementById('extraContent').style.display = 'none';
+      doc.i('extraContent').style.display = 'none';
       extraswitch = 0;
       isChart = 0;
     }
@@ -622,52 +650,43 @@ function extrabutton() {
 }
 
 function upCharts() {
-  if (!firstload) {
-    noConnection('upCharts was called before firstload==1', true);
+  if (firstload <= 1) {
+    noConnection('upCharts was called before firstload==2', true);
     return;
   }
+
   vids = Number(getText('vids'));
   if (vids > 25) {
     changeText('vids',vids = 25);
-
   }
   var sum1 = 0;
   var sum2 = 0;
-  for (var i = 0; i < vids; i++) {
-    myLineChart2.data.labels[i] = '';
-    myLineChart2.data.datasets[0].data[i] = views[i];
-    sum1 += Number(views[i]);
-  }
-  for (i = vids; i < (vids * 2); i++)sum2 += Number(views[i]);
-  myLineChart2.data.labels.splice(vids);
-  myLineChart2.data.datasets[0].data.splice(vids);
-  myLineChart2.data.datasets[0].label = 'Views of last ' + vids + ' videos';
 
-  myLineChart3.data.labels = ['last ' + vids + ' videos', 'last to last ' + vids + ' videos'];
-  myLineChart3.data.datasets[0].data[0] = Math.floor(sum1 / vids);
-  myLineChart3.data.datasets[0].data[1] = Math.floor(sum2 / vids);
+  chartStore[1].data.datasets[0].data = views.slice(0, vids);
+  chartStore[1].data.labels = Array(vids).fill('');
 
-  myLineChart4.data.labels = ['last ' + vids + ' videos (total views)', 'last to last ' + vids + ' videos (total views)'];
-  myLineChart4.data.datasets[0].data[0] = sum1;
-  myLineChart4.data.datasets[0].data[1] = sum2;
+  sum2 = views.slice(0, vids * 2).reduce(function (s, e, i) {
+    if (i == vids) sum1 = s;
+    return s + e;
+  }, 0);
 
-  myLineChart2.update();
-  myLineChart3.update();
-  myLineChart4.update();
+  chartStore[1].data.datasets[0].label = 'Views of last ' + vids + ' videos';
+
+  chartStore[2].data.labels = ['last ' + vids + ' videos', 'last to last ' + vids + ' videos'];
+  chartStore[2].data.datasets[0].data[0] = Math.floor(sum1 / vids);
+  chartStore[2].data.datasets[0].data[1] = Math.floor(sum2 / vids);
+
+  chartStore[3].data.labels = ['last ' + vids + ' videos (total views)', 'last to last ' + vids + ' videos (total views)'];
+  chartStore[3].data.datasets[0].data[0] = sum1;
+  chartStore[3].data.datasets[0].data[1] = sum2;
+
+  chartStore[1].update();
+  chartStore[2].update();
+  chartStore[3].update();
 }
 if (internet) {
   //downloads social and assigns it as background at the end.
-  document.querySelectorAll('.share').forEach(function(e){
+  doc.a('.share').forEach(function(e){
     e.style.backgroundImage = 'url(/images/social.png)';
   });
-  // images are loaded after the whole page is loaded (since it has a big download size and sends multiple requests).
-  /*
-  var images = document.getElementsByTagName('img');
-  for (var pl = 0; pl < images.length; pl++) {
-    if (!images[pl].src && images[pl].id && images[pl].id !== 'dp') {
-      images[pl].src = '/images/' + images[pl].id + '.png';
-    }
-  
-  }
-  */
 }

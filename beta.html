@@ -469,7 +469,7 @@ border-bottom: 1px solid #ddd;
 font-size:3vw;
 font-weight:100;
 }
-.myChart-wrapper {
+.chartWrapper {
 width:80%;
 margin-left:auto;
 margin-right:auto;
@@ -556,7 +556,7 @@ a {text-decoration:none;}
   .extrabutton {
   width:30vw;
   }
-  .myChart-wrapper {
+  .chartWrapper {
   width:95%;
   }
 }
@@ -662,7 +662,7 @@ Shareable Link
 
     <div id="bottomPrime">
       <br>
-      <span id="actualCount">Loading...</span>
+      <span id="actualCount" class="odometer">Loading...</span>
       <br>
     </div>
   </section>
@@ -670,12 +670,12 @@ Shareable Link
   <section id="extra" class="card">
     <button class="extrabutton" id="showextra">Show Stats</button>
     <div id="extraContent">
-      <div class="myChart-wrapper">
-        <canvas width="400" height="200" id="myChart1"></canvas>
+      <div class="chartWrapper">
+        <canvas width="400" height="200" id="chart0"></canvas>
       </div>
       <br><br><br>
       <span class="milestones" id="milestoneBox">
-        <span id="milestoneLeft">Loading...</span> left from <span id="milestoneTarget">Loading...</span>!
+        <span id="milestoneLeft" class="odometer">Loading...</span> left from <span id="milestoneTarget">Loading...</span>!
       </span>
       <br><br><br>
       <table>
@@ -693,10 +693,10 @@ Shareable Link
         </tr>
       </table>
       <p id="vidsText">Last <input aria-label="Input box: Enter number of videos (1-25)" type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
-      <div class="myChart-wrapper">
-        <canvas width="400" height="200" id="myChart2"></canvas>
-        <canvas width="400" height="200" id="myChart3"></canvas>
-        <canvas width="400" height="200" id="myChart4"></canvas>
+      <div class="chartWrapper">
+        <canvas width="400" height="200" id="chart1"></canvas>
+        <canvas width="400" height="200" id="chart2"></canvas>
+        <canvas width="400" height="200" id="chart3"></canvas>
       </div>
     </div>
     <button class="extrabutton" id="hideextra">Hide Stats</button>
@@ -724,7 +724,7 @@ var seconds = 0;
 var actualCount = 0;
 var intervalId;
 var targets = [10, 25, 50, 1E2, 5E2, 1E3, 2.5E3, 5E3, 1E4, 2.5E4, 5E4, 1E5, 2.5E5, 5E5, 1E6, 2E6, 3E6, 4E6, 5E6, 6E6, 7E6, 10E6, 15E6, 20E6, 25E6, 30E6, 40E6, 50E6, 70E6, 1E8, 1.5E8, 2E8, 3E8];
-var myLineChart1;
+var chartStore = [];
 var internet = true;// change this to true when uploaded.
 var developmentMode = true;//change this to false when uploaded.
 var isTutorialOn = [0,0];
@@ -736,6 +736,15 @@ function getKey() {
   if (keyIndex === APIkeys.length) keyIndex = 0;
   return APIkeys[keyIndex];
 }
+var doc = {
+    i: function (e) {
+        return document.getElementById(e);
+    }, q: function (e) {
+        return document.querySelector(e);
+    }, a: function (e) {
+        return document.querySelectorAll(e);
+    }
+};
 // ------ Assigns forEach to NodeList if not already available (minimum requirement  = ES5)------
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
@@ -764,7 +773,7 @@ function ajx(url, success, failure) {
 // ----text changing function for code reusability----
 function changeText(elem, changeVal) {
   if (typeof(elem)==='string') {
-    elem = document.getElementById(elem);
+    elem = doc.i(elem);
   }
   if (elem.nodeName.toUpperCase()==='INPUT') {
     elem.value = String(changeVal).trim();
@@ -775,7 +784,7 @@ function changeText(elem, changeVal) {
 
 function getText(elem) {
   if (typeof(elem)==='string') {
-    elem = document.getElementById(elem);
+    elem = doc.i(elem);
   }
   if (elem.nodeName.toUpperCase()==='INPUT') {
     return String(elem.value).trim();
@@ -784,7 +793,7 @@ function getText(elem) {
   }
 }
 
-function def(ob,val){
+function def(ob, val){
   if (typeof(ob)==='undefined') return val;// if val not declared or val = undefined.
   else return ob;
 }
@@ -826,11 +835,14 @@ function getValue(value) {
       noConnection('queryName unable to call tutorial(3)');
     }
   }
-  if (typeof(loading)==='function')
+  if (typeof(loading)==='function') {
     loading('username');
-  else 
+    loading('actualCount');
+  } else {
     changeText('username', 'Loading...');
-  document.getElementById('username').blur();
+    changeText('actualCount', 'Loading...');
+  }
+  doc.i('username').blur();
   rawInput = value;
   queryName();
 }
@@ -844,10 +856,10 @@ function noConnection(e, noStop) {
     changeText('actualCount','No Internet');
     var arr = ['totalViews', 'totalVideos', 'pubDate', 'username'];
     for (var x = 0; x < arr.length; x++) {
-      changeText(document.getElementById(arr[x]), 'No Internet');
+      changeText(doc.i(arr[x]), 'No Internet');
     }
     changeText('username','Refresh the page');
-    document.getElementById('dp').style.display = 'none';
+    doc.i('dp').style.display = 'none';
     clearInterval(intervalId);
   }
 }
@@ -875,10 +887,10 @@ function queryName(query) {
       if (!query && !e.items[0].snippet.publishedAt.trim()) {// if no result found and queryName not called by suggests (!query)
         //, show not found and hide stuff 
         changeText('username','Not Found!');
-        document.getElementById('actualCount').style.display = 'none';
-        document.getElementById('milestoneBox').style.display = 'none';
-        document.getElementById('dp').style.display = 'none';
-        document.getElementById('extra').style.display = 'none';
+        doc.i('actualCount').style.display = 'none';
+        doc.i('milestoneBox').style.display = 'none';
+        doc.i('dp').style.display = 'none';
+        doc.i('extra').style.display = 'none';
         clearInterval(intervalId);
         notFound = 1;
         return;
@@ -886,16 +898,16 @@ function queryName(query) {
       // else
       // show stuff
       if (notFound === 1) {// show HTML elements if previously hidden
-        document.getElementById('actualCount').style.display = 'inline-block';
-        document.getElementById('milestoneBox').style.display = 'inline';
+        doc.i('actualCount').style.display = 'inline-block';
+        doc.i('milestoneBox').style.display = 'inline';
         notFound = 0;
       }
-      document.getElementById('dp').style.display = 'block';
-      document.getElementById('extra').style.display = 'block';
+      doc.i('dp').style.display = 'block';
+      doc.i('extra').style.display = 'block';
       
       // set channel name in input box and title
       channelname = e.items[0].snippet.title;
-      changeText(document.getElementById('username'), channelname);
+      changeText(doc.i('username'), channelname);
       document.title = channelname + '\'s YouTube® LIVE Subscriber Count - YouCount';
 
       // sets username to channel id so that further requests to find out about the channel can be made
@@ -917,7 +929,7 @@ function queryName(query) {
       pubDate = pubDate.split('-');
       pubDate[1] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][(Number(pubDate[1]) - 1)];
       channeldate = pubDate[2] + '-' + pubDate[1] + '-' + pubDate[0];
-      changeText(document.getElementById('pubDate'), channeldate);
+      changeText(doc.i('pubDate'), channeldate);
       // sends request to find if customUrl is available. if available, uses it for setting url, otherwise uses title for setting url
       // if pushState has to not be set during a queryName run, isBackPressed is set to false. It automatically resets to 1 after not running once.
       if (!isBackPressed) {
@@ -939,13 +951,13 @@ function queryName(query) {
             }
             history.pushState(null, null, '#!/' + urlFinalName);
             // also sets iframe src url for embedding and url for sharing.
-            changeText(document.getElementById('embedUrl'), '<iframe src="https://youcount.github.io/e/#!/' + urlFinalName + '" height="100" width="250" frameborder="0"></iframe>');
-            changeText(document.querySelector('#pageUrl input'), 'https://youcount.github.io/#!/' + urlFinalName);
+            changeText(doc.i('embedUrl'), '<iframe src="https://youcount.github.io/e/#!/' + urlFinalName + '" height="100" width="250" frameborder="0"></iframe>');
+            changeText(doc.q('#pageUrl input'), 'https://youcount.github.io/#!/' + urlFinalName);
           });
         });
       } else isBackPressed = false;// resetting of isBackPressed
 
-      if (firstload) {
+      if (firstload == 2) {
         url = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=' + username + '&fields=items/contentDetails/relatedPlaylists/uploads&key=' + getKey();
         ajx(url,  function (m) {
           url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + m.items[0].contentDetails.relatedPlaylists.uploads + '&maxResults=50&fields=items/snippet/resourceId/videoId&key=' + getKey();
@@ -956,11 +968,11 @@ function queryName(query) {
             }
           });
         });
-      } else if(typeof(extrabutton)!=='undefined') extrabutton();
+      } else if(firstload == 0 && typeof(extrabutton)!=='undefined') extrabutton();
 
 
       // set profile picture of channel
-      document.getElementById('dp').src = e.items[0].snippet.thumbnails.default.url;
+      doc.i('dp').src = e.items[0].snippet.thumbnails.default.url;
       /*
       from https://developers.google.com/youtube/v3/docs/channels#properties
       snippet.description - Channel description
@@ -975,8 +987,7 @@ function queryName(query) {
   }
 }
 var isLive = 0;
-var myLineChart1Data;
-var prevCounts = [0, 0, 0, 0, 0 ];
+var prevCounts = [0, 0, 0, 0, 0];
 function live() {
   var url = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + username + '&fields=items/statistics/subscriberCount&key=' + getKey();
   try {
@@ -996,66 +1007,24 @@ function live() {
           }
         }
         var subsLeft = target - actualCount;
-
-        // load chart if not already loaded and update it.
-        if (isChart === 1) {
-          myLineChart1Data = {
-            labels: [''],
-            datasets: [{
-              label: 'Realtime Trend (30s)',
-              fill: false,
-              borderColor: 'rgba(255,50,50,0.5)',
-              pointRadius: 0,
-              data: [actualCount]
-            }]
-          };
-          myLineChart1 = new Chart(document.getElementById('myChart1').getContext('2d'), {
-            type: 'line',
-            data: myLineChart1Data,
-            gridLines: {display: false},
-            responsive: true,
-            maintainAspectRatio: false
-          });
-          isChart = 2;
-          seconds = 0;
-        }
         ++seconds;
         prevCounts[seconds % 5] = actualCount;
 
         // send updated values of actualCount and milestones
-        if (!isLive) {
-          new Odometer({ // eslint-disable-line no-new
-            el: document.getElementById('actualCount'),
-            value: actualCount,
-            format: '(,ddd)',
-            theme: 'minimal'
-          });
-          new Odometer({ // eslint-disable-line no-new
-            el: document.getElementById('milestoneLeft'),
-            value: subsLeft,
-            format: '(,ddd)',
-            theme: 'minimal'
-          });
-          isLive = 1;
-        } else {
-          changeText(document.getElementById('actualCount'), actualCount);
-          changeText(document.getElementById('milestoneLeft'), subsLeft);
-          changeText(document.getElementById('milestoneTarget'), target.toLocaleString('en-US'));
-          if (subsLeft < 1 && subsLeft > -1) {
-            changeText('milestoneBox','Congratulations!');
-          }
-          // if chart is already loaded, the value of chart is updated here.
-          if (isChart === 2 && seconds % 5 === 0) {
-            for (i = 0; i < 5; i++)myLineChart1.data.labels.push('');
-            for (i = 0; i < 5; i++)myLineChart1.data.datasets[0].data.push(prevCounts[i]);
-            if (seconds > 30) {// the max values of x axis is 30 seconds and after that limit is reached, starting values start getting destroyed.
-              for (i = 0; i < 5; i++) {
-                myLineChart1.data.labels.shift();
-                myLineChart1.data.datasets[0].data.shift();
-              }
-            }
-            myLineChart1.update();
-          }
+        changeText(doc.i('actualCount'), actualCount);
+        changeText(doc.i('milestoneLeft'), subsLeft);
+        changeText(doc.i('milestoneTarget'), target.toLocaleString('en-US'));
+        // if chart is already loaded, the value of chart is updated here.
+        if (firstload === 2 && seconds % 5 === 4) {
+            prevCounts.forEach(function (e) {
+                chartStore[0].data.labels.push('');
+                chartStore[0].data.datasets[0].data.push(e);
+                if (seconds > 30) {
+                    chartStore[0].labels.shift();
+                    chartStore[0].data.datasets[0].data.shift();
+                }
+            });
+            chartStore[0].update();
         }
       }
     }, function () {
@@ -1102,21 +1071,21 @@ window.onpopstate = function () {
 // this thing gives the search box it's effects (material design thing + fading in search button)
 // when it is clicked or focussed upon and effectively hides them as well.
 
-tutorial=null;//to circumvent automatic assignment of tutorial to document.getElementById('tutorial'),
+tutorial=null;//to circumvent automatic assignment of tutorial to doc.i('tutorial'),
 //until it is defined as a function; goog: 'global variables id'
 
-document.getElementById('username').addEventListener('focusin', function () {
+doc.i('username').addEventListener('focusin', function () {
   if (isTutorialOn[0] && tutorial) {
     changeText('username','');
     tutorial(1);
   }
-  document.getElementById('username').select();
-  document.getElementById('inputButton').style.display = 'block';
+  doc.i('username').select();
+  doc.i('inputButton').style.display = 'block';
 });
-document.getElementById('username').addEventListener('focusout', function () {
+doc.i('username').addEventListener('focusout', function () {
   setTimeout(function () {
-    document.getElementById('suggest').style.display = 'none';
-    document.getElementById('inputButton').style.display = 'none';
+    doc.i('suggest').style.display = 'none';
+    doc.i('inputButton').style.display = 'none';
     if (typeof(usernameKeyUp)!=='undefined' && usernameKeyUp[0]) {//shortcircuiting AND in case usernameKeyUp is not defined.
         clearInterval(usernameKeyUpInter);
       usernameKeyUp = [false, false];
