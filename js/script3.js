@@ -485,7 +485,7 @@ function createCharts() {
     totviews[1] = views.slice(0, vids * 2).reduce(function (s, e, i) {
         // set totviews[0] as sum of views[0 to vids - 1]
         if (i == vids) totviews[0] = s;
-        return s + e;
+        return s + Number(e);
     }, 0);
 
     dataVals[2] = [Math.floor(totviews[0] / vids), Math.floor(totviews[1] / vids)];
@@ -564,7 +564,7 @@ function createCharts() {
     };
     chartStore[3] = new Chart(doc.i('chart3').getContext('2d'), {
         type: 'doughnut',
-        data: chartStoreData,
+        data: chartStoreData[3],
         gridLines: {
             display: false
         },
@@ -667,7 +667,7 @@ function upCharts() {
 
   sum2 = views.slice(0, vids * 2).reduce(function (s, e, i) {
     if (i == vids) sum1 = s;
-    return s + e;
+    return s + Number(e);
   }, 0);
 
   chartStore[1].data.datasets[0].label = 'Views of last ' + vids + ' videos';
