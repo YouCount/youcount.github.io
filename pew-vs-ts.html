@@ -120,39 +120,6 @@ background-position: -71.5px 0;
 #share {
 background-position: -107px 0;
 }
-#sharebox {
-position:fixed;
-top:60px;
-right:5px;
-margin:0;
-padding:0;
-list-style-type:none;
-}
-.share {
-height:50px;
-width:50px;
-margin-bottom:5px;
-border-radius:50%;
-cursor:pointer;
-display:none;
-/*background-image: url(/images/social.png);*/
-/*This is done at the end of script3.js so image is downloaded at the very last.*/
-}
-#tw {
-background-position: -50px 0;
-}
-#lnkdIn {
-background-position: -100px 0;
-}
-#tb {
-background-position: 0 -50px;
-}
-#rdit {
-background-position: -50px -50px;
-}
-#link {
-background-position: -100px -50px;
-}
 #pageUrl {
 position:fixed;
 top:20%;
@@ -353,14 +320,6 @@ font-size: 20px;
     <div class="navButtonsCover" data-child="help" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(2)})()">
         <div id="help" class="navButtons" alt="Help button"></div>
     </div>
-      <ul id="sharebox">
-        <li id="fb" class="share"></li>
-        <li id="tw" class="share"></li>
-        <li id="lnkdIn" class="share"></li>
-        <li id="tb" class="share"></li>
-        <li id="rdit" class="share"></li>
-        <li id="link" class="share"></li>
-      </ul>
 </section>
 <span id="pageUrl">
 Shareable Link
@@ -516,16 +475,6 @@ function noConnection(e, noStop) {
   }
 }
 
-function idClickListener(ele, func) {
-  document.getElementById(ele).addEventListener('click', func);
-}
-
-function queryClickListener(ele, func) {
-  var elems = document.querySelectorAll(ele);
-  elems.forEach(function (e) {
-    e.addEventListener('click', func);
-  });
-}
 function fx(str) {
   var ele = document.getElementById(str);
   var duration = 1000/60; // Max Fps = 60
@@ -587,72 +536,6 @@ function setEmail() {
 }
 setEmail();
 
-var clickList = [
-  ['fb', function () {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
-  }],
-  ['tw', function () {
-    window.open('https://twitter.com/share?text=' + getText('username') + ' now has  ' + actualCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' subscribers!&url= ' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&hashtags=YouCount', '_blank');
-  }],
-  ['lnkdIn', function () {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + '\'s%20Live%20Subscriber%20Count&source=YouCount', '_blank');
-  }],
-  ['tb', function () {
-    window.open('http://www.tumblr.com/share/link?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))), '_blank');
-  }],
-  ['rdit', function () {
-    window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(getText(document.querySelector('#pageUrl input'))) + '&title=' + encodeURIComponent(channelname) + 's%20Live%20Subscriber%20Count', '_blank');
-  }],
-  ['link', linkshare],
-  ['bg2', function () {
-    fx('pageUrl').fadeOut(250);
-    fx('bg2').fadeOut(500);
-  }]
-];
-clickList.forEach(function (e) {
-  idClickListener(e[0], e[1]);
-});
-
-// shareswitch is used to record the state of share. Go to its defn on top to know what each state represents
-// the below function behaves based on the state of share, as follows:
-// if shareswitch === 0, show the share stuff; set shareswitch = 1; after transition, set shareswitch = 2
-// if shareswitch === 1, exit
-// if shareswitch === 2, hide share stuff; set shareswitch = 1; after transition, set shareswitch = 0
-// this prevents undesired behaviour, when body or button is clicked during transition.
-function shareFunc() {
-  if (shareswitch === 1) return;
-  var t = 200; // time in milliconds
-  var shareElems = document.querySelectorAll('.share');
-  switch (shareswitch) {
-  case 0:
-    shareswitch = 1;
-    shareElems.forEach(function (e, i) {
-      setTimeout(function () {
-        fx(e.id).fadeIn(t);
-      }, 40 * (i + 1));
-    });
-    setTimeout(function () {
-      shareswitch = 2;
-      queryClickListener('body', shareFunc);
-      navState[1] = false;
-    }, t + (shareElems.length * 40));
-    break;
-  case 2:
-    shareswitch = 1;
-    navState[0] = null;
-    shareElems.forEach(function (e) {
-      fx(e.id).fadeOut(t);
-    });
-    setTimeout(function () {
-      shareswitch = 0;
-      document.body.removeEventListener("click", shareFunc);
-      navState[1] = false;
-    }, t);
-    break;
-  default:break;
-  }
-}
-
 var storeScrollY = 0;
 function handleNavButtons(n) {
   if (navState[1]) return;
@@ -703,8 +586,7 @@ function handleNavButtons(n) {
       }, 700);
       navState = [n, true];
     } else if (n == 4) {
-      shareFunc(true);
-      navState = [4, true];
+      linkshare();
     }
   }
 }
@@ -845,13 +727,6 @@ if (!developmentMode) {
 } else {
   // 2. this starts the processes in the beginning.
   main();
-}
-
-window.onload = function () {
-    //downloads social and assigns it as background at the end.
-  document.querySelectorAll('.share').forEach(function (e) {
-    e.style.backgroundImage = 'url(/images/social.png)';
-  });
 }
 </script>
 <script>

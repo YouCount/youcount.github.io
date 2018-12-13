@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>YouCount: YouTube® LIVE Subscriber Count</title>
+<meta name="theme-color" content="#e61919" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e61919">
+<meta name="apple-mobile-web-app-title" content="YouCount">
+<meta name="application-name" content="YouCount">
+<meta name="msapplication-TileColor" content="#e61919">
+<link rel="canonical" href="https://youcount.github.io/" />
+<link rel="amphtml" href="https://youcount.github.io/amp">
+<link rel="manifest" href="/manifest.json">
+<meta charset="utf-8">
+<meta http-equiv="EXPIRES" content="Thu, 10 Jan 2030 12:00:00 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website."/>
+<meta property="og:title" content="YouCount: YouTube® LIVE Subscriber Count"/>
+<meta property="og:description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website." />
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="https://youcount.github.io/images/fblogo.jpg" />
+<meta property="og:site_name" content="YouCount" />
+<meta property="article:author" content="https://www.facebook.com/20manas"/>
+<script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "YouCount: YouTube® LIVE Subscriber Count",
+        "datePublished": "2018-11-03T12:02:41Z",
+    "publisher": {
+      "@type": "Organization",
+      "name":"YouCount",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://youcount.github.io/images/amplogo.jpg",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "author":"Manas Khurana",
+        "image": {
+      "@type": "ImageObject",
+      "url": "https://youcount.github.io/images/fblogo.jpg",
+      "width": 1203,
+      "height": 630
+        },
+    "description":"See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website."
+      }
+</script>
+<style>
+/* Odometer */
+.odometer.odometer-auto-theme,.odometer.odometer-auto-theme .odometer-digit,.odometer.odometer-theme-minimal,.odometer.odometer-theme-minimal .odometer-digit{display:inline-block;position:relative}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;backface-visibility:hidden}.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0);transform:translateZ(0)}.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s}.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner{-webkit-transition:-webkit-transform .5s;transition:transform .5s;-webkit-transform:translateY(0);transform:translateY(0)}
+/*Odometer End*/
+.navButtonsCover .navButtons, #search {
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAd0AAABGCAMAAAC+Nb5oAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA25pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0Nzk5OWVkZC01ZWUyLWU3NGMtYjQzOC1jYjEzNDk5MWUyNGYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkM2MTYxMTk4OEZCMTFFN0E0RkY5QTAwNkRCMTYzMzIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkM2MTYxMTg4OEZCMTFFN0E0RkY5QTAwNkRCMTYzMzIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDY0NUZGRUY4Njc1MTFFN0I5MTdEQTcwMDU2Q0NCMzciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDY0NUZGRjA4Njc1MTFFN0I5MTdEQTcwMDU2Q0NCMzciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5g/RDXAAAACVBMVEX////lLScAAAA8bF9eAAAAA3RSTlP//wDXyg1BAAAEe0lEQVR42uzd2XIbIRAF0Kv+/49OVapScawBerm9iHjeLEuzcAZoGkaCnDacN2Ft7P0N2PiFZDm4VVK7+YvhJuLmK0IKrf1qctuECbYd14M0W8vl5Lf5E3Bpl6PeGTJxlZdT06cPwGVcjWl/yLRV3mCo4i29YRKuxrzLbF1EcZkYle1BwtXYd4lk3HPjUT/gKtZ9+pNou9snsnERxiUHI8W6rIO7SihfF+awMou3UvfhUKGj+wp5lm7uSLFQF2TdRVmcSgjpuHCF95fockL2TUHsi6hAF+Zb0jyuGxdUJela/9mqu31TUHdzn2/ekjqyDmfgzf8eU3djSZnnT+9LIbMeM3X1xfigi0bd7anHdRddeUHiiqgbKcVuXVF0KIEiwfK13BBrFyhmpE8bdRVnZu6VTYmiB13U6/rqri0pNE/3+xKCeNXdDw5VI0VWjpnVMPveNkJX0nSP3S6f95igycBdVN6xuoE9QKObxLu4+uiN6o3jhurScd/rTnA0fUgdkQpD/5n/TleUugicnHXCS3J18Qm6fFzZTlVEGl8DbVZMZdF9/d6eXnx847eNv/qVk3F3TLEoe9aVOaEkLJ8i62pxEcMFBVcOTWkgbMKqPrNu8w5dNS4GtMssXVvzS+qh4slXs64eFwPaZTmEWozFuYwDDNE14GIArpxiLVPowutYp9bdrJg5B1czQnW0+9lr62/T5dR6ydUlTVM26r424i+bdXl62aBr4d0vXMuba/LHzDref18x4qK/Xd7NpNlX1sfn9Tp133hjuCipujpcGBv0z9GFWncbEZtxvbpEXKWuZwVE/QqesC6YuOivuspFo+N0JUcXRNwSXUrLPFXXPb+r5Q3goqBh9gdVwX4Xn6mLxyzUK7XusrLTJl37iEjqeI2n5smKnwbDM3QdeUjqeBedldej+1rP+6XrBm507RwCO1eFtsoLlq6Dt6bqRnXtuU7a+s8or2+Z17OjZXqoVPe8MAMxXMequLC65gQVDZNa18xb1DBveClzCNo4JXQAB++mYRKHrpW3Tle5ljlQ9pauiNRqH3awixhdukbeqbqkVXNYQNI6ZehCfvMTnks1E2+h7rPYUdd5hN0SOWbMpVnY89jxDFrPzIk9t6vXhNEnKtfIIYkX+1bkbl3ZlQMp4FFWpSxe9e6n6jJGiO+65GhWqUAOnS0rMq/WRU7VNSkYhq1e3mUIcaPuG1xxfhiWyC7uu4kQ5z6dTWybsc0P5x+fN5mkeu7hdl0x6NZN3HEOqBgdlepKn65i5u7TdP/sShVNtn4bWTZvUVkr0/rpxfEeyl2qK4pwtXrBTH5xvIVat+qK4ouvP+R7IgPh5CDdrDui4Tar7wseeZu/fftHN5X3R7eMt+gkvpbh/6TbN+Auvce+TkKK9P5iTb5uT3S3SpdV/igDfnTzi7h8BLG8szqHQze1zMsyrTy2QHJ5ZYDuMnXXwFt57Bm/4Vmh25cN7Uns/B0RpfkGSkOu5C0/AU0gUJSAvE5XmnHF+nRCZmL5Pt38RwT32y8BBgDINqoX+oHxQgAAAABJRU5ErkJggg==);
+background-size: auto 100%;
+}
+body {
+background-color:rgb(250,250,250);
+font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 100;
+outline:none;
+margin:0;
+overflow-x: hidden !important;
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+-webkit-transition: background-color 0.5s linear;
+transition: background-color 0.5s linear;
+}
+img {
+color:transparent;
+}
+ul {
+list-style-type:none;
+}
+#menu {
+position:fixed;
+width:100vw;
+height:50px;
+box-shadow: 0 0 20px -4px black;
+left:0;
+top:0;
+z-index:1001;
+background-color:rgb(230,25,25);
+backface-visibility: hidden;
+}
+.navButtonsCover {
+position:relative;
+height:100%;
+width:15vh;
+min-height:40px;
+float:right;
+top:0;
+cursor:pointer;
+-webkit-transition: background-color 0.5s linear;
+transition: background-color 0.5s linear;
+}
+.navButtonsCover .navButtons {
+position: relative;
+top:10%;
+left:50%;
+-webkit-transform:translate(-50%, 7.5px);
+transform:translate(-50%, 7.5px);
+height:25px;
+width:25px;
+}
+.navButtonsCover[data-child="logo"]{
+float:left;
+}
+#logo {
+width: 36px;
+background-position: 0 0;
+}
+#help {
+background-position: -40px 0;
+}
+#code {
+background-position: -71.5px 0;
+}
+#share {
+background-position: -107px 0;
+}
+#sharebox {
+position:fixed;
+top:60px;
+right:5px;
+margin:0;
+padding:0;
+list-style-type:none;
+}
+.share {
+height:50px;
+width:50px;
+margin-bottom:5px;
+border-radius:50%;
+cursor:pointer;
+display:none;
+/*background-image: url(/images/social.png);*/
+/*This is done at the end of script3.js so image is downloaded at the very last.*/
+}
+#tw {
+background-position: -50px 0;
+}
+#lnkdIn {
+background-position: -100px 0;
+}
+#tb {
+background-position: 0 -50px;
+}
+#rdit {
+background-position: -50px -50px;
+}
+#link {
+background-position: -100px -50px;
+}
+#pageUrl {
+position:fixed;
+top:20%;
+z-index:1010;
+background-color:white;
+box-shadow: 0 0 20px -4px black;
+font-size:35px;
+display:none;
+}
+#pageUrl input {
+border:none;
+outline:none;
+font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 100;
+font-size:30px;
+background-color:gray;
+color:white;
+}
+#pageUrl, #pageUrl input {
+text-align:center;
+width:80%;
+left:10%;
+border-radius:4px;
+padding: 0;
+margin: 0;
+padding-top: 20px;
+padding-bottom: 20px;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+#tutorial {
+display: none;
+z-index: 1003;
+position:absolute;
+height:auto;
+max-width: 100%;
+width:500px;
+background-color:rgba(0,0,0,0.7);
+border-radius:10px;
+left:50%;
+-webkit-transform:translate(-50%,0);
+transform:translate(-50%,0);
+}
+#pointer {
+position: absolute;
+bottom: 100%;
+border: 25px solid transparent;
+border-bottom: 30px solid rgba(0,0,0,0.7);
+left:50%;
+z-index: 1003;
+-webkit-transform:translate(-50%,0);
+transform:translate(-50%,0);
+}
+#tutorial p, .tutStep2 {
+color:white;
+}
+#tutStep1{
+font-size:50px;
+text-align:center;
+font-weight:900;
+margin-left: 15px;
+margin-right: 15px;
+}
+#tutStep2 {
+display: none;
+margin-left: 15px;
+margin-right: 15px;
+}
+#tutorial h3 {
+font-size: 25px;
+}
+ol li {
+padding-top: 5px;
+padding-bottom: 5px;
+}
+.ball {
+-webkit-transform: translate3d(0, -100%, 0) scale(0, 0);
+transform: translate3d(0, -100%, 0) scale(0, 0);
+opacity: 0;
+}
+#bg1 {
+display: block;
+overflow-x: hidden;
+-webkit-transition: all 0.5s linear;
+transition: all 0.5s linear;
+min-height: 100%;
+width: 100%;
+right: 0;
+top:0;
+position: fixed;
+background-color:white;
+z-index:501;
+}
+#bg1 div {
+margin-top: 60px;
+-webkit-transition: all 0.5s;
+transition: all 0.5s;
+opacity: 0;
+display: none;
+}
+#bg1 h2 {
+text-align:center;
+font-size:6vw;
+margin:0;
+}
+#bg1 p, #bg1 ol {
+font-size:20px;
+text-align:left;
+margin-left:20px;
+margin-right:20px;
+}
+#bg1 a {
+color:rgb(230,25,25);
+font-weight: 600;
+}
+#bg1 .extrabutton {
+display: block;
+}
+#bg2 {
+display: none;
+left:0;
+top:0;
+background-color:rgba(0,0,0,0.5);
+z-index: 1001;
+height: 100%;
+width: 100%;
+position:fixed;
+}
+#mainPage {
+position:absolute;
+width:100%;
+left:0;
+bottom:0;
+top:50px;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+}
+.card {
+position:relative;
+width: 80% !important;
+height:auto;
+margin: 20px auto;
+font-size:1vw;
+box-shadow: 0 0 20px -4px black;
+border-radius:4px !important;
+background-color:white;
+backface-visibility: hidden;
+}
+#prime {
+padding-top: 30px;
+padding-bottom: 30px;
+}
+#actualCount {
+font-size: 11vw !important;
+}
+#totalViews, #totalVideos, #pubDate {
+font-size:3vw !important;
+line-height:1;
+font-weight:400;
+}
+label[for="username"] {
+display: inline-block;
+}
+#dp {
+display: none;
+height:8vw;
+margin-right: 1vw;
+border-radius:6vw; /*for both 8vw and 12vw sizes */
+cursor:pointer;
+}
+#username,#input button {
+border:none;
+outline:none;
+}
+#topPrime {
+position: relative;
+}
+#input {
+display: inline-block;
+position: relative;
+height:8vw;
+margin-left:1vw;
+width:75%;
+background-color:rgb(230,230,230);
+-webkit-transition:background-color 0.25s;
+transition:background-color 0.25s;
+border-radius:3px;
+}
+#input button {
+height:100%;
+background-color:rgb(230,25,25);
+width:8vw;
+overflow:hidden;
+cursor:pointer;
+position:absolute;
+top: 0;
+right: 0;
+display:none;
+padding: 0;
+opacity: 0;
+}
+#username {
+color:black;
+font-size:2.5vw;
+font-family: Roboto, Oxygen, 'Open Sans', -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 100;
+text-align:center;
+float:left;
+height:100%;
+width:100%;
+padding:0;
+background-color:transparent;
+-webkit-transition:width 0.25s;
+transition:width 0.25s;
+border-radius:3px 0 0 3px;
+}
+#search {
+height:40px;
+max-height: 60%;
+width:40px;
+max-width: 60%;
+margin-left:auto;
+margin-right:auto;
+background-position: 100% 0;
+background-repeat: no-repeat;
+}
+#username:focus {
+background-color:rgb(255,200,200);
+width: 90%;
+width: calc(100% - 8vw);
+-webkit-box-shadow: inset 0 -5px 0 0 rgb(230,25,25);
+box-shadow: inset 0 -5px 0 0 rgb(230,25,25);
+}
+#username:focus ~ #inputButton {
+opacity: 1;
+}
+#suggest {
+position:absolute;
+left:0;
+top:8vw;
+z-index:400;
+width:100%;
+display:none;
+box-shadow:0 4px 10px -4px black;
+list-style-type:none;
+padding:0;
+margin:0;
+overflow: hidden;
+background-color:white;
+}
+.suggest{
+color:black;
+cursor:pointer;
+height:50px;
+padding-bottom:10px;
+padding-top:10px;
+}
+
+.suggest div{
+font-size:25px;
+position:relative;
+text-align:left;
+top:50%;
+-webkit-transform:translate(0,-50%);
+transform:translate(0,-50%);
+}
+
+.suggest:hover {
+background-color:rgb(230,25,25);
+color:white;
+}
+
+.suggestImg {
+float:left;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+margin-left: 10px;
+margin-right: 10px;
+visibility:hidden;
+}
+#bottomPrime {
+width:100%;
+position: relative;
+}
+#extra {
+font-weight:400;
+padding-top:15px;
+padding-bottom:15px;
+}
+#extraContent {
+display: none;
+}
+#extra table {
+border-collapse: collapse;
+font-size:2vw;
+font-weight:100;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+}
+#extra th, #extra td {
+text-align: left;
+vertical-align: center;
+padding-top: 10px;
+padding-bottom:10px;
+padding-left:2vw;
+padding-right:2vw;
+border-bottom: 1px solid #ddd;
+}
+#milestoneBox {
+font-size:3vw;
+font-weight:100;
+}
+.chartWrapper {
+width:80%;
+margin-left:auto;
+margin-right:auto;
+}
+#hideextra {
+display:none;
+}
+.extrabutton {
+border:none;
+outline:none;
+background-color:rgb(230,25,25);
+color:white;
+min-width: 180px;
+height:50px;
+width:15vw;
+margin-top: 20px;
+margin-bottom: 20px;
+margin-left:auto;
+margin-right:auto;
+font-size: 18px;
+border-radius:4px;
+font-weight:900;
+cursor:pointer;
+overflow:hidden;
+z-index:2;
+text-transform:uppercase;
+}
+#vidsText {
+font-size:25px;
+}
+#vids {
+text-align:center;
+width:5vw;
+margin:1vw;
+font-size:25px;
+border:0;
+border-bottom:0.5vw solid rgb(230,25,25);
+background-color:rgba(200,200,200,0.3);
+}
+a {text-decoration:none;}
+@media only screen and (max-width: 800px), screen and (orientation: portrait) {
+  .navButtonsCover {
+    width: 25%;
+  }
+  #bg1 h2 {
+    font-size: 12vw;
+  }
+  #pageUrl, #pageUrl input {
+    width:100%;
+    left: 0;
+  }
+  .card {
+  width: 98% !important;
+  font-size: 3vw;
+  }
+  #extra table {
+  font-size:5vw;
+  }
+  #milestoneBox {
+  font-size:8vw;
+  }
+  #actualCount {
+  font-size: 15vw !important;
+  }
+  #totalViews, #totalVideos, #pubDate {
+  font-size: 8vw !important;
+  }
+  #username:focus {
+  width:84%;
+  width: calc(100% - 12vw);
+  }
+  #username {
+  font-size:4vw;
+  }
+  #input, #dp {
+  height:12vw;
+  }
+  #suggest {
+  top:12vw;
+  }
+  #input button {
+  width:12vw;
+  }
+  .extrabutton {
+  width:30vw;
+  }
+  .chartWrapper {
+  width:95%;
+  }
+}
+</style>
+</head>
+<body>
+<section id="menu">
+    <div class="navButtonsCover" data-child="logo" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
+        <div id="logo" class="navButtons" alt="YouCount Logo/Homepage"></div>
+    </div>
+    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(4)})()">
+        <div id="share" class="navButtons" alt="Share button"></div>
+    </div>
+    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(3)})()">
+        <div id="code" class="navButtons" alt="Get YouCount embed or widget"></div>
+    </div>
+    <div class="navButtonsCover" data-child="help" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(2)})()">
+        <div id="help" class="navButtons" alt="Help button"></div>
+    </div>
+      <ul id="sharebox">
+        <li id="fb" class="share"></li>
+        <li id="tw" class="share"></li>
+        <li id="lnkdIn" class="share"></li>
+        <li id="tb" class="share"></li>
+        <li id="rdit" class="share"></li>
+        <li id="link" class="share"></li>
+      </ul>
+</section>
+<span id="pageUrl">
+Shareable Link
+<br><input type="text" value="" onclick="this.select()" readonly />
+</span>
+
+<div id="tutorial">
+  <div id="pointer"></div>
+  <p id="tutStep1">Click Here</p>
+  <div id="tutStep2">
+    <h3 class="tutStep2">Search for a YouTube channel</h3>
+    <span class="tutStep2">For example, to see Fine Brothers Entertainment's live YouTube subscriber count, type in any one of these:</span>
+    <ol class="tutStep2">
+      <li><b>TheFineBros</b> (their username)</li>
+      <li><b>Fine Brothers Entertainment</b> (their YouTube channel name)</li>
+      <li><b>UC0v-tlzsn0QZwJnkiaUSJVQ</b> (their YouTube channel ID)</li>
+      <li><b>fine bros</b> (a search query)</li>
+    </ol>
+  </div>
+</div>
+<div class="bg ball" id="bg1">
+  <div id="helpArt">
+    <h2>About YouCount</h2>
+    <p>
+      YouTube updates the number of subscribers a channel has (its subscriber count) after a long time.
+    </p>
+    <p>
+      On YouCount, the subscriber count, of any YouTube channel, is live and is updated every second!
+    </p>
+    <p>SHOW STATS button can be clicked to see extra insights of the YouTube channel.</p>
+    <p>YouCount has been specifically designed using the Material Design language to make it look awesome! It is also optimized for mobile devices and has been made to work even with older browsers.
+    </p>
+    <p>To know more or to get in contact:
+    <ol>
+        <li><a href="//github.com/YouCount/youcount.github.io">Visit the GitHub Project site</a></li>
+        <li>Send an Email: <a id="email"></a></li>
+    </ol>
+    </p>
+    <p>Support the website by sharing it with your friends!</p>
+    <input type="button" class="extrabutton" value="How to Use" onclick="tutorial(0)">
+  </div>
+  <div id="codeArt">
+    <h2>Embed This!</h2>
+    <p>
+    Copy the code below and paste it where you want to embed this:</p>
+    <p><code id="embedUrl"></code></p>
+    <p>
+    Adjust its size by changing the "height" and "width" attribute of the iframe.
+    The size will automatically adjust to the size of the iframe.
+    </p>
+  </div>
+</div>
+
+<div class="bg" id="bg2"></div>
+
+<div id="mainPage">
+  <section id="prime" class="card">
+    <div id="topPrime">
+      <label for="username">
+        <img id="dp" alt="Channel Image">
+      </label>
+      <div id="input">
+        <input type="text" id="username" placeholder="Search for a YouTube channel" aria-label="Click here to search for a channel"  value="Loading..." onkeypress="trigenter(event)"/>
+        <button id="inputButton">
+          <div id="search"></div>
+        </button>
+        <ul id="suggest">
+          <li class="suggest" id="suggest1"><img class="suggestImg"><div></div></li>
+          <li class="suggest"><img class="suggestImg"><div></div></li>
+          <li class="suggest"><img class="suggestImg"><div></div></li>
+          <li class="suggest"><img class="suggestImg"><div></div></li>
+          <li class="suggest"><img class="suggestImg"><div></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="bottomPrime">
+      <br>
+      <span id="actualCount" class="odometer">Loading...</span>
+      <br>
+    </div>
+  </section>
+
+  <section id="extra" class="card">
+    <button class="extrabutton" id="showextra">Show Stats</button>
+    <div id="extraContent">
+      <div class="chartWrapper">
+        <canvas width="400" height="200" id="chart0"></canvas>
+      </div>
+      <br><br><br>
+      <span class="milestones" id="milestoneBox">
+        <span id="milestoneLeft" class="odometer">Loading...</span> left from <span id="milestoneTarget">Loading...</span>!
+      </span>
+      <br><br><br>
+      <table>
+        <tr>
+          <td>Total Views:</td>
+          <td><span id="totalViews">Loading...</span></td>
+        </tr>
+        <tr>
+          <td>Total Videos:</td>
+          <td><span id="totalVideos">Loading...</span></td>
+        </tr>
+        <tr>
+          <td>Since:</td>
+          <td><span id="pubDate">Loading...</span></td>
+        </tr>
+      </table>
+      <p id="vidsText">Last <input aria-label="Input box: Enter number of videos (1-25)" type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
+      <div class="chartWrapper">
+        <canvas width="400" height="200" id="chart1"></canvas>
+        <canvas width="400" height="200" id="chart2"></canvas>
+        <canvas width="400" height="200" id="chart3"></canvas>
+      </div>
+    </div>
+    <button class="extrabutton" id="hideextra">Hide Stats</button>
+  </section>
+</div>
+<script>
+// Odometer
+// eslint-disable-next-line
+(function () {var a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G=[].slice;q='<span class="odometer-value"></span>',n='<span class="odometer-ribbon"><span class="odometer-ribbon-inner">'+q+"</span></span>",d='<span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner">'+n+"</span></span>",g='<span class="odometer-formatting-mark"></span>',c="(,ddd).dd",h=/^\(?([^)]*)\)?(?:(.)(d+))?$/,i=30,f=2e3,a=20,j=2,e=.5,k=1e3/i,b=1e3/a,o="transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd",y=document.createElement("div").style,p=null!=y.transition||null!=y.webkitTransition||null!=y.mozTransition||null!=y.oTransition,w=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame,l=window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver,s=function (a) {var b;return b=document.createElement("div"),b.innerHTML=a,b.children[0]},v=function (a,b) {return a.className=a.className.replace(new RegExp("(^| )"+b.split(" ").join("|")+"( |$)","gi")," ")},r=function (a,b) {return v(a,b),a.className+=" "+b},z=function (a,b) {var c;return null!=document.createEvent?(c=document.createEvent("HTMLEvents"),c.initEvent(b,!0,!0),a.dispatchEvent(c)):void 0},u=function () {var a,b;return null!=(a=null!=(b=window.performance)?"function"==typeof b.now?b.now():void 0:void 0)?a:+new Date},x=function (a,b) {return null==b&&(b=0),b?(a*=Math.pow(10,b),a+=.5,a=Math.floor(a),a/=Math.pow(10,b)):Math.round(a)},A=function (a) {return 0>a?Math.ceil(a):Math.floor(a)},t=function (a) {return a-x(a)},C=!1,(B=function () {var a,b,c,d,e;if (!C&&null!=window.jQuery) {for (C=!0,d=["html","text"],e=[],b=0,c=d.length;c>b;b++)a=d[b],e.push(function (a) {var b;return b=window.jQuery.fn[a],window.jQuery.fn[a]=function (a) {var c;return null==a||null==(null!=(c=this[0])?c.odometer:void 0)?b.apply(this,arguments):this[0].odometer.update(a)}}(a));return e}})(),setTimeout(B,0),m=function () {function a(b) {var c,d,e,g,h,i,l,m,n,o,p=this;if (this.options=b,this.el=this.options.el,null!=this.el.odometer)return this.el.odometer;this.el.odometer=this,m=a.options;for (d in m)g=m[d],null==this.options[d]&&(this.options[d]=g);null==(h=this.options).duration&&(h.duration=f),this.MAX_VALUES=this.options.duration/k/j|0,this.resetFormat(),this.value=this.cleanValue(null!=(n=this.options.value)?n:""),this.renderInside(),this.render();try{for (o=["innerHTML","innerText","textContent"],i=0,l=o.length;l>i;i++)e=o[i],null!=this.el[e]&&!function (a) {return Object.defineProperty(p.el,a,{get:function () {var b;return"innerHTML"===a?p.inside.outerHTML:null!=(b=p.inside.innerText)?b:p.inside.textContent},set:function (a) {return p.update(a)}})}(e)}catch(q) {c=q,this.watchForMutations()}}return a.prototype.renderInside=function () {return this.inside=document.createElement("div"),this.inside.className="odometer-inside",this.el.innerHTML="",this.el.appendChild(this.inside)},a.prototype.watchForMutations=function () {var a,b=this;if (null!=l)try{return null==this.observer&&(this.observer=new l(function () {var a;return a=b.el.innerText,b.renderInside(),b.render(b.value),b.update(a)})),this.watchMutations=!0,this.startWatchingMutations()}catch(c) {a=c}},a.prototype.startWatchingMutations=function () {return this.watchMutations?this.observer.observe(this.el,{childList:!0}):void 0},a.prototype.stopWatchingMutations=function () {var a;return null!=(a=this.observer)?a.disconnect():void 0},a.prototype.cleanValue=function (a) {var b;return"string"==typeof a&&(a=a.replace(null!=(b=this.format.radix)?b:".","<radix>"),a=a.replace(/[.,]/g,""),a=a.replace("<radix>","."),a=parseFloat(a,10)||0),x(a,this.format.precision)},a.prototype.bindTransitionEnd=function () {var a,b,c,d,e,f,g=this;if (!this.transitionEndBound) {for (this.transitionEndBound=!0,b=!1,e=o.split(" "),f=[],c=0,d=e.length;d>c;c++)a=e[c],f.push(this.el.addEventListener(a,function () {return b?!0:(b=!0,setTimeout(function () {return g.render(),b=!1,z(g.el,"odometerdone")},0),!0)},!1));return f}},a.prototype.resetFormat=function () {var a,b,d,e,f,g,i,j;if (a=null!=(i=this.options.format)?i:c,a||(a="d"),d=h.exec(a),!d)noInternet("Odometer: Unparsable digit format");return j=d.slice(1,4),g=j[0],f=j[1],b=j[2],e=(null!=b?b.length:void 0)||0,this.format={repeating:g,radix:f,precision:e}},a.prototype.render=function (a) {var b,c,d,e,f,g,h,i,j,k,l,m;for (null==a&&(a=this.value),this.stopWatchingMutations(),this.resetFormat(),this.inside.innerHTML="",g=this.options.theme,b=this.el.className.split(" "),f=[],i=0,k=b.length;k>i;i++)c=b[i],c.length&&((e=/^odometer-theme-(.+)$/.exec(c))?g=e[1]:/^odometer(-|$)/.test(c)||f.push(c));for (f.push("odometer"),p||f.push("odometer-no-transitions"),f.push(g?"odometer-theme-"+g:"odometer-auto-theme"),this.el.className=f.join(" "),this.ribbons={},this.digits=[],h=!this.format.precision||!t(a)||!1,m=a.toString().split("").reverse(),j=0,l=m.length;l>j;j++)d=m[j],"."===d&&(h=!0),this.addDigit(d,h);return this.startWatchingMutations()},a.prototype.update=function (a) {var b,c=this;return a=this.cleanValue(a),(b=a-this.value)?(v(this.el,"odometer-animating-up odometer-animating-down odometer-animating"),b>0?r(this.el,"odometer-animating-up"):r(this.el,"odometer-animating-down"),this.stopWatchingMutations(),this.animate(a),this.startWatchingMutations(),setTimeout(function () {return c.el.offsetHeight,r(c.el,"odometer-animating")},0),this.value=a):void 0},a.prototype.renderDigit=function () {return s(d)},a.prototype.insertDigit=function (a,b) {return null!=b?this.inside.insertBefore(a,b):this.inside.children.length?this.inside.insertBefore(a,this.inside.children[0]):this.inside.appendChild(a)},a.prototype.addSpacer=function (a,b,c) {var d;return d=s(g),d.innerHTML=a,c&&r(d,c),this.insertDigit(d,b)},a.prototype.addDigit=function (a,b) {var c,d,e,f;if (null==b&&(b=!0),"-"===a)return this.addSpacer(a,null,"odometer-negation-mark");if ("."===a)return this.addSpacer(null!=(f=this.format.radix)?f:".",null,"odometer-radix-mark");if (b)for (e=!1;;) {if (!this.format.repeating.length) {if (e)noInternet("Bad odometer format without digits");this.resetFormat(),e=!0}if (c=this.format.repeating[this.format.repeating.length-1],this.format.repeating=this.format.repeating.substring(0,this.format.repeating.length-1),"d"===c)break;this.addSpacer(c)}return d=this.renderDigit(),d.querySelector(".odometer-value").innerHTML=a,this.digits.push(d),this.insertDigit(d)},a.prototype.animate=function (a) {return p&&"count"!==this.options.animation?this.animateSlide(a):this.animateCount(a)},a.prototype.animateCount=function (a) {var c,d,e,f,g,h=this;if (d=+a-this.value)return f=e=u(),c=this.value,(g=function () {var i,j,k;return u()-f>h.options.duration?(h.value=a,h.render(),void z(h.el,"odometerdone")):(i=u()-e,i>b&&(e=u(),k=i/h.options.duration,j=d*k,c+=j,h.render(Math.round(c))),null!=w?w(g):setTimeout(g,b))})()},a.prototype.getDigitCount=function () {var a,b,c,d,e,f;for (d=1<=arguments.length?G.call(arguments,0):[],a=e=0,f=d.length;f>e;a=++e)c=d[a],d[a]=Math.abs(c);return b=Math.max.apply(Math,d),Math.ceil(Math.log(b+1)/Math.log(10))},a.prototype.getFractionalDigitCount=function () {var a,b,c,d,e,f,g;for (e=1<=arguments.length?G.call(arguments,0):[],b=/^\-?\d*\.(\d*?)0*$/,a=f=0,g=e.length;g>f;a=++f)d=e[a],e[a]=d.toString(),c=b.exec(e[a]),e[a]=null==c?0:c[1].length;return Math.max.apply(Math,e)},a.prototype.resetDigits=function () {return this.digits=[],this.ribbons=[],this.inside.innerHTML="",this.resetFormat()},a.prototype.animateSlide=function (a) {var b,c,d,f,g,h,i,j,k,l,m,n,o,p,q,s,t,u,v,w,x,y,z,B,C,D,E;if (s=this.value,j=this.getFractionalDigitCount(s,a),j&&(a*=Math.pow(10,j),s*=Math.pow(10,j)),d=a-s) {for (this.bindTransitionEnd(),f=this.getDigitCount(s,a),g=[],b=0,m=v=0;f>=0?f>v:v>f;m=f>=0?++v:--v) {if (t=A(s/Math.pow(10,f-m-1)),i=A(a/Math.pow(10,f-m-1)),h=i-t,Math.abs(h)>this.MAX_VALUES) {for (l=[],n=h/(this.MAX_VALUES+this.MAX_VALUES*b*e),c=t;h>0&&i>c||0>h&&c>i;)l.push(Math.round(c)),c+=n;l[l.length-1]!==i&&l.push(i),b++}else l=function () {E=[];for (var a=t;i>=t?i>=a:a>=i;i>=t?a++:a--)E.push(a);return E}.apply(this);for (m=w=0,y=l.length;y>w;m=++w)k=l[m],l[m]=Math.abs(k%10);g.push(l)}for (this.resetDigits(),D=g.reverse(),m=x=0,z=D.length;z>x;m=++x)for (l=D[m],this.digits[m]||this.addDigit(" ",m>=j),null==(u=this.ribbons)[m]&&(u[m]=this.digits[m].querySelector(".odometer-ribbon-inner")),this.ribbons[m].innerHTML="",0>d&&(l=l.reverse()),o=C=0,B=l.length;B>C;o=++C)k=l[o],q=document.createElement("div"),q.className="odometer-value",q.innerHTML=k,this.ribbons[m].appendChild(q),o===l.length-1&&r(q,"odometer-last-value"),0===o&&r(q,"odometer-first-value");return 0>t&&this.addDigit("-"),p=this.inside.querySelector(".odometer-radix-mark"),null!=p&&p.parent.removeChild(p),j?this.addSpacer(this.format.radix,this.digits[j-1],"odometer-radix-mark"):void 0}},a}(),m.options=null!=(E=window.odometerOptions)?E:{},setTimeout(function () {var a,b,c,d,e;if (window.odometerOptions) {d=window.odometerOptions,e=[];for (a in d)b=d[a],e.push(null!=(c=m.options)[a]?(c=m.options)[a]:c[a]=b);return e}},0),m.init=function () {var a,b,c,d,e,f;if (null!=document.querySelectorAll) {for (b=document.querySelectorAll(m.options.selector||".odometer"),f=[],c=0,d=b.length;d>c;c++)a=b[c],f.push(a.odometer=new m({el:a,value:null!=(e=a.innerText)?e:a.textContent}));return f}},null!=(null!=(F=document.documentElement)?F.doScroll:void 0)&&null!=document.createEventObject?(D=document.onreadystatechange,document.onreadystatechange=function () {return"compvare"===document.readyState&&m.options.auto!==!1&&m.init(),null!=D?D.apply(this,arguments):void 0}):document.addEventListener("DOMContentLoaded",function () {return m.options.auto!==!1?m.init():void 0},!1),"function"==typeof define&&define.amd?define(["jquery"],function () {return m}):typeof exports===!1?module.exports=m:window.Odometer=m}).call(this);
+// Odometer End
+// From beta.html to index.html:
+// 1. Change internet and developmentMode to true and false respectively.
+// 2. Ensure that Google Analytics code is included.
+// 3. Change script3 to script at the bottom.
+// --------PRELUDE---------
+// ----Variables----
+/* global tutorial, pushViews, Chart:false, Odometer:false*/
+var isBackPressed = false;
+var chartStore = [];
+var isTutorialOn = [0,0];
+// -----select APIkey randomly----
+var keys = {
+    index: -1, vals: ['AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U'],
+    gen: function() {
+        if (keys.index === -1) {
+            keys.index = Math.floor(Math.random() * keys.vals.length);
+        } else {
+            keys.index = (keys.index + 1) % keys.vals.length;
+        }
+        return keys.vals[keys.index];
+    }
+};
+var doc = {
+    i: function (e) {
+        return document.getElementById(e);
+    }, q: function (e) {
+        return document.querySelector(e);
+    }, a: function (e) {
+        return document.querySelectorAll(e);
+    }
+};
+// ------ Assigns forEach to NodeList if not already available (minimum requirement  = ES5)------
+if (window.NodeList && !NodeList.prototype.forEach) {
+  NodeList.prototype.forEach = function (callback, thisArg) {
+    thisArg = def(thisArg, window);
+    for (var i = 0; i < this.length; i++) {
+      callback.call(thisArg, this[i], i, this);
+    }
+  };
+}
+// ----AJAX function for code reusability----
+function ajx(url, success, failure) {
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (request.readyState === 4) {
+      if (request.status === 200) {
+        if (success)success(JSON.parse(request.responseText));
+      } else {
+        stat.error('ajx failed to load: ' + url, true);
+        if (failure)failure(request.statusText);
+      }
+    }
+  };
+  request.open('GET', url);
+  request.send();
+}
+// ----text changing function for code reusability----
+function changeText(elem, changeVal) {
+  if (typeof(elem)==='string') {
+    elem = doc.i(elem);
+  }
+  if (elem.nodeName.toUpperCase()==='INPUT') {
+    elem.value = String(changeVal).trim();
+  } else {
+    elem.textContent = String(changeVal).trim();
+  }
+}
+
+function getText(elem) {
+  if (typeof(elem)==='string') {
+    elem = doc.i(elem);
+  }
+  if (elem.nodeName.toUpperCase()==='INPUT') {
+    return String(elem.value).trim();
+  } else {
+    return String(elem.textContent).trim();
+  }
+}
+
+function def(ob, val) { // return default value (val) if parameter value (ob) is undefined
+    return (typeof ob === 'undefined') ? val : ob;
+}
+
+// --------MAIN PROGRAM---------
+// ----receives value inputted by user and sends it while input box is starts showing 'Loading...'----
+function startAndPops() { // manage what happens in the very beginning and also on popstate
+    if (location.hash.split('#!/')[1]) {// if something is there after #!/, make that the search query else set page as homepage.
+            if (isBackPressed) {
+                reloadChannel(location.hash.split('#!/')[1]);
+            } else {
+                getValue(location.hash.split('#!/')[1]);
+            }
+    } else {
+        try {
+            isBackPressed = false;// since queryName is not called on this popstate.
+            tutorial(0);
+        } catch (e) {
+            isTutorialOn[0] = 1;// load tutorial when script.js has loaded.
+            stat.error('startAndPops unable to call tutorial(0)', true);
+        }
+    }
+}
+function getValue(value) {
+    value = def(value, getText('username'));
+    if (!stat.internet) {
+        changeText('username', 'Refresh the page');
+        return;
+    }
+    if (!value || ['Not Found!', 'Loading.', 'Loading..', 'Loading...', 'Refresh the page'].indexOf(value) > -1) {
+        return;
+    }
+    if (isTutorialOn[0]) {
+        try {
+            tutorial(3);
+        } catch (err) {
+            stat.error('getValue unable to call tutorial(3)');
+        }
+    }
+    if (typeof loading === 'function') {
+        loading('username');
+        loading('actualCount');
+    } else {
+        changeText('username', 'Loading...');
+        changeText('actualCount', 'Loading...');
+    }
+    doc.i('username').blur();
+    reloadChannel(value);
+}
+var stat = {
+    developmentMode: true, notFoundVal: false, internet: true, extra: false,
+    scripts: {
+        script: 0,
+        chartjs: 0,
+    },
+    get notFound() {
+        return notFoundVal;
+    }, set notFound(val) {
+        if (val === true) {
+            stat.notFoundVal = true;
+            changeText('username','Not Found!');
+            doc.i('actualCount').style.display = 'none';
+            doc.i('milestoneBox').style.display = 'none';
+            doc.i('dp').style.display = 'none';
+            doc.i('extra').style.display = 'none';
+            clearInterval(channel.live.interval);
+        } else {
+            stat.notFoundVal = false;
+            doc.i('actualCount').style.display = 'inline-block';
+            doc.i('milestoneBox').style.display = 'inline';
+            doc.i('dp').style.display = 'block';
+            doc.i('extra').style.display = 'block';
+        }
+    }, error: function (e, restore) {
+        e = def(e, 'No error provided!');
+        restore = def(restore, false);// kill processess by default
+
+        if (stat.developmentMode) {
+            console.log('YC Error:' + e);
+        }
+        if (!restore) {
+            stat.isInternet = false;
+            ['actualCount', 'totalViews', 'pubDate'].forEach(function (a) {
+                changeText(a, 'No Internet');
+            });
+            changeText('username','Refresh the page');
+            doc.i('dp').style.display = 'none';
+            clearInterval(channel.live.interval);
+        }
+    }
+};
+var channel = {
+    id: '', nameVal: '', countVal: 0, dateVal: '', views: [], vids: 5,
+    set name(e) {
+        channel.nameVal = e;
+        changeText('username', e);
+        document.title = e + '\'s YouTube® LIVE Subscriber Count - YouCount';
+    }, set count(e) {
+        channel.countVal = e;
+        channel.live.prevCounts[channel.live.seconds % 5] = e;
+        changeText('actualCount', e);
+    }, set date(e) {
+        channel.dateVal = e;
+        changeText('pubDate', e);
+    }, get name() { return channel.nameVal; },
+    get count() { return channel.countVal; },
+    get date() { return channel.dateVal; },
+    live: {
+        seconds: 0, interval: null, prevCounts: [],
+        count: function() {
+            try {
+                function findTarget() {
+                    var c = channel.count;
+                    var targets = [10, 25, 50, 1E2, 5E2, 1E3, 2.5E3, 5E3, 1E4, 2.5E4, 5E4, 1E5, 2.5E5, 5E5, 1E6, 2E6, 3E6, 4E6, 5E6, 6E6, 7E6, 10E6, 15E6, 20E6, 25E6, 30E6, 40E6, 50E6, 70E6, 1E8, 1.5E8, 2E8, 3E8];
+                    return targets.reduceRight(function (ret, e) {
+                        if (c < e) ret = e;
+                    }, 0);
+                }
+                function updateChart0() {
+                    channel.live.prevCounts.forEach(function (e) {
+                        chartStore[0].data.labels.push('');
+                        chartStore[0].data.datasets[0].data.push(e);
+                        if (channel.live.seconds > 30) {
+                            chartStore[0].data.labels.shift();
+                            chartStore[0].data.datasets[0].data.shift();
+                        }
+                    });
+                    chartStore[0].update();
+                }
+                var url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + channel.id + '&fields=items/statistics/subscriberCount&key=' + keys.gen();
+                ajx(url1, function (result1) {
+                    if (!result1.items || !result1.items[0].statistics.subscriberCount) {
+                        throw 'undef result1.items or result1.items[0].statistics.subscriberCount';
+                    }
+
+                    ++channel.live.seconds;
+
+                    channel.count = result1.items[0].statistics.subscriberCount;
+
+                    var target = findTarget();
+                    changeText('milestoneLeft', channel.count - target);
+                    changeText('milestoneTarget', target);
+
+                    if (stat.extra && (channel.live.seconds % 5) === 4) {
+                        updateChart0();
+                    }
+                }, function () {
+                    throw 'error response from ajx';
+                });
+            } catch (err) {
+                stat.error('updateCount: ' + err, true);
+            }
+        }
+    }
+};
+/*
+function to:-
+  1. determine whether value inputted leads up to a youtube channel
+  2. get channel name, picture, total videos, total views, date of starting youtube, and changing url
+*/
+function reloadChannel(searchTerm, isURL) {
+    try {
+        function getURL(s, i) {
+            var url = '';
+            if (i) {
+                url = s;
+            } else {
+                url = 'https://www.googleapis.com/youtube/v3/';
+                if (s.slice(0, 2).toUpperCase()==='UC' && s.length===24) {
+                    url += 'channels?part=snippet&id'
+                } else {
+                    url += 'search?part=snippet&type=channel&q';
+                }
+                url += '=' + encodeURIComponent(s) + '&fields=items/snippet&maxResults=1&key=';
+            }
+            return url;
+        }
+        function getDate(s) {
+            s = s.split('T')[0].split('-');
+            s[1] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][(Number(pubDate[1]) - 1)];
+            return s[2] + '-' + s[1] + '-' + s[0];
+        }
+        function setLoc(s) {
+            var part = '';
+            var url2 = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + encodeURIComponent(s) + '&type=channel&maxResults=1&key=' + keys.gen();
+            ajx(url2,  function (result2) {
+                if ((result2.pageInfo.totalResults < 1) || (result2.items[0].snippet.channelId.trim() !== channel.id)) {
+                    part = channel.id;
+                } else {
+                    part = s;
+                }
+                history.pushState(null, null, '#!/' + part);
+                // also sets iframe src url for embedding and url for sharing.
+                changeText(doc.i('embedUrl'), '<iframe src="https://youcount.github.io/e/#!/' + part + '" height="100" width="250" frameborder="0"></iframe>');
+                changeText(doc.q('#pageUrl input'), 'https://youcount.github.io/#!/' + part);
+            });
+        }
+        var url1 = getURL(searchTerm, isURL);
+        ajx(url1 + keys.gen(), function (result1) {
+            if (!result1.items) throw 'undef e.items in queryName';
+
+            if (!isURL && !result1.items[0].snippet.publishedAt.trim()) {
+                stat.notFound = true;
+                return;
+            }
+
+            if (stat.notFound) stat.notFound = false;
+
+            channel.name = result1.items[0].snippet.title;
+            channel.id = result1.items[0].snippet.channelId.trim();
+            channel.date = getDate(result1.items[0].snippet.publishedAt);
+            
+            channel.live.count();
+            channel.live.interval = setInterval(channel.live.count, 1000);
+            
+            if (!isBackPressed) {
+                if (result1.items[0].snippet.customUrl.trim()) {
+                    setLoc(result1.items[0].snippet.customUrl.trim());
+                } else {
+                    setLoc(channel.name.trim().replace(/\s+/g, '+'));
+                }
+            } else {
+                isBackPressed = false;
+            }
+            
+            doc.i('dp').src = result1.items[0].snippet.thumbnails.default.url;
+            
+            if (stat.scripts.chartjs === 0 && stat.scripts.script === 2) {
+                extrabutton();
+            } else if (stat.scripts.chartjs === 2) {
+                getMisc();
+                getViews(upCharts);
+            }
+            ga('send', 'event', 'YTChannel', 'updated');
+        }, function () {
+            throw 'error response from ajx';
+        });
+    } catch (err) {
+        stat.error('reloadChannel: ' + err);
+    }
+}
+// this code below, which is not inside any function, starts in the very beginning.
+if (!stat.developmentMode) {
+    // 1. Check if iframe or http
+    try {
+        if (window.top !== window.self || window.top.location !== window.self.location) {
+            window.top.location = window.self.location;
+        } else {
+            // 2. this starts the processes in the beginning.
+            startAndPops();
+        }
+    } catch(e) {
+        console.log(e);
+    }
+} else {
+    // 2. this starts the processes in the beginning.
+    startAndPops();
+}
+
+window.onpopstate = function () {
+    isBackPressed = true;
+    if (typeof loading === 'function') {
+        loading('username');
+    } else {
+        changeText('username', 'Loading...');
+    }
+    startAndPops();
+};
+// --------MAIN PROGRAM ENDS---------
+// --------OTHER PROGRAMS------------
+
+tutorial=null; // to circumvent automatic assignment of tutorial to doc.i('tutorial'),
+// until it is defined as a function; goog: 'global variables id'
+
+doc.i('username').addEventListener('focusin', function () {
+  if (isTutorialOn[0] && tutorial) {
+    changeText('username','');
+    tutorial(1);
+  }
+  doc.i('username').select();
+  doc.i('inputButton').style.display = 'block';
+});
+doc.i('username').addEventListener('focusout', function () {
+  setTimeout(function () {
+    doc.i('suggest').style.display = 'none';
+    doc.i('inputButton').style.display = 'none';
+    if (typeof(usernameKeyUp)!=='undefined' && usernameKeyUp[0]) {//shortcircuiting AND in case usernameKeyUp is not defined.
+        clearInterval(usernameKeyUpInter);
+      usernameKeyUp = [false, false];
+    }
+    if (isTutorialOn[1]===3) {
+      tutorial(1);
+    }
+  }, 200);
+});
+
+// this allows inputting of value using enter.
+function trigenter(e) { // eslint-disable-line no-unused-vars
+  if (e.keyCode === 13) {
+    getValue();
+  }
+}
+// --------OTHER PROGRAMS END------------
+function getScript(source, callback, prop, val) {// used to load jQuery (basically a replacement for $.getScript)
+  var script = document.createElement('script');
+  var prior = document.getElementsByTagName('script')[0];
+  script.async = 1;
+  prior.parentNode.insertBefore(script, prior);
+
+  script.onload = script.onreadystatechange = function ( _, isAbort ) {
+    if (isAbort || !script.readyState || /loaded|compvare/.test(script.readyState) ) {
+      script.onload = script.onreadystatechange = null;
+      script = undefined;
+      if (!isAbort) { if (callback) callback(); } else stat.error('getScript failed to load' + source);
+    }
+  };
+  if (prop && val) {
+    for (var a = 0; a < prop.length; a++) {
+      if (prop[a]) script[prop[a]] = val[a];
+    }
+  }
+  script.src = source;
+}
+window.onload = function () {
+  if (!stat.developmentMode) {
+    getScript('js/script.js');
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  } else {
+    getScript('js/script4.js', function () {
+        stat.scripts.script = 2;
+    });
+  }
+};
+</script>
+</body>
+</html>
