@@ -85,7 +85,8 @@ function fx(str) {
 // this is to hide email from spam bots
 function setEmail() {
     var e = ['urana20', 'ma', 'nas.kh', 'gmail', 'com', '&#46;', '&#64;'];
-    changeText('email', e[1] + e[2] + e[0] + e[6] + e[3] + e[5] + e[4]);
+    // don't use changeText for this
+    doc.i('email').innerHTML = e[1] + e[2] + e[0] + e[6] + e[3] + e[5] + e[4];
     doc.i('email').href = 'mailto:' + getText('email');
 }
 setEmail();
@@ -488,8 +489,8 @@ function getMisc(cb) {
         if (!result1.items[0].statistics.videoCount || !result1.items[0].statistics.viewCount) {
             throw '4. undef b.items[0].statistics.videoCount or b.items[0].statistics.viewCount in extrabutton(script.js)';
         }
-        changeText('totalVideos', b.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-        changeText('totalViews', b.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        changeText('totalVideos', result1.items[0].statistics.videoCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        changeText('totalViews', result1.items[0].statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
         if (typeof cb === 'function') cb();
     });
 }

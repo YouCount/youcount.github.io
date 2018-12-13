@@ -842,7 +842,7 @@ var stat = {
         chartjs: 0,
     },
     get notFound() {
-        return notFoundVal;
+        return stat.notFoundVal;
     }, set notFound(val) {
         if (val === true) {
             stat.notFoundVal = true;
@@ -877,6 +877,7 @@ var stat = {
         }
     }
 };
+
 var channel = {
     id: '', nameVal: '', countVal: 0, dateVal: '', views: [], vids: 5,
     set name(e) {
@@ -1002,7 +1003,7 @@ function reloadChannel(searchTerm, isURL) {
             channel.live.interval = setInterval(channel.live.count, 1000);
             
             if (!isBackPressed) {
-                if (result1.items[0].snippet.customUrl.trim()) {
+                if (result1.items[0].snippet.customUrl) {
                     setLoc(result1.items[0].snippet.customUrl.trim());
                 } else {
                     setLoc(channel.name.trim().replace(/\s+/g, '+'));
