@@ -466,7 +466,7 @@ function pushViews(url, i, cb) {
   ajx(url, function (e) {
     channel.views[i] = e.items[0].statistics.viewCount;
     //if (i === ((vids * 2) - 1)) upCharts();
-    if (i === 50 && typeof cb === 'function') cb();
+    if (i === 49 && typeof cb === 'function') cb();
   });
 }
 
@@ -506,12 +506,12 @@ function createCharts() {
 
     var totviews = [];
     // set totviews[1] as sum of views[ 0 to (vids * 2) - 1]
-    totviews[1] = views.slice(0, vids * 2).reduce(function (s, e, i) {
-        // set totviews[0] as sum of views[0 to vids - 1]
-        if (i == vids) totviews[0] = s;
-        return s + Number(e);
-    }, 0);
-
+    function sum(s, e) {
+        return s + e;
+    }
+    totviews[0] = views.slice(0, vids).reduce(sum, 0);
+    totviews[1] = views.slice(vids, vids * 2).reduce(sum, 0);
+    
     dataVals[2] = [Math.floor(totviews[0] / vids), Math.floor(totviews[1] / vids)];
     labelVals[2] = ['last ' + vids + ' videos', 'last to last ' + vids + ' videos'];
 
@@ -653,16 +653,15 @@ function upCharts() {
   if (vids > 25) {
     changeText('vids',vids = 25);
   }
-  var sum1 = 0;
-  var sum2 = 0;
+
+    function sum(s, e) {
+        return s + e;
+    }
+    var sum1 = views.slice(0, vids).reduce(sum, 0);
+    var sum2 = views.slice(vids, vids * 2).reduce(sum, 0);
 
   chartStore[1].data.datasets[0].data = views.slice(0, vids);
   chartStore[1].data.labels = Array(vids).fill('');
-
-  sum2 = views.slice(0, vids * 2).reduce(function (s, e, i) {
-    if (i == vids) sum1 = s;
-    return s + Number(e);
-  }, 0);
 
   chartStore[1].data.datasets[0].label = 'Views of last ' + vids + ' videos';
 
