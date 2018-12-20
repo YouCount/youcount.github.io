@@ -507,7 +507,7 @@ function createCharts() {
     var totviews = [];
     // set totviews[1] as sum of views[ 0 to (vids * 2) - 1]
     function sum(s, e) {
-        return s + e;
+        return s + Number(e);
     }
     totviews[0] = channel.views.slice(0, vids).reduce(sum, 0);
     totviews[1] = channel.views.slice(vids, vids * 2).reduce(sum, 0);
