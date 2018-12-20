@@ -188,7 +188,7 @@ function tutorial(n) {
     setTutorialPos('username');
     changeText('username', '');
     changeText('actualCount', 'Tutorial');
-    clearInterval(channel.live.interval);
+    channel.live.stopInterval();
     //when clicking on 'Click Here', the username is automatically focussed.
     doc.i('tutorial').addEventListener('click', function () {
       if (isTutorialOn[1]===1)
@@ -561,7 +561,7 @@ function createCharts() {
             scales: {
                 yAxes: [{
                     ticks: {
-                        precision: 1
+                        precision: 0
                     }
                 }]
             }

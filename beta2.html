@@ -847,7 +847,7 @@ var stat = {
             doc.i('milestoneBox').style.display = 'none';
             doc.i('dp').style.display = 'none';
             doc.i('extra').style.display = 'none';
-            clearInterval(channel.live.interval);
+            channel.live.stopInterval();
         } else {
             stat.notFoundVal = false;
             doc.i('actualCount').style.display = 'inline-block';
@@ -869,7 +869,7 @@ var stat = {
             });
             changeText('username','Refresh the page');
             doc.i('dp').style.display = 'none';
-            clearInterval(channel.live.interval);
+            channel.live.stopInterval();
         }
     }
 };
@@ -892,6 +892,10 @@ var channel = {
     get date() { return channel.dateVal; },
     live: {
         seconds: 0, interval: null, prevCounts: [],
+        stopInterval: function () {
+            clearInterval(channel.live.interval)
+            channel.live.interval = null;
+        },
         count: function () {
             try {
                 function findTarget() {
@@ -1001,8 +1005,9 @@ function reloadChannel(searchTerm, isURL) {
             channel.date = getDate(result1.items[0].snippet.publishedAt);
             
             channel.live.count();
-            channel.live.interval = setInterval(channel.live.count, 1000);
-            
+            if (channel.live.interval === null) {
+                channel.live.interval = setInterval(channel.live.count, 1000);
+            }
             if (!isBackPressed) {
                 if (result1.items[0].snippet.customUrl) {
                     setLoc(result1.items[0].snippet.customUrl.trim());
