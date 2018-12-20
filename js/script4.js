@@ -535,7 +535,14 @@ function createCharts() {
         data: chartStoreData[0],
         gridLines: {display: false},
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        options: {
+            scale: {
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
     });
     chartStoreData[1] = {
         labels: labelVals[1],
@@ -574,7 +581,14 @@ function createCharts() {
             display: false
         },
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        options: {
+            scale: {
+                ticks: {
+                    min: 0
+                }
+            }
+        }
     });
     chartStoreData[3] = {
         labels: labelVals[3],
@@ -612,7 +626,7 @@ function extrabutton() {
         } else if (stat.scripts.chartjs === 0) {
             stat.scripts.chartjs = 1;
             loading('showextra');
-            getScript('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js', function () {
+            getScript('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js', function () {
                 getViews(function () {
                     createCharts();
                     stat.scripts.chartjs = 2;
