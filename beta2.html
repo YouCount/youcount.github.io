@@ -890,6 +890,10 @@ var channel = {
     }, get name() { return channel.nameVal; },
     get count() { return channel.countVal; },
     get date() { return channel.dateVal; },
+    dp: function (url) {
+        doc.i('dp').style.display = 'block';
+        doc.i('dp').src = url;
+    },
     live: {
         seconds: 0, interval: null, prevCounts: [],
         stopInterval: function () {
@@ -1018,7 +1022,7 @@ function reloadChannel(searchTerm, isURL) {
                 isBackPressed = false;
             }
             
-            doc.i('dp').src = result1.items[0].snippet.thumbnails.default.url;
+            channel.dp(result1.items[0].snippet.thumbnails.default.url);
             
             if (stat.scripts.chartjs === 0 && stat.scripts.script === 2) {
                 extrabutton();
