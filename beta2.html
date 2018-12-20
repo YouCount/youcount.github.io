@@ -931,7 +931,7 @@ var channel = {
                     channel.count = result1.items[0].statistics.subscriberCount;
 
                     var target = findTarget();
-                    changeText('milestoneLeft', channel.count - target);
+                    changeText('milestoneLeft', target - Number(channel.count));
                     changeText('milestoneTarget', target);
 
                     if (stat.extra && (channel.live.seconds % 5) === 4) {

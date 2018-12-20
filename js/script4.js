@@ -537,10 +537,12 @@ function createCharts() {
         responsive: true,
         maintainAspectRatio: false,
         options: {
-            scale: {
-                ticks: {
-                    stepSize: 1
-                }
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1
+                    }
+                }]
             }
         }
     });
@@ -583,10 +585,12 @@ function createCharts() {
         responsive: true,
         maintainAspectRatio: false,
         options: {
-            scale: {
-                ticks: {
-                    min: 0
-                }
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0
+                    }
+                }]
             }
         }
     });
