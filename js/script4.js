@@ -540,7 +540,7 @@ function createCharts() {
             scales: {
                 yAxes: [{
                     ticks: {
-                        stepSize: 1
+                        precision: 1
                     }
                 }]
             }
