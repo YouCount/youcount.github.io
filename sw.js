@@ -1,5 +1,4 @@
-/* global noConnection:false, Promise:false */
-var CACHE_NAME = 'youcount-cache-1.5';
+var CACHE_NAME = 'youcount-cache-1.6';
 var urlsToCache = [
   '/index.html',
   '/images/social.png',
@@ -38,6 +37,6 @@ self.addEventListener('fetch', function (event) {
         })
     );
   } catch (err) {
-    noConnection('Service Worker failed to fetch!');
+    stat.error('Service Worker failed to fetch!')
   }
 });

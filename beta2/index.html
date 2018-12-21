@@ -871,7 +871,7 @@ var channel = {
     set name(e) {
         channel.nameVal = e;
         changeText('username', e);
-        document.title = e + '\'s YouTube® LIVE Subscriber Count - YouCount';
+        document.title = e + '\'s YouTube Live Subscriber Count - YouCount';
     }, set count(e) {
         channel.countVal = e;
         channel.live.prevCounts[(channel.live.seconds - 1) % 5] = e;
