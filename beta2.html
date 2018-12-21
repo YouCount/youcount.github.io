@@ -269,7 +269,7 @@ margin-right:20px;
 color:rgb(230,25,25);
 font-weight: 600;
 }
-#bg1 .extrabutton {
+#bg1 .extraToggle {
 display: block;
 }
 #bg2 {
@@ -477,7 +477,7 @@ margin-right:auto;
 #hideextra {
 display:none;
 }
-.extrabutton {
+.extraToggle {
 border:none;
 outline:none;
 background-color:rgb(230,25,25);
@@ -553,7 +553,7 @@ a {text-decoration:none;}
   #input button {
   width:12vw;
   }
-  .extrabutton {
+  .extraToggle {
   width:30vw;
   }
   .chartWrapper {
@@ -623,7 +623,7 @@ Shareable Link
     </ol>
     </p>
     <p>Support the website by sharing it with your friends!</p>
-    <input type="button" class="extrabutton" value="How to Use" onclick="tutorial(0)">
+    <input type="button" class="extraToggle" value="How to Use" onclick="tutorial.func(0)">
   </div>
   <div id="codeArt">
     <h2>Embed This!</h2>
@@ -668,7 +668,7 @@ Shareable Link
   </section>
 
   <section id="extra" class="card">
-    <button class="extrabutton" id="showextra">Show Stats</button>
+    <button class="extraToggle" id="showextra">Show Stats</button>
     <div id="extraContent">
       <div class="chartWrapper">
         <canvas width="400" height="200" id="chart0"></canvas>
@@ -692,14 +692,14 @@ Shareable Link
           <td><span id="pubDate">Loading...</span></td>
         </tr>
       </table>
-      <p id="vidsText">Last <input aria-label="Input box: Enter number of videos (1-25)" type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extrabutton" onclick="upCharts();" id="upCharts">Update</button>
+      <p id="vidsText">Last <input aria-label="Input box: Enter number of videos (1-25)" type="text" id="vids" placeholder="1-25" value="5"> videos</p><button class="extraToggle" onclick="updateCharts();" id="updateCharts">Update</button>
       <div class="chartWrapper">
         <canvas width="400" height="200" id="chart1"></canvas>
         <canvas width="400" height="200" id="chart2"></canvas>
         <canvas width="400" height="200" id="chart3"></canvas>
       </div>
     </div>
-    <button class="extrabutton" id="hideextra">Hide Stats</button>
+    <button class="extraToggle" id="hideextra">Hide Stats</button>
   </section>
 </div>
 <script>
@@ -708,11 +708,6 @@ Shareable Link
 // 2. Ensure that Google Analytics code is included.
 // 3. Change script3 to script at the bottom.
 // --------PRELUDE---------
-// ----Variables----
-/* global tutorial, pushViews, Chart:false, Odometer:false*/
-var isBackPressed = false;
-var chartStore = [];
-var isTutorialOn = [0,0];
 // -----select APIkey randomly----
 var keys = {
     index: -1, vals: ['AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U'],
@@ -761,7 +756,7 @@ function ajx(url, success, failure) {
 }
 // ----text changing function for code reusability----
 function changeText(elem, changeVal) {
-  if (typeof(elem)==='string') {
+  if (typeof elem === 'string') {
     elem = doc.i(elem);
   }
   if (elem.nodeName.toUpperCase()==='INPUT') {
@@ -772,7 +767,7 @@ function changeText(elem, changeVal) {
 }
 
 function getText(elem) {
-  if (typeof(elem)==='string') {
+  if (typeof elem === 'string') {
     elem = doc.i(elem);
   }
   if (elem.nodeName.toUpperCase()==='INPUT') {
@@ -790,19 +785,14 @@ function def(ob, val) { // return default value (val) if parameter value (ob) is
 // ----receives value inputted by user and sends it while input box is starts showing 'Loading...'----
 function startAndPops() { // manage what happens in the very beginning and also on popstate
     if (location.hash.split('#!/')[1]) {// if something is there after #!/, make that the search query else set page as homepage.
-            if (isBackPressed) {
-                reloadChannel(location.hash.split('#!/')[1]);
-            } else {
-                getValue(location.hash.split('#!/')[1]);
-            }
-    } else {
-        try {
-            isBackPressed = false;// since queryName is not called on this popstate.
-            tutorial(0);
-        } catch (e) {
-            isTutorialOn[0] = 1;// load tutorial when script.js has loaded.
-            stat.error('startAndPops unable to call tutorial(0)', true);
+        if (handlePopState.isBackPressed) {
+            reloadChannel(location.hash.split('#!/')[1]);
+        } else {
+            getValue(location.hash.split('#!/')[1]);
         }
+    } else {
+        handlePopState.isBackPressed = false;// since reload Channel is not called on this popstate.
+        if (stat.scripts.script === 2) tutorial.func(0);
     }
 }
 function getValue(value) {
@@ -814,14 +804,10 @@ function getValue(value) {
     if (!value || ['Not Found!', 'Loading.', 'Loading..', 'Loading...', 'Refresh the page'].indexOf(value) > -1) {
         return;
     }
-    if (isTutorialOn[0]) {
-        try {
-            tutorial(3);
-        } catch (err) {
-            stat.error('getValue unable to call tutorial(3)');
-        }
+    if (stat.scripts.script === 2 && tutorial.switch) {
+        tutorial.func(3);
     }
-    if (typeof loading === 'function') {
+    if (stat.scripts.script === 2) {
         loading.func('username');
         loading.func('actualCount');
     } else {
@@ -995,7 +981,7 @@ function reloadChannel(searchTerm) {
         }
         var url1 = getURL();
         ajx(url1 + keys.gen(), function (result1) {
-            if (!result1.items) throw 'undef e.items in queryName';
+            if (!result1.items) throw 'undef e.items in reload channel';
 
             if (!result1.items[0].snippet.publishedAt) {
                 stat.notFound = true;
@@ -1017,30 +1003,32 @@ function reloadChannel(searchTerm) {
             if (channel.live.interval === null) {
                 channel.live.interval = setInterval(channel.live.count, 1000);
             }
-            if (!isBackPressed) {
+            if (stat.scripts.script === 2 && stat.extra) resetChart0();
+
+            if (!handlePopState.isBackPressed) {
                 if (result1.items[0].snippet.customUrl) {
                     setLoc(result1.items[0].snippet.customUrl.trim());
                 } else {
                     setLoc(channel.name.trim().replace(/\s+/g, '+'));
                 }
             } else {
-                isBackPressed = false;
+                handlePopState.isBackPressed = false;
             }
             
             channel.dp(result1.items[0].snippet.thumbnails.default.url);
             
             if (stat.scripts.chartjs === 0 && stat.scripts.script === 2) {
-                extrabutton();
+                extraToggle();
             } else if (stat.scripts.chartjs === 2) {
                 getMisc();
-                getViews(upCharts);
+                getViews(updateCharts);
             }
             ga('send', 'event', 'YTChannel', 'updated');
         }, function () {
             throw 'error response from ajx';
         });
     } catch (err) {
-        stat.error('reloadChannel: ' + err);
+        stat.error('reload Channel: ' + err);
     }
 }
 // this code below, which is not inside any function, starts in the very beginning.
@@ -1061,40 +1049,35 @@ if (!stat.devMode) {
     startAndPops();
 }
 
-window.onpopstate = function () {
-    isBackPressed = true;
-    if (typeof loading === 'function') {
-        loading.func('username');
-    } else {
-        changeText('username', 'Loading...');
+var handlePopState = {
+    isBackPressed: false,
+    func: function() {
+        handlePopState.isBackPressed = true;
+        if (stat.scripts.script === 2) {
+            loading.func('username');
+        } else {
+            changeText('username', 'Loading...');
+        }
+        startAndPops();
     }
-    startAndPops();
 };
+window.onpopstate = handlePopState.func();
 // --------MAIN PROGRAM ENDS---------
 // --------OTHER PROGRAMS------------
 
-tutorial=null; // to circumvent automatic assignment of tutorial to doc.i('tutorial'),
-// until it is defined as a function; goog: 'global variables id'
-
 doc.i('username').addEventListener('focusin', function () {
-  if (isTutorialOn[0] && tutorial) {
+  if (stat.scripts.script === 2 && tutorial.switch) {
     changeText('username','');
-    tutorial(1);
+    tutorial.func(1);
   }
   doc.i('username').select();
   doc.i('inputButton').style.display = 'block';
 });
 doc.i('username').addEventListener('focusout', function () {
-  setTimeout(function () {
-    doc.i('suggest').style.display = 'none';
-    doc.i('inputButton').style.display = 'none';
-    if (typeof(usernameKeyUp)!=='undefined' && usernameKeyUp[0]) {//shortcircuiting AND in case usernameKeyUp is not defined.
-        clearInterval(usernameKeyUpInter);
-      usernameKeyUp = [false, false];
-    }
-    if (isTutorialOn[1]===3) {
-      tutorial(1);
-    }
+    setTimeout(function () {
+        if (stat.scripts.script === 2) {
+            suggest.hide();
+        }
   }, 200);
 });
 
@@ -1105,7 +1088,7 @@ function trigenter(e) { // eslint-disable-line no-unused-vars
   }
 }
 function handleNavButtons(i) {
-    if (typeof handleNav === 'function') handleNav(i);
+    if (stat.scripts.script === 2) handleNav.func(i);
 }
 // --------OTHER PROGRAMS END------------
 function getScript(source, callback, prop, val) {// used to load jQuery (basically a replacement for $.getScript)
