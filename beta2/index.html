@@ -875,7 +875,7 @@ var channel = {
         document.title = e + '\'s YouTube® LIVE Subscriber Count - YouCount';
     }, set count(e) {
         channel.countVal = e;
-        channel.live.prevCounts[channel.live.seconds % 5] = e;
+        channel.live.prevCounts[(channel.live.seconds - 1) % 5] = e;
         changeText('actualCount', e);
     }, set date(e) {
         channel.dateVal = e;
@@ -1011,7 +1011,6 @@ function reloadChannel(searchTerm) {
                 channel.live.interval = setInterval(channel.live.count, 1000);
             }
             if (stat.extra) resetChart0();
-            channel.live.seconds = 0;
 
             if (!handlePopState.isBackPressed) {
                 if (result1.items[0].snippet.customUrl) {

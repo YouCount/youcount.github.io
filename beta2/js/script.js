@@ -647,7 +647,7 @@ function extraToggle() {
             fx('hideextra').fadeIn();
             doc.i('extraContent').style.display = 'block';
             
-            channel.live.seconds = -1;
+            channel.live.seconds = 0;
             stat.extra = true;
         } else if (stat.extra) {
             fx('showextra').fadeIn();
@@ -684,7 +684,8 @@ function updateCharts() {
         }
     });
 }
-function resetChart0() {
+function resetChart0() { // used by reloadChannel and extraToggle
+    channel.live.seconds = 0; // this allows prevCounts to be filled from start
     channel.live.prevCounts = [];
     chartStore[0].data.labels = [];
     chartStore[0].data.datasets[0].data = [];
