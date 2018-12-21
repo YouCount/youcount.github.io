@@ -1031,6 +1031,18 @@ function reloadChannel(searchTerm) {
         stat.error('reload Channel: ' + err);
     }
 }
+var handlePopState = {
+    isBackPressed: false,
+    func: function() {
+        handlePopState.isBackPressed = true;
+        if (stat.scripts.script === 2) {
+            loading.func('username');
+        } else {
+            changeText('username', 'Loading...');
+        }
+        startAndPops();
+    }
+};
 // this code below, which is not inside any function, starts in the very beginning.
 if (!stat.devMode) {
     // 1. Check if iframe or http
@@ -1048,19 +1060,6 @@ if (!stat.devMode) {
     // 2. this starts the processes in the beginning.
     startAndPops();
 }
-
-var handlePopState = {
-    isBackPressed: false,
-    func: function() {
-        handlePopState.isBackPressed = true;
-        if (stat.scripts.script === 2) {
-            loading.func('username');
-        } else {
-            changeText('username', 'Loading...');
-        }
-        startAndPops();
-    }
-};
 window.onpopstate = handlePopState.func();
 // --------MAIN PROGRAM ENDS---------
 // --------OTHER PROGRAMS------------
