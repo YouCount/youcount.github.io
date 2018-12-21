@@ -1,20 +1,16 @@
 var shareswitch = 0; // 0 === share stuff hidden, 1 === share stuff is in transition, 2 === share stuff is showing
 var navState = [null, false];
-var views = [];
 var extraswitch = 0;
 var chartStore = [];
-var vids = 5;
-var loadingList = [];
-var loadingInterval = null;
 // just to ensure that the correct page is loaded iframe and http is checked again
-if (!stat.developmentMode) {
+if (!stat.devMode) {
   // 1. Check if iframe or http
   try {
     if (window.top !== window.self || window.top.location !== window.self.location) {
       window.top.location = window.self.location;
     }
   } catch (e) {
-    if (stat.developmentMode) throw e
+    if (stat.devMode) throw e
   }
 }
 // MISC FUNCTIONS
@@ -90,7 +86,7 @@ function setEmail() {
 }
 setEmail();
 
-var clickList = [
+[
   ['inputButton', function () {
     getValue();// called like this because addEventListener by default does not send empty parameter.
   }],
@@ -118,9 +114,8 @@ var clickList = [
       fx('bg2').fadeOut(500);
     }
   }]
-];
-clickList.forEach(function (e) {
-  idClickListener(e[0], e[1]);
+].forEach(function (e) {
+    idClickListener(e[0], e[1]);
 });
 // below, the queries are assigned their onclicks(all elements except the ones with ids).
 //
@@ -128,13 +123,10 @@ clickList.forEach(function (e) {
 // querySelectorAll and there are a lot of single ids being assigned onclicks.
 queryClickListener('.suggest', function (v) {
   if (stat.internet && v.target.dataset.id && ['Loading.','Loading..','Loading...'].indexOf(v.target.innerHTML) === -1) {
-    channel.id = v.target.dataset.id;
-    var send = 'https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + v.target.dataset.id + '&fields=items/snippet&type=channel&maxResults=1&key=';
-    
     // if tutorial is on, disable it (as getvalue is not called)
     if (isTutorialOn[0]) tutorial(3);
     
-    reloadChannel(send, true);
+    reloadChannel(v.target.dataset.id);
   }
 });
 ['showextra', 'hideextra'].forEach(function (e) {
@@ -157,7 +149,8 @@ function tutorial(n) {
     doc.i('suggest').style.zIndex = zI[1];
   }
   function showTutStep(show) { // show one of the two tutSteps and hide the other one
-    var hide = show==1? 2: 1; // if show == 1, hide = 2, else show == 2, hence hide = 1
+    var hide = (show % 2) + 1; // if show == 1, hide = 2, else show == 2, hence hide = 1
+    // var hide = show === 1 ? 2 : 1;
     doc.i('tutStep' + show).style.display = 'block';
     doc.i('tutStep' + hide).style.display = 'none';
   }
@@ -406,7 +399,7 @@ doc.i('username').addEventListener('keyup', function () {
       if (x===0) {
         s.style.display = 'block';
         s.childNodes[0].style.visibility = 'hidden';
-        loading(s.childNodes[1]);
+        loading.func(s.childNodes[1]);
       } else {
         s.style.display = 'none';
       }
@@ -426,32 +419,35 @@ doc.i('username').addEventListener('keyup', function () {
     usernameKeyUp[1] = true;
   }
 });
-
-function loading(el) {
-  if (el && loadingList.indexOf(el) === -1) {
-    if (!loadingList.length) {
-      loadingInterval = setInterval(function () {
-        loading();
-      }, 500);
+var loading = {
+    list: [],
+    interval: null,
+    func: function (el) {
+        if (el && loading.list.indexOf(el) === -1) {
+            if (loading.list.length === 0) {
+                loading.interval = setInterval(function () {
+                    loading.func();
+                }, 500);
+            }
+            changeText(el, 'Loading.');
+            loading.list.push(el);
+            } else {
+                if (loading.list.length === 0) {
+                    clearInterval(loading.interval);
+                } else {
+                    var loadList = ['Loading.', 'Loading..', 'Loading...'];
+                    loading.list = loading.list.filter(function (e) {
+                        var x = loadList.indexOf(getText(e));
+                        if (x >= 0) {
+                            changeText(e, loadList[(x + 1) % 3]);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                }
+            }
     }
-    changeText(el,'Loading.');
-    loadingList.push(el);
-  } else {
-    if (!loadingList.length) {
-      clearInterval(loadingInterval);
-    } else {
-      var loadList = ['Loading.', 'Loading..', 'Loading...'];
-      loadingList = loadingList.filter(function (e,i) {
-        var x = loadList.indexOf(getText(e));
-        if (x >= 0) {
-          changeText(e, loadList[(x + 1) % 3]);
-          return true;
-        } else {
-          return false;
-        }
-      });
-    }
-  }
 }
 
 // this shows/hides the sharable link of the page.
@@ -475,7 +471,7 @@ for (var l = 50; l > 0; l--) channel.views.push(l);
 function pushViews(url, i, cb) {
   ajx(url, function (e) {
     channel.views[i] = e.items[0].statistics.viewCount;
-    //if (i === ((vids * 2) - 1)) upCharts();
+    //if (i === ((channel.vids * 2) - 1)) upCharts();
     if (i === 49 && typeof cb === 'function') cb();
   });
 }
@@ -512,17 +508,17 @@ function getChartData(i) {
             return s + Number(e);
         }
         var sumRet = [];
-        sumRet[0] = channel.views.slice(0, vids).reduce(sum, 0);
-        sumRet[1] = channel.views.slice(vids, vids * 2).reduce(sum, 0);
+        sumRet[0] = channel.views.slice(0, channel.vids).reduce(sum, 0);
+        sumRet[1] = channel.views.slice(channel.vids, channel.vids * 2).reduce(sum, 0);
         return sumRet;
     }
     if (i === 0) { // send the live count
         return [channel.count];
     } else if (i === 1) { // send x number of views as array (x = value of vids)
-        return channel.views.slice(0, vids);
+        return channel.views.slice(0, channel.vids);
     } else if (i === 2) { // send mean of sums
         var sum = getSum();
-        return [Math.floor(sum[0] / vids), Math.floor(sum[1] / vids)];
+        return [Math.floor(sum[0] / channel.vids), Math.floor(sum[1] / channel.vids)];
     } else if (i === 3) { // send sums
         return getSum();
     }
@@ -531,11 +527,11 @@ function getChartLabels(i) {
     if (i === 0) {
         return [''];
     } else if (i === 1) {
-        return Array(vids).fill('');
+        return Array(channel.vids).fill('');
     } else if (i === 2) {
-        return ['Last ' + vids + ' videos', 'Last to last ' + vids + ' videos'];
+        return ['Last ' + channel.vids + ' videos', 'Last to last ' + channel.vids + ' videos'];
     } else if (i === 3) {
-        return ['Last ' + vids + ' videos (total views)', 'Last to last ' + vids + ' videos (total views)'];
+        return ['Last ' + channel.vids + ' videos (total views)', 'Last to last ' + channel.vids + ' videos (total views)'];
     }
 }
 function createCharts() {
@@ -570,7 +566,7 @@ function createCharts() {
     chartStoreData[1] = {
         labels: getChartLabels(1),
         datasets: [{
-            label: 'Views of last ' + vids + ' videos',
+            label: 'Views of last ' + channel.vids + ' videos',
             fill: false,
             borderColor: 'rgba(255,50,50,0.5)',
             pointBorderColor: 'rgba(255,50,50,0.5)',
@@ -650,7 +646,7 @@ function extrabutton() {
             tutorial(0);
         } else if (stat.scripts.chartjs === 0) {
             stat.scripts.chartjs = 1;
-            loading('showextra');
+            loading.func('showextra');
             getScript('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js', function () {
                 getViews(function () {
                     createCharts();
@@ -679,7 +675,7 @@ function extrabutton() {
             stat.extra = false;
         }
     } catch (err) {
-        if (stat.developmentMode) throw 'extrabutton:' + err;
+        if (stat.devMode) throw 'extrabutton:' + err;
     }
 }
 function upCharts() {
@@ -688,10 +684,10 @@ function upCharts() {
         return;
     }
 
-    vids = Number(getText('vids'));
-    if (vids > 25) {
-        vids = 25;
-        changeText('vids', vids);
+    channel.vids = Number(getText('vids'));
+    if (channel.vids > 25) {
+        channel.vids = 25;
+        changeText('vids', channel.vids);
     }
 
     chartStore.forEach(function (cs, i) {
@@ -699,7 +695,7 @@ function upCharts() {
             cs.data.datasets[0].data = getChartData(i);
             cs.data.labels = getChartLabels(i);
 
-            if (i === 1) cs.data.datasets[0].label = 'Views of last ' + vids + ' videos';
+            if (i === 1) cs.data.datasets[0].label = 'Views of last ' + channel.vids + ' videos';
             
             cs.update();
         }

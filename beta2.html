@@ -704,7 +704,7 @@ Shareable Link
 </div>
 <script>
 // From beta.html to index.html:
-// 1. Change internet and developmentMode to true and false respectively.
+// 1. Change internet and devMode to true and false respectively.
 // 2. Ensure that Google Analytics code is included.
 // 3. Change script3 to script at the bottom.
 // --------PRELUDE---------
@@ -822,8 +822,8 @@ function getValue(value) {
         }
     }
     if (typeof loading === 'function') {
-        loading('username');
-        loading('actualCount');
+        loading.func('username');
+        loading.func('actualCount');
     } else {
         changeText('username', 'Loading...');
         changeText('actualCount', 'Loading...');
@@ -832,7 +832,7 @@ function getValue(value) {
     reloadChannel(value);
 }
 var stat = {
-    developmentMode: true, notFoundVal: false, internet: true, extra: false,
+    devMode: true, notFoundVal: false, internet: true, extra: false,
     scripts: {
         script: 0,
         chartjs: 0,
@@ -859,7 +859,7 @@ var stat = {
         e = def(e, 'No error provided!');
         restore = def(restore, false);// kill processess by default
 
-        if (stat.developmentMode) {
+        if (stat.devMode) {
             console.log('YC Error:' + e);
         }
         if (!restore) {
@@ -924,11 +924,13 @@ var channel = {
                     });
                     chartStore[0].update();
                 }
+                var compareId = channel.id;
                 var url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + channel.id + '&fields=items/statistics/subscriberCount&key=' + keys.gen();
                 ajx(url1, function (result1) {
                     if (!result1.items || !result1.items[0].statistics.subscriberCount) {
                         throw 'undef result1.items or result1.items[0].statistics.subscriberCount';
                     }
+                    if (compareId !== channel.id) throw 'compareId !== channel.id';
 
                     ++channel.live.seconds;
 
@@ -955,21 +957,19 @@ function to:-
   1. determine whether value inputted leads up to a youtube channel
   2. get channel name, picture, total videos, total views, date of starting youtube, and changing url
 */
-function reloadChannel(searchTerm, isURL) {
+function reloadChannel(searchTerm) {
     try {
-        function getURL(s, i) {
-            var url = '';
-            if (i) {
-                url = s;
+        function isId() {
+            return (searchTerm.slice(0, 2).toUpperCase()==='UC' && searchTerm.length===24);
+        }
+        function getURL() {
+            var url = 'https://www.googleapis.com/youtube/v3/';
+            if (isId()) {
+                url += 'channels?part=snippet&id';
             } else {
-                url = 'https://www.googleapis.com/youtube/v3/';
-                if (s.slice(0, 2).toUpperCase()==='UC' && s.length===24) {
-                    url += 'channels?part=snippet&id'
-                } else {
-                    url += 'search?part=snippet&type=channel&q';
-                }
-                url += '=' + encodeURIComponent(s) + '&fields=items/snippet&maxResults=1&key=';
+                url += 'search?part=snippet&type=channel&q';
             }
+            url += '=' + encodeURIComponent(searchTerm) + '&fields=items/snippet&maxResults=1&key=';
             return url;
         }
         function getDate(s) {
@@ -993,11 +993,11 @@ function reloadChannel(searchTerm, isURL) {
                 changeText(doc.q('#pageUrl input'), 'https://youcount.github.io/#!/' + part);
             });
         }
-        var url1 = getURL(searchTerm, isURL);
+        var url1 = getURL();
         ajx(url1 + keys.gen(), function (result1) {
             if (!result1.items) throw 'undef e.items in queryName';
 
-            if (!isURL && !result1.items[0].snippet.publishedAt.trim()) {
+            if (!result1.items[0].snippet.publishedAt) {
                 stat.notFound = true;
                 return;
             }
@@ -1005,8 +1005,13 @@ function reloadChannel(searchTerm, isURL) {
             if (stat.notFound) stat.notFound = false;
 
             channel.name = result1.items[0].snippet.title;
-            channel.id = result1.items[0].snippet.channelId.trim();
             channel.date = getDate(result1.items[0].snippet.publishedAt);
+
+            if (isId()) {
+                channel.id = searchTerm;
+            } else {
+                channel.id = result1.items[0].snippet.channelId.trim();
+            }
             
             channel.live.count();
             if (channel.live.interval === null) {
@@ -1039,7 +1044,7 @@ function reloadChannel(searchTerm, isURL) {
     }
 }
 // this code below, which is not inside any function, starts in the very beginning.
-if (!stat.developmentMode) {
+if (!stat.devMode) {
     // 1. Check if iframe or http
     try {
         if (window.top !== window.self || window.top.location !== window.self.location) {
@@ -1059,7 +1064,7 @@ if (!stat.developmentMode) {
 window.onpopstate = function () {
     isBackPressed = true;
     if (typeof loading === 'function') {
-        loading('username');
+        loading.func('username');
     } else {
         changeText('username', 'Loading...');
     }
@@ -1124,7 +1129,7 @@ function getScript(source, callback, prop, val) {// used to load jQuery (basical
   script.src = source;
 }
 window.onload = function () {
-  if (!stat.developmentMode) {
+  if (!stat.devMode) {
     getScript('js/script.js');
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
