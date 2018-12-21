@@ -792,7 +792,14 @@ function startAndPops() { // manage what happens in the very beginning and also 
         }
     } else {
         handlePopState.isBackPressed = false;// since reload Channel is not called on this popstate.
-        if (stat.scripts.script === 2) tutorial.func(0);
+        if (stat.scripts.script === 2) {
+            tutorial.func(0);
+        }
+        else {
+            stat.delegate.push(function () {
+                tutorial.func(0);
+            });
+        }
     }
 }
 function getValue(value) {
@@ -818,7 +825,7 @@ function getValue(value) {
     reloadChannel(value);
 }
 var stat = {
-    devMode: true, notFoundVal: false, internet: true, extra: false,
+    devMode: true, notFoundVal: false, internet: true, extra: false, delegate: [],
     scripts: {
         script: 0,
         chartjs: 0,
@@ -1111,16 +1118,15 @@ function getScript(source, callback, prop, val) {// used to load jQuery (basical
   script.src = source;
 }
 window.onload = function () {
-  if (!stat.devMode) {
-    getScript('js/script.js');
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
-  } else {
-    getScript('js/script4.js', function () {
+    getScript('js/script.js', function () {
         stat.scripts.script = 2;
+        stat.delegate.forEach(function (func) {
+            if (typeof func === 'function') func();
+        });
     });
-  }
+    if (!stat.devMode && 'serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+    }
 };
 </script>
 <script>
