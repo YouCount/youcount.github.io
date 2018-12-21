@@ -315,7 +315,7 @@ var handleNav = {
     }
 };
 doc.i('username').addEventListener('keyup', function () {
-    if (!suggest.isShowing) suggest.loading();
+    if (!suggest.isShowing) suggest.load();
 
     suggest.inputChange = true;
 });
@@ -330,7 +330,7 @@ var suggest = {
         return new Promise(function (resolve) {
             el.addEventListener("load", resolve);
         });
-    }, loading: function() {
+    }, load: function() {
         doc.i('suggest').style.display = 'block';
         
         // hide all suggest except first one which is loading...
