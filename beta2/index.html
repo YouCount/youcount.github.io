@@ -933,7 +933,7 @@ var channel = {
                     changeText('milestoneLeft', target - Number(channel.count));
                     changeText('milestoneTarget', target);
 
-                    if (stat.extra && (channel.live.seconds % 5) === 4) {
+                    if (stat.extra && (channel.live.seconds % 5) === 0) {
                         updateChart0();
                     }
                 }, function () {
@@ -1010,7 +1010,8 @@ function reloadChannel(searchTerm) {
             if (channel.live.interval === null) {
                 channel.live.interval = setInterval(channel.live.count, 1000);
             }
-            if (stat.scripts.script === 2 && stat.extra) resetChart0();
+            if (stat.extra) resetChart0();
+            channel.live.seconds = 0;
 
             if (!handlePopState.isBackPressed) {
                 if (result1.items[0].snippet.customUrl) {

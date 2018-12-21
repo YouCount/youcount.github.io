@@ -290,7 +290,7 @@ var handleNav = {
                 handleNav.state = null;
                 handleNav.transition = false;
             }, 500);
-            if (handleNav.state === n) {
+            if (handleNav.state !== n) {
                 setTimeout(function () {
                     handleNav.func(n);
                 }, 500);
@@ -396,6 +396,8 @@ var suggest = {
                             c.style.display = 'none';
                         }
                     });
+
+                    if (tutorial.switch) tutorial.func(2)
                 });
             }
         } catch (err) {
@@ -683,6 +685,7 @@ function updateCharts() {
     });
 }
 function resetChart0() {
+    channel.live.prevCounts = [];
     chartStore[0].data.labels = [];
     chartStore[0].data.datasets[0].data = [];
     chartStore[0].update();
