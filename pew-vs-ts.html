@@ -323,7 +323,7 @@ font-size: 20px;
 </section>
 <span id="pageUrl">
 Shareable Link
-<br><input type="text" value="https://youcount.github.io/pew-vs-ts.html" onclick="this.select()" readonly />
+<br><input type="text" value="https://youcount.github.io/pew-vs-ts" onclick="this.select()" readonly />
 </span>
 <div class="bg ball" id="bg1">
     <div id="helpArt">
@@ -357,7 +357,7 @@ Shareable Link
       </p>
     </div>
 </div>
-<div class="bg" id="bg2"></div>
+<div class="bg" id="bg2" onclick="linkshare(false)"></div>
   
 <div id="mainPage">
     <section class="card">
@@ -528,11 +528,11 @@ function fx(str) {
   };
   return fx;
 }
-// this is to hide email from spam bots
 function setEmail() {
     var e = ['urana20', 'ma', 'nas.kh', 'gmail', 'com', '&#46;', '&#64;'];
-    changeText('email', e[1] + e[2] + e[0] + e[6] + e[3] + e[5] + e[4]);
-    document.getElementById('email').href = 'mailto:' + getText('email');
+    // don't use changeText for this
+    doc.i('email').innerHTML = e[1] + e[2] + e[0] + e[6] + e[3] + e[5] + e[4];
+    doc.i('email').href = 'mailto:' + getText('email');
 }
 setEmail();
 
@@ -586,7 +586,7 @@ function handleNavButtons(n) {
       }, 700);
       navState = [n, true];
     } else if (n == 4) {
-      linkshare();
+      linkshare(true);
     }
   }
 }
@@ -618,10 +618,14 @@ function loading(el) {
 }
 
 // this shows/hides the sharable link of the page.
-function linkshare() {
-  fx('pageUrl').fadeIn(250);
-  fx('bg2').fadeIn(500);
-  if (!username || !location.hash.split('#!/')[1])changeText(document.querySelector('#pageUrl input'),'https://youcount.github.io/');
+function linkshare(swich) {
+    if (swich) {
+        fx('pageUrl').fadeIn(500);
+        fx('bg2').fadeIn(250);
+    } else {
+        fx('pageUrl').fadeOut(250);
+        fx('bg2').fadeOut(500);
+    }
 }
 
 var elems = {
