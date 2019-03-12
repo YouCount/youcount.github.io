@@ -28,7 +28,7 @@
         "@context": "http://schema.org",
         "@type": "Article",
         "headline": "YouCount: YouTube Live Subscriber Count",
-        "datePublished": "2018-12-21T12:02:41Z",
+        "datePublished": "2019-03-11T12:02:41Z",
     "publisher": {
       "@type": "Organization",
       "name":"YouCount",
@@ -509,6 +509,27 @@ border:0;
 border-bottom:0.5vw solid rgb(230,25,25);
 background-color:rgba(200,200,200,0.3);
 }
+#redirect {
+max-width: calc(100vw - 80px);
+position: fixed;
+right: 20px;
+bottom: 20px;
+z-index: 9999;
+background-color: white;
+border-radius: 4px;
+box-shadow: 0 0 20px -4px black;
+font-weight: 600;
+font-size: 30px;
+padding: 20px;
+text-align: center;
+color: black;
+}
+#redirect span {
+color: rgb(230,25,25);
+}
+#redirect button {
+margin: 5px 0;
+}
 a {text-decoration:none;}
 @media only screen and (max-width: 800px), screen and (orientation: portrait) {
   .navButtonsCover {
@@ -638,6 +659,14 @@ Shareable Link
 </div>
 
 <div class="bg" id="bg2"></div>
+
+<div id="redirect">
+  See<br>
+  <span>PewDiePie vs T-Series</span><br>
+  Side by Side!<br>
+  <button onclick="location.href = 'https://youcount.github.io/pew-vs-ts'" class="extraToggle">Go</button>
+  <button onclick="document.getElementById('redirect').style.display = 'none'" class="extraToggle">Close</button>
+</div>
 
 <div id="mainPage">
   <section id="prime" class="card">
