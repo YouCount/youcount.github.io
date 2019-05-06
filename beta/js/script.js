@@ -6,6 +6,9 @@ if (!stat.devMode) {
     if (window.top !== window.self || window.top.location !== window.self.location) {
       window.top.location = window.self.location;
     }
+    if (window.location.hostname != 'youcount.github.io') {
+        window.location.hostname = 'youcount.github.io';
+    }
   } catch (e) {
     if (stat.devMode) throw e
   }

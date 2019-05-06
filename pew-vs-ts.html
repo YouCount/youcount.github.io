@@ -261,7 +261,7 @@ background-color:transparent;
 transition:width 0.25s;
 border-radius:3px 0 0 3px;
 }
-.rate, .rateText {
+.rate, .rateText, .takeoverParent {
 font-size: 25px;
 }
 #countGap {
@@ -308,16 +308,16 @@ font-size: 20px;
 </head>
 <body>
 <section id="menu">
-    <div class="navButtonsCover" data-child="logo" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(1)})()">
+    <div class="navButtonsCover" data-child="logo" onClick="(function(){if(typeof handleNavButtons!=='undefined')handleNavButtons(1)})()">
         <div id="logo" class="navButtons" alt="YouCount Logo/Homepage"></div>
     </div>
-    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(4)})()">
+    <div class="navButtonsCover" data-child="share" onClick="(function(){if(typeof handleNavButtons!=='undefined')handleNavButtons(4)})()">
         <div id="share" class="navButtons" alt="Share button"></div>
     </div>
-    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(3)})()">
+    <div class="navButtonsCover" data-child="code" onClick="(function(){if(typeof handleNavButtons!=='undefined')handleNavButtons(3)})()">
         <div id="code" class="navButtons" alt="Get YouCount embed or widget"></div>
     </div>
-    <div class="navButtonsCover" data-child="help" onClick="(function(){if(typeof(handleNavButtons)!=='undefined')handleNavButtons(2)})()">
+    <div class="navButtonsCover" data-child="help" onClick="(function(){if(typeof handleNavButtons!=='undefined')handleNavButtons(2)})()">
         <div id="help" class="navButtons" alt="Help button"></div>
     </div>
 </section>
@@ -368,6 +368,10 @@ Shareable Link
         <span class ="rateText">Rate: </span>
         <span class="rate odometer">0</span>
         <span class="rateText"> subs / sec</span>
+        <br><br>
+        <span class="takeoverParent">The channel will takeover in:
+          <span class="takeover"></span>
+        </span>
     </section>
     <section class="card">
         <img class="dp" alt="Channel Image">
@@ -377,6 +381,10 @@ Shareable Link
         <span class ="rateText">Rate: </span>
         <span class="rate odometer">0</span>
         <span class="rateText"> subs / sec</span>
+        <br><br>
+        <span class="takeoverParent">The channel will takeover in:      
+            <span class="takeover"></span>
+        </span>
     </section>
     <section class="card" id="common">
         <span id="countGapText">Subscribers Gap</span><br>
@@ -395,7 +403,7 @@ var loadingInterval = null;
 var prevCount = [];
 // -----select APIkey randomly----
 var API = {
-    keys: ['AIzaSyBAb4nM48dVlty7LPHm_qrcWrhlQ1P205U'],
+    keys: ['AIzaSyAREyMIJH-atKsKOFmUugwfb74LqrdNf9c'],
     index: -1,
     get key() {
         if (API.index === -1) API.index = Math.round(Math.random() * (API.keys.length - 1));
@@ -409,7 +417,7 @@ window.odometerOptions = {
     theme: "minimal",
 }
 
-// ------ Assigns forEach to NodeList if not already available (minimum requirement  = ES5)------
+// ------ Assigns forEach to NodeList if not already available (minimum requirement  == ES5)------
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
     thisArg = def(thisArg, window);
@@ -436,7 +444,7 @@ function ajx(url, success, failure) {
 }
 // ----text changing function for code reusability----
 function changeText(elem, changeVal) {
-  if (typeof(elem)==='string') {
+  if (typeof elem === 'string') {
     elem = document.getElementById(elem);
   }
   if (elem.nodeName.toUpperCase()==='INPUT') {
@@ -447,7 +455,7 @@ function changeText(elem, changeVal) {
 }
 
 function getText(elem) {
-  if (typeof(elem)==='string') {
+  if (typeof elem === 'string') {
     elem = document.getElementById(elem);
   }
   if (elem.nodeName.toUpperCase()==='INPUT') {
@@ -458,7 +466,7 @@ function getText(elem) {
 }
 
 function def(ob, val){
-  if (typeof(ob)==='undefined') return val;// if val not declared or val = undefined.
+  if (typeof ob === 'undefined') return val;// if val not declared or val === undefined.
   else return ob;
 }
 
@@ -487,7 +495,7 @@ function fx(str) {
     var c = change * Math.round((time - prev) / duration);
     if (fx.xnor(fin > val, fin > (val + c))) {
       func(val + c);
-      if (typeof window.requestAnimationFrame == 'function') {
+      if (typeof window.requestAnimationFrame === 'function') {
         requestAnimationFrame(function() {
           fx.transition(val + c, fin, change, time, func);
         });
@@ -508,7 +516,7 @@ function fx(str) {
     ele.dataset.fxOpacity = op = Number(ele.dataset.fxOpacity || ele.style.opacity || 1);
     if (ele.dataset.fxDisplay) ele.style.display = ele.dataset.fxDisplay;
     else ele.style.display = 'block';
-  fx.transition(0, op, op * duration / t, Date.now(), function (v) {
+    fx.transition(0, op, op * duration / t, Date.now(), function (v) {
       ele.style.opacity = v;
     });
   };
@@ -636,6 +644,7 @@ var elems = {
         elems.username = document.getElementsByClassName('username');
         elems.count = document.getElementsByClassName('actualCount');
         elems.rate = document.getElementsByClassName('rate');
+        elems.takeover = document.getElementsByClassName('takeover');
     }, showDp: function (i) {
         elems.initialize();
         elems.dp[i].style.display = 'block';
@@ -650,6 +659,22 @@ var rates = {
         rates.vals[i] = Number(parseFloat(rates.vals[i]).toFixed(2));
     }
 };
+
+function getTime(t) {
+  var str = ['', '', ' seconds'];
+  var s = t, m = '', h = '';
+  if (t >= 60) {
+    str[1] = ' minutes ';
+    m = parseInt(t / 60);
+    s -= m * 60;
+  }
+  if (t >= 3600) {
+    str[0] = ' hours ';
+    h = parseInt(t / 3600);
+    m -= h * 60;
+  }
+  return h + str[0] + m + str[1] + s + str[2];
+}
 
 function getInfo() {
     elems.initialize();
@@ -694,7 +719,15 @@ function live() {
                     prevCount[i] = count[i];
                 }
                 if ((i === 0 && !isNaN(count[1])) || (i === 1 && !isNaN(count[0]))) {
-                    changeText('countGap', Math.abs(count[0] - count[1]));
+                    var gap = Math.abs(count[0] - count[1]);
+                    changeText('countGap', gap);
+                    
+                    var more = count[0] > count[1] ? 0 : 1, less = 1 - more;
+                    
+                    var secsLeft = parseInt(gap / (rates.vals[less] - rates.vals[more]));
+                    changeText(elems.takeover[less], secsLeft >= 0 ? getTime(secsLeft) : 'Never');
+                    elems.takeover[less].parentElement.style.visibility = 'visible';
+                    elems.takeover[more].parentElement.style.visibility = 'hidden';
                 }
             });
         }

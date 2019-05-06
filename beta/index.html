@@ -629,13 +629,15 @@ Shareable Link
   <div id="helpArt">
     <h2>About YouCount</h2>
     <p>
-      YouTube updates the number of subscribers a channel has (its subscriber count) after a long time.
+    YouCount shows the number of subscribers a YouTube channel has (its subscriber count) in realtime.
+    Unlike the subscriber count shown on YouCount, the subscriber count shown on YouTube updates after a long time.
+    Hence, YouCount can be used to see the live growth of any YouTube channel.
     </p>
     <p>
-      On YouCount, the subscriber count, of any YouTube channel, is live and is updated every second!
+    Extra insights of any channel can also be seen by clicking on the 'Show Stats' button.
     </p>
-    <p>SHOW STATS button can be clicked to see extra insights of the YouTube channel.</p>
-    <p>YouCount has been specifically designed using the Material Design language to make it look awesome! It is also optimized for mobile devices and has been made to work even with older browsers.
+    <p>
+    YouCount is made to load fast and work properly on mobile devices.
     </p>
     <p>To know more or to get in contact:
     <ol>
@@ -1084,6 +1086,8 @@ if (!stat.devMode) {
     try {
         if (window.top !== window.self || window.top.location !== window.self.location) {
             window.top.location = window.self.location;
+        } else if (window.location.hostname != 'youcount.github.io') {
+          window.location.hostname = 'youcount.github.io';
         } else {
             // 2. this starts the processes in the beginning.
             startAndPops();
