@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>YouCount: YouTube Live Subscriber Count</title>
+<title>YouCount: YouTube Live Subscriber Count (Live Sub Count)</title>
 <meta name="theme-color" content="#e61919" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -17,7 +17,7 @@
 <meta http-equiv="EXPIRES" content="Thu, 10 Jan 2030 12:00:00 GMT">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website."/>
-<meta property="og:title" content="YouCount: YouTube Live Subscriber Count"/>
+<meta property="og:title" content="YouCount: YouTube Live Subscriber Count (Live Sub Count)"/>
 <meta property="og:description" content="See the live growth of any YouTube channel through their subcriber count updated in realtime. See collected insights about your favorite YouTubers. Add subscriber counts to your own website." />
 <meta property="og:type" content="article"/>
 <meta property="og:image" content="https://youcount.github.io/images/fblogo.jpg" />
@@ -27,7 +27,7 @@
       {
         "@context": "http://schema.org",
         "@type": "Article",
-        "headline": "YouCount: YouTube Live Subscriber Count",
+        "headline": "YouCount: YouTube Live Subscriber Count (Live Sub Count)",
         "datePublished": "2019-03-11T12:02:41Z",
     "publisher": {
       "@type": "Organization",
@@ -902,7 +902,7 @@ var channel = {
     set name(e) {
         channel.nameVal = e;
         changeText('username', e);
-        document.title = e + '\'s YouTube Live Subscriber Count - YouCount';
+        document.title = e + '\'s YouTube Live Subscriber Count (Live Sub Count) - YouCount';
     }, set count(e) {
         channel.countVal = e;
         channel.live.prevCounts[(channel.live.seconds - 1) % 5] = e;
