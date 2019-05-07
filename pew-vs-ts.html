@@ -651,12 +651,16 @@ var elems = {
     }
 };
 var rates = {
+    counts: [[],[]],
     vals: [0, 0],
     divisor: [0, 0],
     add: function (i, a) {
-        rates.vals[i] = ((rates.vals[i] * rates.divisor[i]) + a) / (rates.divisor[i] + 1);
-        rates.divisor[i]++;
-        rates.vals[i] = Number(parseFloat(rates.vals[i]).toFixed(2));
+        a = Number(a);
+        rates.vals[i] *= rates.counts[i].length;
+        rates.counts[i].push(a);
+        var sub = rates.counts[i].length > 60 ? rates.counts[i].shift() : 0;
+        rates.vals[i] += (a - sub);
+        rates.vals[i] = (rates.vals[i] / rates.counts[i].length).toFixed(2);
     }
 };
 
