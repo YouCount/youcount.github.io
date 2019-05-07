@@ -10,33 +10,18 @@
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://youcount.github.io/#!/ksi</loc>
+  <loc>https://youcount.github.io/pew-vs-ts</loc>
   <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://youcount.github.io/#!/whatsinside</loc>
+  <loc>https://youcount.github.io/#!/PewDiePie</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.80</priority>
+  <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://youcount.github.io/#!/irmaosneto</loc>
+  <loc>https://youcount.github.io/#!/tseries</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://youcount.github.io/#!/FaZe+Banks</loc>
-  <changefreq>weekly</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://youcount.github.io/#!/UCmDalaHBMDjFT65eYI50ZzQ</loc>
-  <changefreq>weekly</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://youcount.github.io/#!/dualipa</loc>
-  <changefreq>weekly</changefreq>
-  <priority>0.80</priority>
+  <priority>0.60</priority>
 </url>
 </urlset>
