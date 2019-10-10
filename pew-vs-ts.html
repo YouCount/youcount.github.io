@@ -233,7 +233,7 @@ backface-visibility: hidden;
 width: calc(100% - 20px);
 }
 .actualCount {
-font-size: 8vw !important;
+font-size: 7vw !important;
 }
 .dp {
 float: left;
@@ -269,6 +269,9 @@ font-size: 8vw;
 }
 #countGapText {
 font-size: 20px;
+}
+.derived-notice {
+  font-weight: 300;
 }
 @media only screen and (max-width: 800px), screen and (orientation: portrait) {
     .navButtonsCover {
@@ -387,8 +390,13 @@ Shareable Link
         </span>
     </section>
     <section class="card" id="common">
-        <span id="countGapText">Subscribers Gap</span><br>
+        <span id="countGapText">Subscribers Gap</span>
+        <br>
         <span id="countGap" class="odometer">Loading...</span>
+        <br>
+        <span class="derived-notice">
+            The metrics "Rate", "The channel will take over in:", "Subscribers Gap" are not provided by YouTube but are independently calculated metrics.
+        </span>
     </section>
 </div>
 <script>
