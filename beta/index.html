@@ -509,26 +509,18 @@ border:0;
 border-bottom:0.5vw solid rgb(230,25,25);
 background-color:rgba(200,200,200,0.3);
 }
-#redirect {
-max-width: calc(100vw - 80px);
-position: fixed;
-right: 20px;
-bottom: 20px;
-z-index: 9999;
-background-color: white;
-border-radius: 4px;
-box-shadow: 0 0 20px -4px black;
-font-weight: 600;
-font-size: 30px;
-padding: 20px;
-text-align: center;
-color: black;
+#tos-notice {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    z-index: 1003;
+    background-color:rgb(250,250,250);
+    padding: 10px;
+    text-align:center;
 }
-#redirect span {
-color: rgb(230,25,25);
-}
-#redirect button {
-margin: 5px 0;
+#tos-notice button{
+    padding: 5;
 }
 a {text-decoration:none;}
 @media only screen and (max-width: 800px), screen and (orientation: portrait) {
@@ -662,14 +654,10 @@ Shareable Link
 
 <div class="bg" id="bg2"></div>
 
-<div id="redirect">
-  See<br>
-  <span>PewDiePie vs T-Series</span><br>
-  Side by Side!<br>
-  <button onclick="location.href = 'https://youcount.github.io/pew-vs-ts'" class="extraToggle">Go</button>
-  <button onclick="document.getElementById('redirect').style.display = 'none'" class="extraToggle">Close</button>
+<div id="tos-notice">By using YouCount, you are agreeing to be bound by the
+    <a href="https://www.youtube.com/t/terms">YouTube Terms of Service.</a>
+    <button onclick="document.getElementById('tos-notice').style.display = 'none'">I agree</button>
 </div>
-
 <div id="mainPage">
   <section id="prime" class="card">
     <div id="topPrime">
@@ -1039,7 +1027,7 @@ function reloadChannel(searchTerm) {
             } else {
                 channel.id = result1.items[0].snippet.channelId.trim();
             }
-            
+
             channel.live.count();
             if (channel.live.interval === null) {
                 channel.live.interval = setInterval(channel.live.count, 1000);
@@ -1055,9 +1043,9 @@ function reloadChannel(searchTerm) {
             } else {
                 handlePopState.isBackPressed = false;
             }
-            
+
             channel.dp(result1.items[0].snippet.thumbnails.default.url);
-            
+
             if (stat.scripts.chartjs === 0 && stat.scripts.script === 2) {
                 extraToggle();
             } else if (stat.scripts.chartjs === 2) {
