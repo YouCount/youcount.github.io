@@ -1027,7 +1027,7 @@ function reloadChannel(searchTerm) {
 
             channel.live.count();
             if (channel.live.interval === null) {
-                channel.live.interval = setInterval(channel.live.count, 1000);
+                channel.live.interval = setInterval(channel.live.count, 10000);
             }
             if (stat.extra) resetChart0();
 
