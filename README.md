@@ -1,6 +1,8 @@
 # YouCount
 YouCount allows you to see the subscriber count of any YouTube user in realtime. Youtube doesn't allow you to see the subscriber count in realtime. But on YouCount, the subscriber count is updated every second!
 
+**This project has been archived and is no longer working. See the reason here:** https://github.com/YouCount/youcount.github.io/issues/12#issuecomment-802671582
+
 ### Website
 https://youcount.github.io/
 
